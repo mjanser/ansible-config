@@ -1,0 +1,42 @@
+- name: ensure developer user exists
+  user: name="{{ developer_username }}"
+        comment="{{ developer_fullname }}"
+        uid="{{ developer_uid }}"
+        groups=wheel,docker
+        shell=/bin/bash
+        password="{{ default_password }}"
+        update_password=on_create
+  register: user_developer
+
+- name: ensure the password of developer user is expired
+  command: "chage -d 0 {{ developer_username }}"
+  when: user_developer.changed
+
+- name: ensure ssh key of developer user is added to authorized keys
+  authorized_key: user="{{ developer_username }}" key="{{ developer_ssh_key }}"
+
+- name: ensure ssh config for developer user is installed
+  copy: src=developer/ssh-config
+        dest="/home/{{ developer_username }}/.ssh/config"
+        owner="{{ developer_username }}" group="{{ developer_username }}" mode=0640
+
+- name: ensure git config for developer user is installed
+  template: src=developer/git-config.j2
+            dest="/home/{{ developer_username }}/.gitconfig"
+            owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
+
+- name: ensure ssh private key for developer user is linked
+  file:
+    src=keys/id_rsa
+    dest="/home/{{ developer_username }}/.ssh/id_rsa"
+    state=link
+    force=yes
+    owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
+
+- name: ensure ssh public key for developer user is linked
+  file:
+    src=keys/id_rsa.pub
+    dest="/home/{{ developer_username }}/.ssh/id_rsa.pub"
+    state=link
+    force=yes
+    owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644

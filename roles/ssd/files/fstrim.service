@@ -1,0 +1,10 @@
+[Unit]
+Description=Trim free cells on the SSD
+After=local-fs.target
+
+[Service]
+ExecStart=/sbin/fstrim --all
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

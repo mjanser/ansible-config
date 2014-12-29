@@ -1,0 +1,24 @@
+- name: ensure tex tools are at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - texlive
+    - texlive-latex
+    - texlive-xdvi
+    - texlive-adjustbox
+    - texlive-apacite
+    - texlive-babel
+    - texlive-babel-english
+    - texlive-babelbib
+    - texlive-biblatex
+    - texlive-biblatex-apa
+    - texlive-cite
+    - texlive-csquotes
+    - texlive-fancyhdr
+    - texlive-floatrow
+    - texlive-koma-script
+    - texlive-lastpage
+    - texlive-tools
+    - texlive-german
+    - texlive-babel-german
+    - texlive-hyphen-german
+    - latex-mk

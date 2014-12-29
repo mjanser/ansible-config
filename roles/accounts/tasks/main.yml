@@ -1,0 +1,5 @@
+- include: developer.yml
+  when: "'workstations' in group_names or 'mediacenters' in group_names"
+
+- include: developer_extras.yml
+  when: "'workstations' in group_names"

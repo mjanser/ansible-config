@@ -1,0 +1,6 @@
+[vagrant]
+name=vagrant
+baseurl=http://repos.duss-janser.ch/vagrant
+skip_if_unavailable=True
+gpgcheck=0
+enabled=1

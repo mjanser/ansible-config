@@ -1,0 +1,2 @@
+- name: ensure ansible is at the latest version
+  yum: name=ansible state=latest

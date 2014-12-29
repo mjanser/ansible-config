@@ -1,0 +1,20 @@
+- name: ensure yum repository for vagrant is installed
+  copy: src=vagrant.repo
+        dest=/etc/yum.repos.d/
+        owner=root group=root mode=0644
+
+- name: ensure vagrant is at the latest version
+  yum: name=vagrant state=latest
+
+- shell: vagrant --version
+  register: vagrant_version
+
+- name: ensure bash completion script for vagrant is installed
+  file: src=/opt/vagrant/embedded/gems/gems/vagrant-{{ vagrant_version.stdout.split()[1] }}/contrib/bash/completion.sh
+        dest=/etc/bash_completion.d/vagrant.sh
+        state=link
+
+- name: ensure sudoers file for vagrant is installed
+  copy: src=sudoers
+        dest=/etc/sudoers.d/vagrant-commands
+        owner=root group=root mode=0600

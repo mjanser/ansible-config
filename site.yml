@@ -1,0 +1,20 @@
+- hosts: all
+  tasks:
+    - include_vars: vars.yml
+
+- hosts: workstations
+  roles:
+    - fedora-gui
+    - ssd
+    - ansible
+    - tex
+    - taxi
+    - vagrant
+    - php-dev
+    - accounts
+
+- hosts: mediacenters
+  roles:
+    - fedora
+    - ssd
+    - accounts

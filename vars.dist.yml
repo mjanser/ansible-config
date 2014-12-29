@@ -1,0 +1,14 @@
+default_password: ~
+developer_uid: ~
+developer_username: ~
+developer_email: ~
+developer_fullname: ~
+developer_ssh_key: ~
+developer_tksrc: ~
+
+ssmtp_to: ~
+ssmtp_mailhub: ~
+ssmtp_auth_user: ~
+ssmtp_auth_pass: ~
+
+eclipse_owner: ~

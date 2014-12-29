@@ -1,0 +1,105 @@
+- name: ensure eclipse base directory exists
+  file:
+    dest="{{ eclipse_base_dir }}"
+    state=directory
+    owner="{{ eclipse_owner }}"
+    group="{{ eclipse_group }}"
+
+- name: ensure eclipse package is downloaded
+  get_url:
+    url="{{ eclipse_url }}"
+    dest="{{ eclipse_base_dir }}/{{ eclipse_version }}.tar.gz"
+
+- name: ensure eclipse target directory exists
+  file:
+    dest="{{ eclipse_base_dir }}/{{ eclipse_version }}"
+    state=directory
+    owner="{{ eclipse_owner }}"
+    group="{{ eclipse_group }}"
+
+- name: ensure eclipse package is unpacked
+  unarchive:
+    src="{{ eclipse_base_dir }}/{{ eclipse_version }}.tar.gz"
+    dest="{{ eclipse_base_dir }}/{{ eclipse_version }}"
+    copy=no
+    owner="{{ eclipse_owner }}"
+    group="{{ eclipse_group }}"
+    creates="{{ eclipse_base_dir }}/{{ eclipse_version }}/eclipse"
+  sudo: yes
+  sudo_user: "{{ eclipse_owner }}"
+
+- name: ensure eclipse.ini is installed
+  copy: src=eclipse.ini
+        dest="{{ eclipse_base_dir }}/{{ eclipse_version }}/eclipse/eclipse.ini"
+        owner="{{ eclipse_owner }}"
+        group="{{ eclipse_group }}"
+
+- name: ensure base eclipse plugins are installed
+  command: "{{ eclipse_base_dir }}/{{ eclipse_version }}/eclipse/eclipse -nosplash -application org.eclipse.equinox.p2.director \
+    -repository \
+      http://download.eclipse.org/releases/{{ eclipse_name }}/,\
+      http://texlipse.sourceforge.net/,\
+      http://eclipse-color-theme.github.io/update/,\
+      http://sourceforge.net/projects/shelled/files/shelled/update/,\
+      http://p2-dev.pdt-extensions.org/,\
+      http://workspacemechanic.eclipselabs.org.codespot.com/git.update/mechanic \
+    -installIU \
+      org.eclipse.dltk.ruby,\
+      net.sourceforge.texlipse,\
+      com.github.eclipsecolortheme.feature.feature.group,\
+      net.sourceforge.shelled.feature.group,\
+      net.sourceforge.vrapper.feature.group,\
+      net.sourceforge.vrapper.plugin.surround.feature.group,\
+      com.google.eclipse.mechanic.feature.group,\
+      de.anbos.eclipse.logviewer.feature.feature.group,\
+      net.mihai-nita.ansicon.feature.group \
+    "
+  sudo: yes
+  sudo_user: "{{ eclipse_owner }}"
+#      com.wdev91.eclipse.copyright.feature.feature.group,\
+
+- name: ensure php eclipse plugins are installed
+  command: "{{ eclipse_base_dir }}/{{ eclipse_version }}/eclipse/eclipse -nosplash -application org.eclipse.equinox.p2.director \
+    -repository \
+      http://download.eclipse.org/releases/{{ eclipse_name }}/,\
+      http://p2-dev.pdt-extensions.org/ \
+    -installIU \
+      org.eclipse.dltk.ruby,\
+      com.dubture.composer.feature.feature.group,\
+      com.dubture.doctrine.feature.feature.group,\
+      com.dubture.symfony.feature.feature.group,\
+      com.dubture.twig.feature.feature.group,\
+      org.phpsrc.eclipse.pti.core.feature.group,\
+      org.phpsrc.eclipse.pti.library.pear.feature.group,\
+      org.phpsrc.eclipse.pti.tools.codesniffer.feature.group,\
+      org.phpsrc.eclipse.pti.tools.phpunit.feature.group,\
+      org.phpsrc.eclipse.pti.tools.phpcpd.feature.group,\
+      org.phpsrc.eclipse.pti.tools.phpmd.feature.group,\
+      markdown.editor.feature.feature.group,\
+      org.psem2m.eclipse.rest.editor.feature.group,\
+      org.dadacoalition.yedit.feature.group,\
+      org.sourceforge.jsonedit.feature.feature.group,\
+      com.piece_framework.makegood_feature.feature.group \
+    "
+  sudo: yes
+  sudo_user: "{{ eclipse_owner }}"
+
+- name: ensure current eclipse version is linked
+  file:
+    src="{{ eclipse_base_dir }}/{{ eclipse_version }}/eclipse"
+    dest="{{ eclipse_base_dir }}/current"
+    state=link
+
+- name: ensure current eclipse binary is linked
+  file:
+    src="{{ eclipse_base_dir }}/current/eclipse"
+    dest=/usr/local/bin/eclipse
+    state=link
+
+- name: ensure desktop file for eclipse is installed
+  copy: src=eclipse.desktop
+        dest=/usr/share/applications/eclipse.desktop
+        owner=root group=root mode=0644
+
+- name: ensure port 9000 for php debugging is open in internal zone
+  firewalld: port=9000/tcp permanent=true zone=internal state=enabled

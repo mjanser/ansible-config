@@ -1,0 +1,119 @@
+- name: ensure rpmfusion-free repository is installed
+  yum: pkg=http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm state=present
+
+- name: ensure rpmfusion-nonfree repository is installed
+  yum: pkg=http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm state=present
+
+- name: ensure livna repository is installed
+  yum: pkg=http://rpm.livna.org/livna-release.rpm state=present
+
+- name: ensure basic software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - yum-plugin-changelog
+    - createrepo
+    - vim-enhanced
+    - vim-latex
+    - git
+    - gitflow
+    - python-pip
+    - fuse-sshfs
+    - xorg-x11-xauth
+    - bzip2
+    - ntp
+    - bash-completion
+    - logwatch
+    - gcc
+
+- name: ensure stat software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - rpmconf
+    - iotop
+    - htop
+    - lm_sensors
+    - tlp
+    - acpitool
+    - powertop
+
+- name: ensure vdpau software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - libva-vdpau-driver
+    - libva-intel-driver
+    - libva-utils
+
+- name: ensure ansible is at the latest version
+  yum: pkg=ansible state=latest
+
+- name: ensure duplicity is at the latest version
+  yum: pkg=duplicity state=latest
+
+- name: ensure pass is at the latest version
+  yum: pkg=pass state=latest
+
+- name: ensure unrar is at the latest version
+  yum: pkg=unrar state=latest
+
+- name: ensure docker is at the latest version
+  yum: pkg=docker-io state=latest
+
+- name: ensure mirall is at the latest version
+  yum: pkg=mirall state=latest
+
+- name: ensure multimedia software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - flac
+    - ffmpeg
+    - gstreamer-plugins-good
+    - gstreamer-plugins-good-extras
+    - gstreamer-plugins-bad-free
+    - gstreamer-plugins-bad-free-extras
+    - gstreamer-plugins-bad
+    - gstreamer-plugins-bad-nonfree
+    - gstreamer-plugins-ugly
+    - gstreamer-rtsp
+    - gstreamer-ffmpeg
+    - lame-libs
+    - twolame-libs
+    - x264-libs
+    - xvidcore
+    - faac
+    - mplayer
+    - transcode
+    - libdvdread
+    - libdvdnav
+    - libdvdcss
+
+- name: ensure ssmtp software is at the latest version
+  yum: name=ssmtp state=latest
+
+- name: ensure ssmtp configuration is installed
+  template: src=ssmtp.conf.j2 dest=/etc/ssmtp/ssmtp.conf owner=root group=root mode=0640
+
+- name: ensure docker service runs
+  service: name=docker enabled=yes state=started
+
+- name: ensure standard firewalld configuration is not installed
+  yum: pkg=firewalld-config-standard state=absent
+
+- name: ensure own CA certificate exists on the filesystem
+  copy: src=Duss-Janser-CA.crt dest=/opt/Duss-Janser-CA.crt
+
+- command: trust list --filter=ca-anchors
+  register: ca_installed
+
+- name: ensure own CA certificate is installed
+  command: trust anchor --store /opt/Duss-Janser-CA.crt
+  when: ca_installed.stdout.find('Duss-Janser') == -1
+
+- name: ensure logwatch is configured
+  copy: src=logwatch.conf
+        dest=/etc/logwatch/conf/logwatch.conf
+        owner=root group=root mode=0644
+
+- name: ensure logwatch runtime configuration is installed
+  copy: src=zz-runtime.conf
+        dest=/etc/logwatch/conf/services/zz-runtime.conf
+        owner=root group=root mode=0644

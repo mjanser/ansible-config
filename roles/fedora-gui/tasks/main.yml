@@ -1,0 +1,54 @@
+- name: ensure gnome tools are at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - "@^workstation-product-environment"
+    - epiphany
+    - gnome-web-photo
+    - gnome-photos
+    - gnome-music
+    - gnome-maps
+    - gnome-weather
+    - gnome-rdp
+    - gnome-power-manager
+    - gnome-activity-journal
+    - gnome-tweak-tool
+    - gmpc
+
+- name: ensure multimedia software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - ImageMagick
+    - avidemux-qt
+    - devede
+
+- name: ensure misc software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - gitg
+    - virt-manager
+    - deja-dup
+    - mirall
+    - gramps
+
+- name: ensure gnucash is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - gnucash
+    - gnucash-docs
+    - libdbi-dbd-mysql
+
+- name: ensure office is at the latest version
+  yum: pkg="@libreoffice" state=latest
+
+- name: ensure yum repository for google chrome is installed
+  copy: src=google-chrome.repo
+        dest=/etc/yum.repos.d/
+        owner=root group=root mode=0644
+
+- name: ensure google chrome is at the latest version
+  yum: name=google-chrome-stable state=latest
+
+- name: ensure firewalld service runs
+  service: name=firewalld enabled=yes state=started
+
+- file: src=/lib/systemd/system/graphical.target dest=/etc/systemd/system/default.target state=link
