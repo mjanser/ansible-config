@@ -35,6 +35,7 @@
     - tlp
     - acpitool
     - powertop
+    - tuned-utils
 
 - name: ensure vdpau software is at the latest version
   yum: pkg={{ item }} state=latest
@@ -73,13 +74,30 @@
     - gstreamer-plugins-bad
     - gstreamer-plugins-bad-nonfree
     - gstreamer-plugins-ugly
+    - gstreamer-plugins-fc
+    - gstreamer-plugin-crystalhd
     - gstreamer-rtsp
     - gstreamer-ffmpeg
+    - gstreamer1-libav
+    - gstreamer1-plugins-base-tools
+    - gstreamer1-plugins-good
+    - gstreamer1-plugins-bad-free
+    - gstreamer1-plugins-bad-free-extras
+    - gstreamer1-plugins-bad-freeworld
+    - gstreamer1-plugins-good-extras
+    - gstreamer1-plugins-ugly
+    - gstreamer1-vaapi
+    - lame
     - lame-libs
     - twolame-libs
+    - libmatroska
+    - x264
     - x264-libs
     - xvidcore
     - faac
+    - faad2
+    - amrnb
+    - amrwb
     - mplayer
     - transcode
     - libdvdread
@@ -94,6 +112,12 @@
 
 - name: ensure docker service runs
   service: name=docker enabled=yes state=started
+
+- name: ensure tuned service runs
+  service: name=tuned enabled=yes state=started
+
+- name: ensure nfs service runs
+  service: name=nfs-server enabled=yes state=started
 
 - name: ensure standard firewalld configuration is not installed
   yum: pkg=firewalld-config-standard state=absent
@@ -117,3 +141,14 @@
   copy: src=zz-runtime.conf
         dest=/etc/logwatch/conf/services/zz-runtime.conf
         owner=root group=root mode=0644
+
+#- name: ensure powertop tunables are saved in Tuned profile
+#  command: powertop2tuned --enable powersave
+#  creates: /etc/tuned/powersave
+
+- command: tuned-adm active
+  register: tuned_profile
+
+- name: ensure Tuned profile powersave is active
+  command: tuned-adm profile powersave
+  when: tuned_profile.stdout.find('powersave') == -1

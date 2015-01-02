@@ -22,3 +22,7 @@ Configure the groups of hosts in the file `production` (see /etc/ansible/hosts f
 Then run ansible:
 
     ansible-playbook -i production -l [group] site.yml
+
+To run it for the local host, use:
+
+    ansible-playbook -i production -l [group] --connection local site.yml
