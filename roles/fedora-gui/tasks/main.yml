@@ -20,6 +20,7 @@
     - ImageMagick
     - avidemux-qt
     - devede
+    - easytag
 
 - name: ensure misc software is at the latest version
   yum: pkg={{ item }} state=latest

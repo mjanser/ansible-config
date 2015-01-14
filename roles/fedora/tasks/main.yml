@@ -11,6 +11,7 @@
   yum: pkg={{ item }} state=latest
   with_items:
     - yum-plugin-changelog
+    - yum-langpacks
     - createrepo
     - vim-enhanced
     - vim-latex
@@ -121,6 +122,9 @@
 
 - name: ensure standard firewalld configuration is not installed
   yum: pkg=firewalld-config-standard state=absent
+
+- name: ensure de langpacks are installed
+  command: yum langinstall de_CH
 
 - name: ensure own CA certificate exists on the filesystem
   copy: src=Duss-Janser-CA.crt dest=/opt/Duss-Janser-CA.crt
