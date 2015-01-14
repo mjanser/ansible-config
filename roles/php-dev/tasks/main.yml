@@ -4,6 +4,7 @@
 - name: ensure capifony is at the latest version
   get_url: url=https://raw.githubusercontent.com/mjanser/capifony-docker/master/cap.sh
            dest=/usr/local/bin/cap
+           force=yes
            mode=0755
 
 - include: eclipse.yml tags=eclipse
