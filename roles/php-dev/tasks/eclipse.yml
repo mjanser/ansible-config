@@ -44,7 +44,7 @@
       http://p2-dev.pdt-extensions.org/,\
       http://workspacemechanic.eclipselabs.org.codespot.com/git.update/mechanic \
     -installIU \
-      org.eclipse.dltk.ruby,\
+      org.eclipse.dltk.ruby.feature.group,\
       net.sourceforge.texlipse,\
       com.github.eclipsecolortheme.feature.feature.group,\
       net.sourceforge.shelled.feature.group,\
