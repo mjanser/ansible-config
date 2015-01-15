@@ -16,12 +16,12 @@
   authorized_key: user="{{ developer_username }}" key="{{ developer_ssh_key }}"
 
 - name: ensure ssh config for developer user is installed
-  copy: src=developer/ssh-config
+  copy: src=account_developer/ssh-config
         dest="/home/{{ developer_username }}/.ssh/config"
         owner="{{ developer_username }}" group="{{ developer_username }}" mode=0640
 
 - name: ensure git config for developer user is installed
-  template: src=developer/git-config.j2
+  template: src=account_developer/git-config.j2
             dest="/home/{{ developer_username }}/.gitconfig"
             owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
 
@@ -40,3 +40,6 @@
     state=link
     force=yes
     owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
+
+- include: account_developer_extras.yml
+  when: "'workstations' in group_names"

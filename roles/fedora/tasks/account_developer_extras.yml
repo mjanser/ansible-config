@@ -11,10 +11,10 @@
     - Linux
     - Vagrant
     - Eclipse
-    - vim
+    - Vim
 
 - name: ensure custom gitignore source file for developer user is installed
-  copy: src=developer/gitignore
+  copy: src=account_developer/gitignore
         dest="/home/{{ developer_username }}/.gitignore-sources/custom.gitignore"
         owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
 
@@ -23,7 +23,7 @@
             owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
 
 - name: ensure vrapperrc file for developer user is installed
-  copy: src=developer/vrapperrc
+  copy: src=account_developer/vrapperrc
         dest="/home/{{ developer_username }}/.vrapperrc"
         owner="{{ developer_username }}" group="{{ developer_username }}" mode=0644
 

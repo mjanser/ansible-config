@@ -1,4 +1,5 @@
 default_password: ~
+
 developer_uid: ~
 developer_username: ~
 developer_email: ~
@@ -6,9 +7,17 @@ developer_fullname: ~
 developer_ssh_key: ~
 developer_tksrc: ~
 
+user1_uid: ~
+user1_username: ~
+user1_fullname: ~
+user1_ssh_key: ~
+
 ssmtp_to: ~
 ssmtp_mailhub: ~
 ssmtp_auth_user: ~
 ssmtp_auth_pass: ~
 
 eclipse_owner: ~
+
+mariadb_root_password: ~
+mariadb_backup_password: ~

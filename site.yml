@@ -4,17 +4,13 @@
 
 - hosts: workstations
   roles:
-    - fedora-gui
-    - ssd
-    - ansible
+    - fedora-workstation
     - tex
     - taxi
     - vagrant
     - php-dev
-    - accounts
 
 - hosts: mediacenters
   roles:
-    - fedora
-    - ssd
-    - accounts
+    - fedora-server
+    - dbserver

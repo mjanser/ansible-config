@@ -25,6 +25,7 @@
 - name: ensure misc software is at the latest version
   yum: pkg={{ item }} state=latest
   with_items:
+    - yum-langpacks
     - gitg
     - virt-manager
     - deja-dup
@@ -41,6 +42,9 @@
 - name: ensure office is at the latest version
   yum: pkg="@libreoffice" state=latest
 
+- name: ensure de langpacks are installed
+  command: yum -y langinstall de_CH
+
 - name: ensure yum repository for google chrome is installed
   copy: src=google-chrome.repo
         dest=/etc/yum.repos.d/
@@ -48,8 +52,5 @@
 
 - name: ensure google chrome is at the latest version
   yum: name=google-chrome-stable state=latest
-
-- name: ensure firewalld service runs
-  service: name=firewalld enabled=yes state=started
 
 - file: src=/lib/systemd/system/graphical.target dest=/etc/systemd/system/default.target state=link

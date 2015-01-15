@@ -1,0 +1,8 @@
+- include: account_developer.yml
+  when: "'workstations' in group_names or 'mediacenters' in group_names"
+
+- include: account_user1.yml
+  when: "'mediacenters' in group_names"
+
+- include: account_mediacenter.yml
+  when: "'mediacenters' in group_names"

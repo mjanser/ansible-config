@@ -11,7 +11,6 @@
   yum: pkg={{ item }} state=latest
   with_items:
     - yum-plugin-changelog
-    - yum-langpacks
     - createrepo
     - vim-enhanced
     - vim-latex
@@ -59,9 +58,6 @@
 
 - name: ensure docker is at the latest version
   yum: pkg=docker-io state=latest
-
-- name: ensure mirall is at the latest version
-  yum: pkg=mirall state=latest
 
 - name: ensure multimedia software is at the latest version
   yum: pkg={{ item }} state=latest
@@ -117,14 +113,8 @@
 - name: ensure tuned service runs
   service: name=tuned enabled=yes state=started
 
-- name: ensure nfs service runs
-  service: name=nfs-server enabled=yes state=started
-
 - name: ensure standard firewalld configuration is not installed
   yum: pkg=firewalld-config-standard state=absent
-
-- name: ensure de langpacks are installed
-  command: yum -y langinstall de_CH
 
 - name: ensure own CA certificate exists on the filesystem
   copy: src=Duss-Janser-CA.crt dest=/opt/Duss-Janser-CA.crt
@@ -156,3 +146,8 @@
 - name: ensure Tuned profile powersave is active
   command: tuned-adm profile powersave
   when: tuned_profile.stdout.find('powersave') == -1
+
+- include: ssd.yml
+  when: ansible_devices.sda.rotational == 0
+
+- include: accounts.yml

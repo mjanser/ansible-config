@@ -3,6 +3,9 @@
         dest=/etc/yum.repos.d/
         owner=root group=root mode=0644
 
+- name: ensure nfs-utils software is at the latest version
+  yum: name=nfs-utils state=latest
+
 - name: ensure vagrant and VirtualBox is at the latest version
   yum: name={{ item }} state=latest
   with_items:

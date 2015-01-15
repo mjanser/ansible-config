@@ -1,0 +1,6 @@
+- name: ensure mediacenter user exists
+  user: name=mediacenter
+        comment="Mediacenter User"
+        uid=1200
+        groups=video,audio
+        shell=/sbin/nologin

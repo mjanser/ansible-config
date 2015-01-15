@@ -1,0 +1,5 @@
+- name: ensure fedora-release-server is installed
+  yum: pkg=fedora-release-server state=latest
+
+- name: ensure firewalld service runs
+  service: name=firewalld enabled=yes state=started
