@@ -5,22 +5,22 @@
 
 USER=backup
 PASS='{{ mariadb_backup_password }}'
-DIR=/var/lib/backup/mediacenter/db
+DIR=/var/lib/backup/$(hostname -s)/db
 ROTATE=30
-
-PREFIX=backup_
 
 set -o pipefail
 
 cleanup()
 {
-    find "${DIR}/" -maxdepth 1 -type f -name "${PREFIX}*.sql*" -mtime +${ROTATE} -print0 | xargs -0 -r rm -f
+    find "${DIR}/" -maxdepth 1 -type f -name "*.sql*" -mtime +${ROTATE} -print0 | xargs -0 -r rm -f
 }
 
 mysql -u${USER} -p${PASS} -s -r -N -e 'SHOW DATABASES' | grep -Ev "mysql|information_schema|performance_schema"  | while read dbname
 do
-  mysqldump -u${USER} -p${PASS} --opt --flush-logs --single-transaction --ignore-table=mysql.event \
-    ${dbname} > ${DIR}/${PREFIX}${dbname}_`date +%Y%m%d-%H%M%S`.sql
+  TARGET_FILE=${dbname}_`date +%Y%m%d-%H%M%S`.sql
+
+  mysqldump -u${USER} -p${PASS} --opt --flush-logs --single-transaction ${dbname} > ${DIR}/${TARGET_FILE}
+  ln -s --force ${TARGET_FILE} ${DIR}/${dbname}_latest.sql
 done
 
 if [ $? -eq 0 ] ; then
