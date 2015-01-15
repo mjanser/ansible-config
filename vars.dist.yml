@@ -21,3 +21,8 @@ eclipse_owner: ~
 
 mariadb_root_password: ~
 mariadb_backup_password: ~
+
+gnucash_db_password: ~
+gnucash_databases: ~
+
+backup_directories: ~

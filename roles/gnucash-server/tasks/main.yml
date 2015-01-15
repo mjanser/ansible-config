@@ -1,0 +1,19 @@
+- name: ensure mariadb gnucash user exists
+  mysql_user: name=gnucash
+              host="%"
+              password={{ gnucash_db_password }}
+              priv="gnucash_%.*:ALL"
+
+- name: ensure mariadb gnucash databases exists
+  mysql_db: name="gnucash_{{ item }}"
+            encoding=utf8
+            collation=utf8_general_ci
+  with_items: gnucash_databases
+  register: gnucash_databases_created
+
+- name: import gnucash databases
+  mysql_db: name="gnucash_{{ item.item }}"
+            state=import
+            target="/var/lib/backup/{{ ansible_hostname }}/db/gnucash_{{ item.item }}_latest.sql"
+  when: item.changed
+  with_items: gnucash_databases_created.results

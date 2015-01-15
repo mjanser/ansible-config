@@ -1,0 +1,5 @@
+- name: ensure mpd is at the latest version
+  yum: pkg=mpd state=latest
+
+- name: ensure mpd service runs
+  service: name=mpd enabled=yes state=started
