@@ -1,8 +1,39 @@
-- include: account_developer.yml
-  when: "'workstations' in group_names or 'mediacenters' in group_names"
+- name: ensure users exist
+  user: name="{{ item.username }}"
+        comment="{{ item.name }}"
+        uid="{{ item.uid }}"
+        groups="{{ item.groups|default('') }}"
+        shell="{{ item.shell|default('/bin/bash') }}"
+        password="{{ item.password|default('') }}"
+        update_password=on_create
+  register: created_users
+  when: group_names[0] in item.hosts
+  with_items: users
 
-- include: account_user1.yml
-  when: "'mediacenters' in group_names"
+- name: ensure the user passwords are expired
+  command: "chage -d 0 {{ item.item.username }}"
+  when: item.changed and item.item.password is defined
+  with_items: created_users.results
 
-- include: account_mediacenter.yml
-  when: "'mediacenters' in group_names"
+- name: ensure ssh keys of users are added to authorized keys
+  authorized_key: user="{{ item.item.username }}" key="{{ item.item.ssh_key }}"
+  when: item.item.ssh_key is defined
+  with_items: created_users.results
+
+- name: ensure ssh config for users is installed
+  lineinfile: dest="/home/{{ item.item.username }}/.ssh/config"
+              line="ServerAliveInterval 30"
+              owner="{{ item.item.username }}" group="{{ item.item.username }}" mode=0640
+              create=yes
+  when: item.shell is defined and item.shell != '/sbin/nologin'
+  with_items: created_users.results
+
+- name: ensure symlinks for users are created
+  file: src="{{ item[1].source }}"
+        dest="/home/{{ item[0].item.username }}/{{ item[1].target }}"
+        state=link
+        force=yes
+        owner="{{ item[0].item.username }}" group="{{ item[0].item.username }}" mode=0644
+  with_subelements_registered:
+    - created_users.results
+    - symlinks

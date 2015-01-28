@@ -6,11 +6,12 @@
 - name: ensure nfs-utils software is at the latest version
   yum: name=nfs-utils state=latest
 
-- name: ensure vagrant and VirtualBox is at the latest version
-  yum: name={{ item }} state=latest
-  with_items:
-    - vagrant
-    - VirtualBox
+- name: ensure VirtualBox is at the latest version
+  yum: name=VirtualBox state=latest
+  when: ansible_virtualization_role != 'guest'
+
+- name: ensure vagrant is at the latest version
+  yum: name=vagrant state=latest
 
 - shell: vagrant --version
   register: vagrant_version
@@ -34,3 +35,5 @@
 
 - name: ensure port 2049/udp for vagrant nfs is open in internal zone
   firewalld: port=2049/udp permanent=true zone=internal state=enabled
+
+- include: plugins.yml

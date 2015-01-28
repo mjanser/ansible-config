@@ -1,0 +1,7 @@
+[user]
+    email = {{ item.email }}
+    name = {{ item.name }}
+{% if item.git_ignore_github is defined or item.git_ignore_custom is defined %}
+[core]
+    excludesfile = /home/{{ item.username }}/.gitignore
+{% endif %}

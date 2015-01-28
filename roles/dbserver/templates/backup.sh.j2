@@ -4,7 +4,7 @@
 #
 
 USER=backup
-PASS='{{ mariadb_backup_password }}'
+PASS='{{ mariadb.backup_password }}'
 DIR=/var/lib/backup/$(hostname -s)/db
 ROTATE=30
 

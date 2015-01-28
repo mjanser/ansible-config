@@ -6,12 +6,12 @@
 #
 # The person who gets all mail for userids < 1000
 # Make this empty to disable rewriting.
-root={{ ssmtp_to | default('postmaster') }}
+root={{ ssmtp.to | default('postmaster') }}
 
 # The place where the mail goes. The actual machine name is required
 # no MX records are consulted. Commonly mailhosts are named mail.domain.com
 # The example will fit if you are in domain.com and your mailhub is so named.
-mailhub={{ ssmtp_mailhub | default('mail') }}
+mailhub={{ ssmtp.mailhub | default('mail') }}
 
 # Example for SMTP port number 2525
 # mailhub=mail.your.domain:2525
@@ -31,7 +31,7 @@ mailhub={{ ssmtp_mailhub | default('mail') }}
 #FromLineOverride=YES
 
 # Use SSL/TLS to send secure messages to server.
-UseTLS={% if ssmtp_tls | default(true) %}YES{% else %}NO{% endif %}
+UseTLS={% if ssmtp.tls | default(true) %}YES{% else %}NO{% endif %}
 
 #IMPORTANT: The following line is mandatory for TLS authentication
 TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
@@ -42,10 +42,10 @@ TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
 # Use this RSA certificate.
 #TLSCert=/etc/pki/tls/private/ssmtp.pem
 
-{% if ssmtp_auth_user | default(null) and ssmtp_auth_pass | default(null) %}
+{% if ssmtp.auth.user | default(null) and ssmtp.auth.pass | default(null) %}
 # Authentication
-AuthUser={{ ssmtp_auth_user }}
-AuthPass={{ ssmtp_auth_pass }}
+AuthUser={{ ssmtp.auth.user }}
+AuthPass={{ ssmtp.auth.pass }}
 {% endif %}
 
 # Get enhanced (*really* enhanced) debugging information in the logs

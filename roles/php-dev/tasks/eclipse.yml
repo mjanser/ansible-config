@@ -42,7 +42,8 @@
       http://eclipse-color-theme.github.io/update/,\
       http://sourceforge.net/projects/shelled/files/shelled/update/,\
       http://p2-dev.pdt-extensions.org/,\
-      http://workspacemechanic.eclipselabs.org.codespot.com/git.update/mechanic \
+      http://workspacemechanic.eclipselabs.org.codespot.com/git.update/mechanic,\
+      http://pydev.org/updates \
     -installIU \
       org.eclipse.dltk.ruby.feature.group,\
       net.sourceforge.texlipse,\
@@ -52,7 +53,8 @@
       net.sourceforge.vrapper.plugin.surround.feature.group,\
       com.google.eclipse.mechanic.feature.group,\
       de.anbos.eclipse.logviewer.feature.feature.group,\
-      net.mihai-nita.ansicon.feature.group \
+      net.mihai-nita.ansicon.feature.group,\
+      org.python.pydev.feature.feature.group \
     "
   sudo: yes
   sudo_user: "{{ eclipse_owner }}"

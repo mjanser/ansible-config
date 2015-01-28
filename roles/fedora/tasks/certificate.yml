@@ -1,0 +1,9 @@
+- name: ensure own CA certificate exists on the filesystem
+  copy: src=Duss-Janser-CA.crt dest=/opt/Duss-Janser-CA.crt
+
+- command: trust list --filter=ca-anchors
+  register: ca_installed
+
+- name: ensure own CA certificate is installed
+  command: trust anchor --store /opt/Duss-Janser-CA.crt
+  when: ca_installed.stdout.find('Duss-Janser') == -1

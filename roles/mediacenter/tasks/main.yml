@@ -1,3 +1,11 @@
+- name: ensure alsa software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - alsa-firmware
+    - alsa-tools
+    - alsa-tools-firmware
+    - alsa-utils
+
 - name: ensure media directories exist
   file:
     dest="/var/lib/media/{{ item }}"
@@ -22,4 +30,4 @@
     dest="/var/lib/backup/{{ item.dir }}"
     state=directory
     owner="{{ item.user }}" group="{{ item.user }}" mode=0750
-  with_items: backup_directories
+  with_items: backup.directories

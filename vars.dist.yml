@@ -1,28 +1,39 @@
-default_password: ~
-
-developer_uid: ~
-developer_username: ~
-developer_email: ~
-developer_fullname: ~
-developer_ssh_key: ~
-developer_tksrc: ~
-
-user1_uid: ~
-user1_username: ~
-user1_fullname: ~
-user1_ssh_key: ~
-
-ssmtp_to: ~
-ssmtp_mailhub: ~
-ssmtp_auth_user: ~
-ssmtp_auth_pass: ~
+default_user_password: ~
+users:
+  -
+    uid: 1001
+    username: ~
+    name: ~
+    email: ~
+    groups: ~
+    password: default_user_password
+    ssh_key: ~
+    hosts: []
+    symlinks:
+      - { source: ~, target: ~ }
+    git: false
+    git_ignore_github: [ Linux ]
+    git_ignore_custom: ~
+    vagrant_plugins:
+      - vagrant-hostmanager
 
 eclipse_owner: ~
 
-mariadb_root_password: ~
-mariadb_backup_password: ~
+ssmtp:
+  to: ~
+  mailhub: ~
+  auth:
+    user: ~
+    pass: ~
 
-gnucash_db_password: ~
-gnucash_databases: ~
+mariadb:
+  - root_password: ~
+  - backup_password: ~
+  - users:
+      - { name: ~, host: %, password: ~, privileges: "*.*:ALL" }
+  - databases:
+      - { name: ~, encoding: utf8, collation: utf8_general_ci, import: true }
 
-backup_directories: ~
+
+backup:
+  directories: []

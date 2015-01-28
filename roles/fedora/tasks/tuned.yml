@@ -1,0 +1,16 @@
+- name: ensure tuned software is at the latest version
+  yum: name=tuned-utils state=latest
+
+- name: ensure tuned service runs
+  service: name=tuned enabled=yes state=started
+
+#- name: ensure powertop tunables are saved in Tuned profile
+#  command: powertop2tuned --enable powersave
+#  creates: /etc/tuned/powersave
+
+- command: tuned-adm active
+  register: tuned_profile
+
+- name: ensure tuned profile powersave is active
+  command: tuned-adm profile powersave
+  when: tuned_profile.stdout.find('powersave') == -1

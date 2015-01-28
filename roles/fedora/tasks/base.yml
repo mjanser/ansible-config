@@ -1,0 +1,77 @@
+- name: ensure basic software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - yum-plugin-changelog
+    - tracer
+    - createrepo
+    - vim-enhanced
+    - git
+    - gitflow
+    - python-pip
+    - fuse-sshfs
+    - xorg-x11-xauth
+    - bzip2
+    - unrar
+    - ntp
+    - bash-completion
+    - gcc
+    - duplicity
+
+- name: ensure stat software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - rpmconf
+    - iotop
+    - htop
+    - lm_sensors
+    - tlp
+    - acpitool
+    - powertop
+
+- name: ensure multimedia software is at the latest version
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - flac
+    - ffmpeg
+    - gstreamer-plugins-good
+    - gstreamer-plugins-good-extras
+    - gstreamer-plugins-bad-free
+    - gstreamer-plugins-bad-free-extras
+    - gstreamer-plugins-bad
+    - gstreamer-plugins-bad-nonfree
+    - gstreamer-plugins-ugly
+    - gstreamer-plugins-fc
+    - gstreamer-plugin-crystalhd
+    - gstreamer-rtsp
+    - gstreamer-ffmpeg
+    - gstreamer1-libav
+    - gstreamer1-plugins-base-tools
+    - gstreamer1-plugins-good
+    - gstreamer1-plugins-bad-free
+    - gstreamer1-plugins-bad-free-extras
+    - gstreamer1-plugins-bad-freeworld
+    - gstreamer1-plugins-good-extras
+    - gstreamer1-plugins-ugly
+    - gstreamer1-vaapi
+    - lame
+    - lame-libs
+    - twolame-libs
+    - libmatroska
+    - x264
+    - x264-libs
+    - xvidcore
+    - faac
+    - faad2
+    - amrnb
+    - amrwb
+    - mplayer
+    - transcode
+    - libdvdread
+    - libdvdnav
+    - libdvdcss
+    - libva-vdpau-driver
+    - libva-intel-driver
+    - libva-utils
+
+- name: ensure standard firewalld configuration is not installed
+  yum: pkg=firewalld-config-standard state=absent

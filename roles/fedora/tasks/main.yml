@@ -7,147 +7,23 @@
 - name: ensure livna repository is installed
   yum: pkg=http://rpm.livna.org/livna-release.rpm state=present
 
-- name: ensure basic software is at the latest version
-  yum: pkg={{ item }} state=latest
-  with_items:
-    - yum-plugin-changelog
-    - createrepo
-    - vim-enhanced
-    - vim-latex
-    - git
-    - gitflow
-    - python-pip
-    - fuse-sshfs
-    - xorg-x11-xauth
-    - bzip2
-    - ntp
-    - bash-completion
-    - logwatch
-    - gcc
-
-- name: ensure stat software is at the latest version
-  yum: pkg={{ item }} state=latest
-  with_items:
-    - rpmconf
-    - iotop
-    - htop
-    - lm_sensors
-    - tlp
-    - acpitool
-    - powertop
-    - tuned-utils
-
-- name: ensure vdpau software is at the latest version
-  yum: pkg={{ item }} state=latest
-  with_items:
-    - libva-vdpau-driver
-    - libva-intel-driver
-    - libva-utils
-
-- name: ensure ansible is at the latest version
-  yum: pkg=ansible state=latest
-
-- name: ensure duplicity is at the latest version
-  yum: pkg=duplicity state=latest
-
-- name: ensure pass is at the latest version
-  yum: pkg=pass state=latest
-
-- name: ensure unrar is at the latest version
-  yum: pkg=unrar state=latest
-
 - name: ensure docker is at the latest version
   yum: pkg=docker-io state=latest
-
-- name: ensure multimedia software is at the latest version
-  yum: pkg={{ item }} state=latest
-  with_items:
-    - flac
-    - ffmpeg
-    - gstreamer-plugins-good
-    - gstreamer-plugins-good-extras
-    - gstreamer-plugins-bad-free
-    - gstreamer-plugins-bad-free-extras
-    - gstreamer-plugins-bad
-    - gstreamer-plugins-bad-nonfree
-    - gstreamer-plugins-ugly
-    - gstreamer-plugins-fc
-    - gstreamer-plugin-crystalhd
-    - gstreamer-rtsp
-    - gstreamer-ffmpeg
-    - gstreamer1-libav
-    - gstreamer1-plugins-base-tools
-    - gstreamer1-plugins-good
-    - gstreamer1-plugins-bad-free
-    - gstreamer1-plugins-bad-free-extras
-    - gstreamer1-plugins-bad-freeworld
-    - gstreamer1-plugins-good-extras
-    - gstreamer1-plugins-ugly
-    - gstreamer1-vaapi
-    - lame
-    - lame-libs
-    - twolame-libs
-    - libmatroska
-    - x264
-    - x264-libs
-    - xvidcore
-    - faac
-    - faad2
-    - amrnb
-    - amrwb
-    - mplayer
-    - transcode
-    - libdvdread
-    - libdvdnav
-    - libdvdcss
-
-- name: ensure ssmtp software is at the latest version
-  yum: name=ssmtp state=latest
-
-- name: ensure ssmtp configuration is installed
-  template: src=ssmtp.conf.j2 dest=/etc/ssmtp/ssmtp.conf owner=root group=root mode=0640
 
 - name: ensure docker service runs
   service: name=docker enabled=yes state=started
 
-- name: ensure tuned service runs
-  service: name=tuned enabled=yes state=started
+- include: base.yml tags=fedora-base
 
-- name: ensure standard firewalld configuration is not installed
-  yum: pkg=firewalld-config-standard state=absent
+- include: certificate.yml
 
-- name: ensure own CA certificate exists on the filesystem
-  copy: src=Duss-Janser-CA.crt dest=/opt/Duss-Janser-CA.crt
+- include: ssmtp.yml tags=ssmtp
 
-- command: trust list --filter=ca-anchors
-  register: ca_installed
+- include: logwatch.yml tags=logwatch
 
-- name: ensure own CA certificate is installed
-  command: trust anchor --store /opt/Duss-Janser-CA.crt
-  when: ca_installed.stdout.find('Duss-Janser') == -1
+- include: tuned.yml tags=tuned
 
-- name: ensure logwatch is configured
-  copy: src=logwatch.conf
-        dest=/etc/logwatch/conf/logwatch.conf
-        owner=root group=root mode=0644
-
-- name: ensure logwatch runtime configuration is installed
-  copy: src=zz-runtime.conf
-        dest=/etc/logwatch/conf/services/zz-runtime.conf
-        owner=root group=root mode=0644
-
-#- name: ensure powertop tunables are saved in Tuned profile
-#  command: powertop2tuned --enable powersave
-#  creates: /etc/tuned/powersave
-
-- command: tuned-adm active
-  register: tuned_profile
-
-- name: ensure Tuned profile powersave is active
-  command: tuned-adm profile powersave
-  when: tuned_profile.stdout.find('powersave') == -1
-
-- include: ssd.yml
+- include: ssd.yml tags=ssd
   when: ansible_devices.sda.rotational == 0
 
-- include: accounts.yml
+- include: accounts.yml tags=accounts

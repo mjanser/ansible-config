@@ -1,5 +1,12 @@
 - name: ensure mpd is at the latest version
   yum: pkg=mpd state=latest
 
-- name: ensure mpd service runs
-  service: name=mpd enabled=yes state=started
+- name: ensure mpd socket runs
+  service: name=mpd.socket enabled=yes state=started
+
+- name: ensure mpd music directory is linked
+  file: src=/var/lib/mpd/music
+        dest=/var/lib/media/music
+        state=link
+        force=yes
+        owner=mpd group=mpd mode=0644

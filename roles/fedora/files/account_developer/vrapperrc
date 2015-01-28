@@ -1,5 +1,0 @@
-set autoindent
-set ignorecase
-set smartcase
-set shiftround
-set shiftwidth=4

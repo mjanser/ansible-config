@@ -7,4 +7,6 @@
            force=yes
            mode=0755
 
+- include: user.yml
+
 - include: eclipse.yml tags=eclipse

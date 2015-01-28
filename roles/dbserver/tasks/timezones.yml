@@ -1,0 +1,8 @@
+- command: "mysql -ss -e 'SELECT COUNT(*) FROM time_zone' mysql"
+  register: mariadb_zones_count
+
+- name: ensure mariadb test database is removed
+  shell: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql"
+  when: mariadb_zones_count.stdout < 1
+  notify:
+    - restart mariadb

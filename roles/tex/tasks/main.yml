@@ -22,3 +22,6 @@
     - texlive-babel-german
     - texlive-hyphen-german
     - latex-mk
+    - vim-latex
+  tags:
+    - tex

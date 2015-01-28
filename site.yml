@@ -14,5 +14,5 @@
   roles:
     - fedora-server
     - dbserver
-    - gnucash-server
     - mediacenter
+    - mpd

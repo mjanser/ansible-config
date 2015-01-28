@@ -1,0 +1,7 @@
+- name: ensure ssmtp software is at the latest version
+  yum: name=ssmtp state=latest
+
+- name: ensure ssmtp configuration is installed
+  template: src=ssmtp.conf.j2
+            dest=/etc/ssmtp/ssmtp.conf
+            owner=root group=root mode=0640

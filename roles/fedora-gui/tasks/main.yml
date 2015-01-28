@@ -13,6 +13,8 @@
     - gnome-activity-journal
     - gnome-tweak-tool
     - gmpc
+  tags:
+    - fedora-gui
 
 - name: ensure multimedia software is at the latest version
   yum: pkg={{ item }} state=latest
@@ -21,6 +23,8 @@
     - avidemux-qt
     - devede
     - easytag
+  tags:
+    - fedora-gui
 
 - name: ensure misc software is at the latest version
   yum: pkg={{ item }} state=latest
@@ -31,6 +35,8 @@
     - deja-dup
     - mirall
     - gramps
+  tags:
+    - fedora-gui
 
 - name: ensure gnucash is at the latest version
   yum: pkg={{ item }} state=latest
@@ -38,19 +44,33 @@
     - gnucash
     - gnucash-docs
     - libdbi-dbd-mysql
+  tags:
+    - fedora-gui
 
 - name: ensure office is at the latest version
   yum: pkg="@libreoffice" state=latest
+  tags:
+    - fedora-gui
 
 - name: ensure de langpacks are installed
   command: yum -y langinstall de_CH
+  tags:
+    - fedora-gui
 
 - name: ensure yum repository for google chrome is installed
   copy: src=google-chrome.repo
         dest=/etc/yum.repos.d/
         owner=root group=root mode=0644
+  tags:
+    - fedora-gui
+    - google-chrome
 
 - name: ensure google chrome is at the latest version
   yum: name=google-chrome-stable state=latest
+  tags:
+    - fedora-gui
+    - google-chrome
 
 - file: src=/lib/systemd/system/graphical.target dest=/etc/systemd/system/default.target state=link
+  tags:
+    - fedora-gui
