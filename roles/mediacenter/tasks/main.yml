@@ -7,27 +7,24 @@
     - alsa-utils
 
 - name: ensure media directories exist
-  file:
-    dest="/var/lib/media/{{ item }}"
-    state=directory
-    owner=mediacenter group=mediacenter mode=0755
+  file: dest="/var/lib/media/{{ item }}"
+        state=directory
+        owner=mediacenter group=mediacenter mode=0755
   with_items:
     - music
     - pictures
     - videos
 
 - name: ensure backup directories for mediacenter itself exist
-  file:
-    dest="/var/lib/backup/mediacenter/{{ item }}"
-    state=directory
-    owner=root group=root mode=0750
+  file: dest="/var/lib/backup/mediacenter/{{ item }}"
+        state=directory
+        owner=root group=root mode=0750
   with_items:
     - db
     - home
 
 - name: ensure backup directories exist
-  file:
-    dest="/var/lib/backup/{{ item.dir }}"
-    state=directory
-    owner="{{ item.user }}" group="{{ item.user }}" mode=0750
+  file: dest="/var/lib/backup/{{ item.dir }}"
+        state=directory
+        owner="{{ item.user }}" group="{{ item.user }}" mode=0750
   with_items: backup.directories

@@ -4,7 +4,7 @@ With these files I set up my computers.
 
 ## Configuration
 
-Before you start, you have to create the file `vars.yml` in the root directory. It contains some private configuration.
+Before you start, you have to create the file `vars.yml` in the `group_vars/all`. It contains some private configuration.
 You can copy the file `vars.dist.yml` to start with.
 
 ## Vagrant

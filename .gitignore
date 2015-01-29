@@ -1,2 +1,2 @@
-vars.yml
+group_vars/all/vars.yml
 production

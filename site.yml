@@ -1,7 +1,3 @@
-- hosts: all
-  tasks:
-    - include_vars: vars.yml
-
 - hosts: workstations
   roles:
     - fedora-workstation

@@ -1,0 +1,43 @@
+music_directory         "/var/lib/mpd/music"
+playlist_directory      "/var/lib/mpd/playlists"
+
+db_file                 "/var/lib/mpd/mpd.db"
+sticker_file            "/var/lib/mpd/sticker.db"
+state_file              "/var/lib/mpd/mpdstate"
+
+log_file                "/var/log/mpd/mpd.log"
+
+user                    "mpd"
+group                   "audio"
+
+restore_paused          "yes"
+auto_update             "yes"
+follow_outside_symlinks "no"
+follow_inside_symlinks  "no"
+
+zeroconf_name           "Mediacenter Music Player"
+
+{% if mpd_passwords.user %}
+password                "{{ mpd_passwords.user }}@read,add"
+{% endif %}
+{% if mpd_passwords.admin %}
+password                "{{ mpd_passwords.admin }}@read,add,control,admin"
+{% endif %}
+{% if mpd_passwords.user or mpd_passwords.admin %}
+default_permissions     "read"
+{% else %}
+default_permissions     "read,add,control"
+{% endif %}
+
+
+input {
+        plugin "curl"
+        verify_peer "yes"
+        verify_host "yes"
+}
+
+audio_output {
+        type        "alsa"
+        name        "Standard"
+        device      "{{ mpd_device }}"
+}

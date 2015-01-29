@@ -18,11 +18,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.sudo = true
     #ansible.verbose = "vvvv"
-    ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
+    #ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
+    #ansible.start_at_task = "ensure media directories exist"
     ansible.playbook = "site.yml"
     ansible.groups = {
       "workstations" => ["workstation"],
       "mediacenters" => ["mediacenter"],
+    }
+    ansible.extra_vars = {
+      mpd_device: "hw:0,0"
     }
   end
 
@@ -43,9 +47,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vmconfig.vm.network :private_network, ip: "192.168.222.11"
     vmconfig.vm.hostname = 'mediacenter.test'
 
+    vmconfig.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--audio", "alsa"]
+    end
+
     vmconfig.vm.synced_folder "data/backup", "/var/lib/backup", type: "rsync",
         rsync__chown: false,
-        rsync__exclude: ".gitkeep",
-        rsync__args: ["--verbose", "--rsync-path='sudo rsync'", "--archive", "--delete", "-z"]
+        rsync__exclude: ".gitignore",
+        rsync__args: ["--verbose", "--rsync-path='sudo rsync'", "--archive", "-z"]
+
+    vmconfig.vm.synced_folder "data/media", "/var/lib/media", type: "rsync",
+        rsync__chown: false,
+        rsync__exclude: ".gitignore",
+        rsync__args: ["--verbose", "--rsync-path='sudo rsync'", "--archive", "-z"]
   end
 end

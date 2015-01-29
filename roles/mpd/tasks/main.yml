@@ -1,12 +1,30 @@
 - name: ensure mpd is at the latest version
-  yum: pkg=mpd state=latest
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - mpd
+    - mpc
 
 - name: ensure mpd socket runs
   service: name=mpd.socket enabled=yes state=started
 
 - name: ensure mpd music directory is linked
-  file: src=/var/lib/mpd/music
-        dest=/var/lib/media/music
+  file: src=/var/lib/media/music
+        dest=/var/lib/mpd/music
         state=link
         force=yes
         owner=mpd group=mpd mode=0644
+        seuser=system_u serole=object_r setype=mpd_var_lib_t
+
+- name: ensure music directories has correct permissions
+  file: dest=/var/lib/media/music
+        state=directory
+        recurse=yes
+        owner=mediacenter group=mediacenter mode="u=rwX,g=rX,o=rX"
+        seuser=system_u serole=object_r setype=mpd_var_lib_t
+
+- name: ensure mpd is configured
+  template: src=mpd.conf.j2
+            dest=/etc/mpd.conf
+            owner=root group=root mode=0644
+  notify:
+    - restart mpd
