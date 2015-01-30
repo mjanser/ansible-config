@@ -1,3 +1,7 @@
+ssl_ca:
+  file: ~
+  name: ~
+
 default_user_password: ~
 users:
   -
@@ -27,12 +31,17 @@ ssmtp:
     pass: ~
 
 mariadb:
-  - root_password: ~
-  - backup_password: ~
-  - users:
-      - { name: ~, host: %, password: ~, privileges: "*.*:ALL" }
-  - databases:
-      - { name: ~, encoding: utf8, collation: utf8_general_ci, import: true }
+  root_password: ~
+  backup_password: ~
+  ssl:
+    name: ~
+    source:
+      cert: ~
+      key: ~
+  users:
+    - { name: ~, host: "%", password: ~, privileges: "*.*:ALL" }
+  databases:
+    - { name: ~, encoding: utf8, collation: utf8_general_ci, import: true }
 
 mpd_device: ~
 mpd_passwords:

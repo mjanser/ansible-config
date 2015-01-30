@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.sudo = true
     #ansible.verbose = "vvvv"
     #ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
-    #ansible.start_at_task = "ensure media directories exist"
+    #ansible.start_at_task = "ensure mariadb users exist"
     ansible.playbook = "site.yml"
     ansible.groups = {
       "workstations" => ["workstation"],
@@ -48,6 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vmconfig.vm.hostname = 'mediacenter.test'
 
     vmconfig.vm.provider "virtualbox" do |vb|
+      vb.memory = 1024
       vb.customize ["modifyvm", :id, "--audio", "alsa"]
     end
 

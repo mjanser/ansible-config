@@ -1,3 +1,9 @@
 [mysqld]
 bind-address = 0.0.0.0
 ignore-db-dir = lost+found
+
+{% if mariadb.ssl.name %}
+ssl-ca=/etc/pki/tls/certs/{{ ssl_ca.name }}.crt
+ssl-cert=/etc/pki/tls/certs/{{ mariadb.ssl.name }}.crt
+ssl-key=/etc/pki/tls/private/{{ mariadb.ssl.name }}.pem
+{% endif %}

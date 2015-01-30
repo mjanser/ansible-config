@@ -5,6 +5,12 @@
     - mariadb-server
     - MySQL-python
 
+- name: ensure mariadb certificate exists
+  copy: src="{{ mariadb.ssl.source.cert }}" dest="/etc/pki/tls/certs/{{ mariadb.ssl.name }}.crt"
+
+- name: ensure mariadb private key exists
+  copy: src="{{ mariadb.ssl.source.key }}" dest="/etc/pki/tls/private/{{ mariadb.ssl.name }}.pem"
+
 - name: ensure mariadb is configured
   template: src=server.cnf.j2
             dest=/etc/my.cnf.d/server-custom.cnf

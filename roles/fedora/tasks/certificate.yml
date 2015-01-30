@@ -1,9 +1,11 @@
 - name: ensure own CA certificate exists on the filesystem
-  copy: src=Duss-Janser-CA.crt dest=/opt/Duss-Janser-CA.crt
+  copy: src="{{ ssl_ca.file }}" dest="/etc/pki/tls/certs/{{ ssl_ca.name }}.crt"
+  when: ssl_ca.file and ssl_ca.name
 
 - command: trust list --filter=ca-anchors
   register: ca_installed
+  when: ssl_ca.file and ssl_ca.name
 
 - name: ensure own CA certificate is installed
-  command: trust anchor --store /opt/Duss-Janser-CA.crt
-  when: ca_installed.stdout.find('Duss-Janser') == -1
+  command: "trust anchor --store /etc/pki/tls/certs/{{ ssl_ca.name }}.crt"
+  when: "ssl_ca.file and ssl_ca.name and ca_installed.stdout.find('{{ ssl_ca.name }}') == -1"
