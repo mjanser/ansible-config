@@ -18,7 +18,7 @@ follow_inside_symlinks  "no"
 zeroconf_name           "Mediacenter Music Player"
 
 {% if mpd_passwords.user %}
-password                "{{ mpd_passwords.user }}@read,add"
+password                "{{ mpd_passwords.user }}@read,add,control"
 {% endif %}
 {% if mpd_passwords.admin %}
 password                "{{ mpd_passwords.admin }}@read,add,control,admin"
