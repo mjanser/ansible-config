@@ -1,0 +1,9 @@
+- name: ensure mpd backup directory exists
+  file: dest="/var/lib/backup/{{ ansible_hostname }}/mpd"
+        state=directory
+        owner=root group=root mode=0750
+
+- name: ensure mpd backup cron script is installed
+  template: src=backup.sh.j2
+            dest=/etc/cron.daily/mpd_backup.sh
+            owner=root group=root mode=0750
