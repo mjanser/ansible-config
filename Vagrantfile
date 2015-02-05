@@ -12,6 +12,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--cpuexecutioncap", "60"]
   end
 
+  if Vagrant.has_plugin?("vagrant-hostmanager")
+    config.hostmanager.enabled = true
+    config.hostmanager.manage_host = true
+    config.hostmanager.ignore_private_ip = false
+  end
+
   config.vm.provision "shell",
     inline: "rm -f /etc/systemd/system/firewalld.service && systemctl daemon-reload"
 
@@ -19,7 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.sudo = true
     #ansible.verbose = "vvvv"
     #ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
-    #ansible.start_at_task = "ensure mariadb users exist"
+    #ansible.start_at_task = "ensure mythtv software is installed"
+    #ansible.start_at_task = "ensure php-fpm is running"
     ansible.playbook = "site.yml"
     ansible.groups = {
       "workstations" => ["workstation"],
@@ -46,6 +53,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vmconfig.vm.box = "TFDuesing/Fedora-21"
     vmconfig.vm.network :private_network, ip: "192.168.222.11"
     vmconfig.vm.hostname = 'mediacenter.test'
+
+    if Vagrant.has_plugin?("vagrant-hostmanager")
+      vmconfig.hostmanager.aliases = %w(mythweb.mediacenter.test cloud.mediacenter.test)
+    end
 
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.memory = 1024

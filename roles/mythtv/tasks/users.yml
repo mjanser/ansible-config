@@ -1,0 +1,24 @@
+- stat: path=/home/vagrant
+  register: vagrant_home
+
+- name: ensure mythtv config directory for users exist
+  file: dest="{{ item.home|default("/home/" + item.username) }}/.mythtv"
+        state=directory
+        owner="{{ item.username }}" group="{{ item.username }}" mode=0755
+  when: item.mythtv_admin is defined and item.mythtv_admin and (item.username != "vagrant" or (vagrant_home.stat.isdir is defined and vagrant_home.stat.isdir))
+  with_flattened:
+    - [ { username: "root", home: "/root", mythtv_admin: true } ]
+    - [ { username: "vagrant", mythtv_admin: true } ]
+    - users
+
+- name: ensure mythtv config for users is linked
+  file: src=/etc/mythtv/config.xml
+        dest="{{ item.home|default("/home/" + item.username) }}/.mythtv/config.xml"
+        state=link
+        force=yes
+        owner="{{ item.username }}" group="{{ item.username }}" mode=0644
+  when: item.mythtv_admin is defined and item.mythtv_admin and (item.username != "vagrant" or (vagrant_home.stat.isdir is defined and vagrant_home.stat.isdir))
+  with_flattened:
+    - [ { username: "root", home: "/root", mythtv_admin: true } ]
+    - [ { username: "vagrant", mythtv_admin: true } ]
+    - users

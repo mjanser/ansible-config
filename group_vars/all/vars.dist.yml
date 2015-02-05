@@ -20,6 +20,7 @@ users:
     git_ignore_custom: ~
     vagrant_plugins:
       - vagrant-hostmanager
+    mythtv_admin: false
 
 eclipse_owner: ~
 
@@ -47,6 +48,12 @@ mpd_device: ~
 mpd_passwords:
   user: ~
   admin: ~
+
+mythtv:
+  db_password: ~
+  web:
+    hostname: ~
+    allowed: ~
 
 backup:
   directories: []

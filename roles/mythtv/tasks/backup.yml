@@ -1,0 +1,16 @@
+- name: ensure mythtv backup directory exists
+  file: dest="/var/lib/backup/{{ ansible_hostname }}/mythtv"
+        state=directory
+        owner=root group=root mode=0750
+
+- name: ensure mythtv backup configuration is installed
+  template: src=backuprc.j2
+            dest=/root/.mythtv/backuprc
+            owner=root group=root mode=0640
+
+- name: ensure mythtv backup cron script is installed
+  cron: name="mythtv backup"
+        cron_file=mythtv_backup
+        user=root
+        hour=6
+        job=/usr/share/mythtv/mythconverg_backup.pl

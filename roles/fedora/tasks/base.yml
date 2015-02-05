@@ -27,6 +27,7 @@
     - tlp
     - acpitool
     - powertop
+    - net-tools
 
 - name: ensure multimedia software is installed
   yum: pkg={{ item }}

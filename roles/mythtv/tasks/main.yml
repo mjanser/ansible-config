@@ -1,0 +1,53 @@
+- name: ensure mythtv software is installed
+  yum: pkg={{ item }}
+  with_items:
+    - xmltv
+    - xmltv-grabbers
+    - mythtv-backend
+    - mythtv-setup
+    - mythtv-docs
+    - python-MythTV
+
+- name: ensure database user for mythtv exists
+  mysql_user: name=mythtv
+              host=localhost
+              password="{{ mythtv.db_password }}"
+              priv="mythtv.*:ALL"
+
+- name: ensure database for mythtv exists
+  mysql_db: name=mythtv
+            encoding=utf8
+            collation=utf8_general_ci
+  register: mythtv_database
+
+- stat: path="/var/lib/backup/{{ ansible_hostname }}/db/mythtv_latest.sql"
+  register: mythtv_database_backup
+
+- name: import mythtv database from backup
+  mysql_db: name=mythtv
+            state=import
+            target="/var/lib/backup/{{ ansible_hostname }}/db/mythtv_latest.sql"
+  when: mythtv_database.changed and mythtv_database_backup.stat.isfile is defined and mythtv_database_backup.stat.isfile
+
+- name: ensure mythtv directories exist
+  file: dest="/var/lib/mythtv/{{ item }}"
+        state=directory
+        owner=mythtv group=mythtv mode=0755
+  with_items:
+    - channel_icons
+    - livetv
+    - recordings
+
+- name: ensure mythtv is configured
+  template: src=config.xml.j2
+            dest=/etc/mythtv/config.xml
+            owner=root group=root mode=0644
+
+- include: users.yml
+
+- name: ensure mythbackend is running
+  service: name=mythbackend enabled=yes state=started
+
+- include: mythweb.yml
+
+- include: backup.yml
