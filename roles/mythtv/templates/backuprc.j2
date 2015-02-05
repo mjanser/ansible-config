@@ -1,4 +1,4 @@
 DBBackupDirectory=/var/lib/backup/{{ ansible_hostname }}/mythtv
 DBName=mythtv
-DBUserName=root
+DBPassword={{ mythtv.db_password }}
 rotate=30

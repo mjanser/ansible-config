@@ -7,6 +7,7 @@
     - mythtv-setup
     - mythtv-docs
     - python-MythTV
+    - liberation-sans-fonts
 
 - name: ensure database user for mythtv exists
   mysql_user: name=mythtv
@@ -34,16 +35,24 @@
         state=directory
         owner=mythtv group=mythtv mode=0755
   with_items:
-    - channel_icons
     - livetv
     - recordings
 
 - name: ensure mythtv is configured
   template: src=config.xml.j2
             dest=/etc/mythtv/config.xml
-            owner=root group=root mode=0644
+            owner=mythtv group=mythtv mode=0640
 
-- include: users.yml
+- name: ensure mythtv user config directory exist
+  file: src=/etc/mythtv
+        dest=/var/lib/mythtv/.mythtv
+        state=link
+        force=yes
+
+- name: ensure mythtv-setup wrapper is installed
+  copy: src=mythtv-setup.bash
+        dest=/usr/local/bin/mythtv-setup
+        owner=root group=root mode=755
 
 - name: ensure mythbackend is running
   service: name=mythbackend enabled=yes state=started
