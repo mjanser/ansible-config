@@ -2,6 +2,12 @@
 bind-address = 0.0.0.0
 ignore-db-dir = lost+found
 
+key_buffer = 16M
+table_cache = 128
+sort_buffer_size = 2M
+myisam_sort_buffer_size = 8M
+query_cache_size = 16M
+
 {% if mariadb.ssl.name %}
 ssl-ca=/etc/pki/tls/certs/{{ ssl_ca.name }}.crt
 ssl-cert=/etc/pki/tls/certs/{{ mariadb.ssl.name }}.crt

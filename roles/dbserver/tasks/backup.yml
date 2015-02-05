@@ -1,8 +1,7 @@
 - name: ensure mariadb backup directory exists
-  file:
-    dest="/var/lib/backup/{{ ansible_hostname }}/db"
-    state=directory
-    owner=root group=root mode=0750
+  file: dest="/var/lib/backup/{{ ansible_hostname }}/db"
+        state=directory
+        owner=root group=root mode=0750
 
 - name: ensure mariadb backup user exists
   mysql_user: name=backup
