@@ -7,8 +7,8 @@
 - name: ensure livna repository is installed
   yum: pkg=http://rpm.livna.org/livna-release.rpm state=present
 
-- name: ensure docker is at the latest version
-  yum: pkg=docker-io state=latest
+- name: ensure docker is installed
+  yum: pkg=docker-io
 
 - name: ensure docker service runs
   service: name=docker enabled=yes state=started

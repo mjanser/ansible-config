@@ -1,4 +1,4 @@
-- name: ensure taxi software is at the latest version
+- name: ensure taxi software is installed
   get_url: url=https://raw.githubusercontent.com/mjanser/taxi-docker/master/taxi.sh
            dest=/usr/local/bin/taxi
            force=yes

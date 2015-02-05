@@ -1,5 +1,5 @@
-- name: ensure logwatch software is at the latest version
-  yum: name=logwatch state=latest
+- name: ensure logwatch software is installed
+  yum: name=logwatch
 
 - name: ensure logwatch is configured
   copy: src=logwatch.conf

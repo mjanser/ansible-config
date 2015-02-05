@@ -1,5 +1,5 @@
-- name: ensure basic software is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure basic software is installed
+  yum: pkg={{ item }}
   with_items:
     - yum-plugin-changelog
     - tracer
@@ -17,8 +17,8 @@
     - gcc
     - duplicity
 
-- name: ensure stat software is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure stat software is installed
+  yum: pkg={{ item }}
   with_items:
     - rpmconf
     - iotop
@@ -28,8 +28,8 @@
     - acpitool
     - powertop
 
-- name: ensure multimedia software is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure multimedia software is installed
+  yum: pkg={{ item }}
   with_items:
     - flac
     - ffmpeg

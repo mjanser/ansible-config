@@ -1,5 +1,5 @@
-- name: ensure mariadb is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure mariadb is installed
+  yum: pkg={{ item }}
   with_items:
     - mariadb
     - mariadb-server

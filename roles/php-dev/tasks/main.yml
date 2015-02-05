@@ -1,7 +1,7 @@
-- name: ensure php-cli software is at the latest version
-  yum: name=php-cli state=latest
+- name: ensure php-cli software is installed
+  yum: name=php-cli
 
-- name: ensure capifony is at the latest version
+- name: ensure capifony is installed
   get_url: url=https://raw.githubusercontent.com/mjanser/capifony-docker/master/cap.sh
            dest=/usr/local/bin/cap
            force=yes

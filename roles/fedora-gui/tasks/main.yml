@@ -1,5 +1,5 @@
-- name: ensure gnome tools are at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure gnome tools are installed
+  yum: pkg={{ item }}
   with_items:
     - "@^workstation-product-environment"
     - epiphany
@@ -16,8 +16,8 @@
   tags:
     - fedora-gui
 
-- name: ensure multimedia software is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure multimedia software is installed
+  yum: pkg={{ item }}
   with_items:
     - ImageMagick
     - avidemux-qt
@@ -26,8 +26,8 @@
   tags:
     - fedora-gui
 
-- name: ensure misc software is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure misc software is installed
+  yum: pkg={{ item }}
   with_items:
     - yum-langpacks
     - gitg
@@ -39,8 +39,8 @@
   tags:
     - fedora-gui
 
-- name: ensure gnucash is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure gnucash is installed
+  yum: pkg={{ item }}
   with_items:
     - gnucash
     - gnucash-docs
@@ -48,8 +48,8 @@
   tags:
     - fedora-gui
 
-- name: ensure office is at the latest version
-  yum: pkg="@libreoffice" state=latest
+- name: ensure office is installed
+  yum: pkg="@libreoffice"
   tags:
     - fedora-gui
 
@@ -66,8 +66,8 @@
     - fedora-gui
     - google-chrome
 
-- name: ensure google chrome is at the latest version
-  yum: name=google-chrome-stable state=latest
+- name: ensure google chrome is installed
+  yum: name=google-chrome-stable
   tags:
     - fedora-gui
     - google-chrome

@@ -1,5 +1,5 @@
-- name: ensure tex tools are at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure tex tools are installed
+  yum: pkg={{ item }}
   with_items:
     - texlive
     - texlive-latex

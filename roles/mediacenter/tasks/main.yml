@@ -1,5 +1,5 @@
-- name: ensure alsa software is at the latest version
-  yum: pkg={{ item }} state=latest
+- name: ensure alsa software is installed
+  yum: pkg={{ item }}
   with_items:
     - alsa-firmware
     - alsa-tools

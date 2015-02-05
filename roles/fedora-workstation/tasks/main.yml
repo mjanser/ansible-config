@@ -1,5 +1,5 @@
-- name: ensure workstation related software is at the latest version
-  yum: pkg=ansible state=latest
+- name: ensure workstation related software is installed
+  yum: pkg=ansible
   with_items:
     - fedora-release-workstation
     - ansible

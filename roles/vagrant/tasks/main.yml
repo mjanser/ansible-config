@@ -3,15 +3,15 @@
         dest=/etc/yum.repos.d/
         owner=root group=root mode=0644
 
-- name: ensure nfs-utils software is at the latest version
-  yum: name=nfs-utils state=latest
+- name: ensure nfs-utils software is installed
+  yum: name=nfs-utils
 
-- name: ensure VirtualBox is at the latest version
-  yum: name=VirtualBox state=latest
+- name: ensure VirtualBox is installed
+  yum: name=VirtualBox
   when: ansible_virtualization_role != 'guest'
 
-- name: ensure vagrant is at the latest version
-  yum: name=vagrant state=latest
+- name: ensure vagrant is installed
+  yum: name=vagrant
 
 - shell: vagrant --version
   register: vagrant_version
