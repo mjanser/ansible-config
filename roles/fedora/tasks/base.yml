@@ -16,6 +16,7 @@
     - bash-completion
     - gcc
     - duplicity
+    - libsemanage-python
 
 - name: ensure stat software is installed
   yum: pkg={{ item }}

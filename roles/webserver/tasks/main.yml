@@ -5,6 +5,9 @@
     - php
     - php-fpm
 
+- name: ensure php-fpm can access network
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes
+
 - name: ensure php-fpm is running
   service: name=php-fpm enabled=yes state=started
 
