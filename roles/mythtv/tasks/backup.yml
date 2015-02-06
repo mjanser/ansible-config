@@ -8,7 +8,7 @@
             dest=/etc/mythtv/backuprc
             owner=mythtv group=mythtv mode=0640
 
-- name: ensure mythtv backup cron script is installed
+- name: ensure mythtv database backup cron script is installed
   cron: name="mythtv backup"
         cron_file=mythtv_backup
         user=mythtv

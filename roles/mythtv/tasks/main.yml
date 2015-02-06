@@ -35,6 +35,7 @@
         state=directory
         owner=mythtv group=mythtv mode=0755
   with_items:
+    - channels
     - livetv
     - recordings
 
@@ -43,11 +44,41 @@
             dest=/etc/mythtv/config.xml
             owner=mythtv group=mythtv mode=0640
 
-- name: ensure mythtv user config directory exist
+- name: ensure mythtv user config directory exists
   file: src=/etc/mythtv
         dest=/var/lib/mythtv/.mythtv
         state=link
         force=yes
+
+- name: ensure mythtv channel icons directory exists
+  file: src=/var/lib/mythtv/channels
+        dest=/etc/mythtv/channels
+        state=link
+        force=yes
+
+- name: ensure mythtv cache/tmp directories exist
+  file: dest="/etc/mythtv/{{ item }}"
+        state=directory
+        owner=mythtv group=mythtv mode=0755
+  with_items:
+    - /etc/mythtv/tmp
+    - /etc/mythtv/themecache
+    - "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}"
+    - "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}"
+
+- name: ensure mythtv cache/tmp directories are mounted as tmpfs
+  mount: name="{{ item }}"
+        src=none
+        fstype=tmpfs
+        opts="size=5%"
+        dump=0
+        passno=0
+        state=present
+  with_items:
+    - /etc/mythtv/tmp
+    - /etc/mythtv/themecache
+    - "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}"
+    - "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}"
 
 - name: ensure mythtv-setup wrapper is installed
   copy: src=mythtv-setup.bash
