@@ -8,18 +8,10 @@
           value=50
           sysctl_file=/etc/sysctl.d/40-ssd-optimizations.conf
 
-- name: ensure daily ssd trim cron is installed
-  copy: src=ssd/fstrim.cron
-        dest=/etc/cron.{{ ssd_trim_interval }}/fstrim.cron
-        owner=root group=root mode=0755
+- name: ensure ssd trim timer is enabled
+  service: name=fstrim.timer enabled=yes
   when: ssd_trim_interval != 'boot'
 
-- name: ensure ssd trim service is installed
-  copy: src=ssd/fstrim.service
-        dest=/etc/systemd/system/fstrim.service
-        owner=root group=root mode=0644
-  when: ssd_trim_interval == 'boot'
-
 - name: ensure ssd trim service is enabled
-  service: name=fstrim enabled=yes
+  service: name=fstrim.service enabled=yes
   when: ssd_trim_interval == 'boot'
