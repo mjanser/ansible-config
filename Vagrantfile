@@ -26,13 +26,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #ansible.verbose = "vvvv"
     #ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
     #ansible.start_at_task = "ensure mythtv software is installed"
-    #ansible.start_at_task = "ensure php-fpm is running"
+    #ansible.start_at_task = "ensure nginx and php software is installed"
     ansible.playbook = "site.yml"
     ansible.groups = {
       "workstations" => ["workstation"],
       "mediacenters" => ["mediacenter"],
     }
     ansible.extra_vars = {
+      local_network: "192.168.222.0/24",
       mpd_device: "hw:0,0"
     }
   end
