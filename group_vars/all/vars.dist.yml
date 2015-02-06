@@ -56,5 +56,8 @@ mythtv:
   web:
     hostname: ~
 
+kodi:
+  db_password: ~
+
 backup:
   directories: []

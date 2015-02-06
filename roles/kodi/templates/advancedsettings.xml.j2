@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<advancedsettings>
+    <loglevel>0</loglevel>
+    <packagefoldersize>300</packagefoldersize>
+
+    <videodatabase>
+        <type>mysql</type>
+        <host>localhost</host>
+        <name>kodi</name>
+        <user>kodi</user>
+        <pass>{{ kodi.db_password }}</pass>
+    </videodatabase>
+    <musicdatabase>
+        <type>mysql</type>
+        <host>localhost</host>
+        <name>kodi</name>
+        <user>kodi</user>
+        <pass>{{ kodi.db_password }}</pass>
+    </musicdatabase>
+
+    <videolibrary>
+        <importwatchedstate>true</importwatchedstate>
+    </videolibrary>
+
+    <network>
+        <cachemembuffersize>209715200</cachemembuffersize>
+        <readbufferfactor>10</readbufferfactor> 
+    </network>
+</advancedsettings>

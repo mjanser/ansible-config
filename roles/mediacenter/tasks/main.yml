@@ -25,3 +25,6 @@
         state=directory
         owner="{{ item.user }}" group="{{ item.user }}" mode=0750
   with_items: backup.directories
+
+- name: ensure selinux is disabled because of problem with kodi
+  selinux: state=disabled

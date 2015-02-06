@@ -15,7 +15,7 @@
         owner=mpd group=mpd mode=0644
         seuser=system_u serole=object_r setype=mpd_var_lib_t
 
-- name: ensure music directories has correct permissions
+- name: ensure music directory has correct permissions
   file: dest=/var/lib/media/music
         state=directory
         recurse=yes
