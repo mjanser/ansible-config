@@ -20,17 +20,6 @@
         shell=/bin/bash
         home=/var/lib/kodi
 
-- name: ensure database user for kodi exists
-  mysql_user: name=kodi
-              host=localhost
-              password="{{ kodi.db_password }}"
-              priv="kodi.*:ALL"
-
-- name: ensure database for kodi exists
-  mysql_db: name=kodi
-            encoding=utf8
-            collation=utf8_general_ci
-
 - name: ensure kodi config directories exist
   file: dest="{{ item }}"
         state=directory
