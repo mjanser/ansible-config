@@ -1,9 +1,9 @@
 server {
-    listen       80;
+    listen 80;
     server_name  {{ mythtv.web.hostname }};
     root /usr/share/mythweb;
 
-    error_page   500 502 503 504  /50x.html;
+    error_page 500 502 503 504 /50x.html;
     location = /50x.html {
         root   /usr/share/nginx/html;
     }
@@ -27,7 +27,7 @@ server {
         fastcgi_param   db_name  mythtv;
         fastcgi_param   db_login mythtv;
         fastcgi_param   db_password {{ mythtv.db_password }};
-        fastcgi_pass    127.0.0.1:9000;
+        fastcgi_pass    php-fpm;
     }
 
     location @handler {
