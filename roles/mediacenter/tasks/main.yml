@@ -9,7 +9,8 @@
 - name: ensure media directories exist
   file: dest="/var/lib/media/{{ item }}"
         state=directory
-        owner=mediacenter group=mediacenter mode=0755
+        recurse=yes
+        owner=apache group=apache mode=0755
   with_items:
     - music
     - pictures

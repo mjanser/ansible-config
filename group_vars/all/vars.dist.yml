@@ -59,5 +59,12 @@ mythtv:
 kodi:
   db_password: ~
 
+cloud_server_name: ~
+owncloud:
+  db_password: ~
+  ssl:
+    cert: ~
+    key: ~
+
 backup:
   directories: []

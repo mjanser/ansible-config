@@ -1,0 +1,52 @@
+- name: ensure owncloud software is installed
+  yum: pkg={{ item }}
+  with_items:
+    - owncloud
+    - owncloud-mysql
+    - owncloud-nginx
+    - php-imap
+
+- name: ensure database user for owncloud exists
+  mysql_user: name=owncloud
+              host=localhost
+              password="{{ owncloud.db_password }}"
+              priv="owncloud.*:ALL"
+
+- name: ensure database for owncloud exists
+  mysql_db: name=owncloud
+            encoding=utf8
+            collation=utf8_general_ci
+
+- stat: path="/var/lib/backup/{{ ansible_hostname }}/db/owncloud_latest.sql"
+  register: owncloud_database_backup
+
+- name: import owncloud database from backup
+  mysql_db: name=owncloud
+            state=import
+            target="/var/lib/backup/{{ ansible_hostname }}/db/owncloud_latest.sql"
+  when: owncloud_database.changed and owncloud_database_backup.stat.isfile is defined and owncloud_database_backup.stat.isfile
+
+#- name: ensure owncloud log directory exists
+#  file: dest=/var/log/owncloud
+#        state=directory
+#        owner=apache group=apache mode=0750
+
+- name: ensure owncloud https certificate exists on the filesystem
+  copy: src="{{ owncloud.ssl.cert }}" dest="/etc/pki/tls/certs/{{ cloud_server_name }}.crt"
+
+- name: ensure owncloud https key file exists on the filesystem
+  copy: src="{{ owncloud.ssl.key }}" dest="/etc/pki/tls/private/{{ cloud_server_name }}.pem"
+
+- name: ensure owncloud vhost is configured
+  template: src=owncloud.conf.j2
+            dest=/etc/nginx/conf.d/owncloud.conf
+            owner=root group=root mode=0644
+  notify:
+    - restart nginx
+
+- name: ensure owncloud cron job is installed
+  cron: name="owncloud cron"
+        cron_file=owncloud
+        user=apache
+        minute="*/15"
+        job="php -f /usr/share/owncloud/cron.php"

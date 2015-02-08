@@ -25,8 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.sudo = true
     #ansible.verbose = "vvvv"
     #ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
-    #ansible.start_at_task = "ensure mythtv software is installed"
-    #ansible.start_at_task = "ensure nginx and php software is installed"
+    #ansible.start_at_task = "ensure alsa software is installed"
+    #ansible.start_at_task = "ensure kodi software is installed"
     ansible.playbook = "site.yml"
     ansible.groups = {
       "workstations" => ["workstation"],
@@ -34,7 +34,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
     ansible.extra_vars = {
       local_network: "192.168.222.0/24",
-      mpd_device: "hw:0,0"
+      mpd_device: "hw:0,0",
+      cloud_server_name: "cloud.mediacenter.test"
     }
   end
 
