@@ -13,8 +13,10 @@
 - name: ensure rpmfusion-nonfree repository is installed
   yum: pkg=http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm state=present
 
-- name: ensure livna repository is installed
-  yum: pkg=http://rpm.livna.org/livna-release.rpm state=present
+#- name: ensure livna repository is installed
+#  yum: pkg=http://rpm.livna.org/livna-release.rpm state=present
+- name: ensure livna repository is not installed
+  yum: pkg=livna-release state=absent
 
 - name: ensure docker is installed
   yum: pkg=docker-io
