@@ -66,5 +66,9 @@ owncloud:
     cert: ~
     key: ~
 
+vagrant_repo_updater:
+  user: ~
+  remote: ~
+
 backup:
   directories: []

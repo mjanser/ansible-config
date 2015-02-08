@@ -5,6 +5,7 @@
     - tracer
     - createrepo
     - vim-enhanced
+    - docker-io-vim
     - git
     - gitflow
     - python-pip
