@@ -27,5 +27,10 @@
         owner="{{ item.user }}" group="{{ item.user }}" mode=0750
   with_items: backup.directories
 
+- name: ensure udev rule for slowing down dvd drive speed is installed
+  copy: content='KERNEL=="sr0", ACTION=="change", ENV{DISK_MEDIA_CHANGE}=="1", RUN+="/sbin/hdparm -E 9 /dev/sr0"'
+        dest=/etc/udev/rules.d/dvd-speed.rules
+        owner=root group=root mode=644
+
 - name: ensure selinux is disabled because of problem with kodi
   selinux: state=disabled
