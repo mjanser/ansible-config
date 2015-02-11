@@ -12,6 +12,27 @@
     - mesa-dri-drivers
     - dbus-x11
 
+- name: ensure mariadb user for kodi WatchedList addon exists
+  mysql_user: name=kodi
+              host=localhost
+              password="{{ kodi.db_password }}"
+              priv="kodi_%.*:ALL"
+
+- name: ensure mariadb database for kodi WatchedList addon exists
+  mysql_db: name=kodi_watched
+            encoding=utf8
+            collation=utf8_general_ci
+  register: kodi_watched_database
+
+- stat: path="/var/lib/backup/{{ ansible_hostname }}/db/kodi_watched_latest.sql"
+  register: kodi_watched_database_backup
+
+- name: import mariadb database for kodi WatchedList addon from backup
+  mysql_db: name=kodi_watched
+            state=import
+            target="/var/lib/backup/{{ ansible_hostname }}/db/kodi_watched_latest.sql"
+  when: kodi_watched_database.changed and kodi_watched_database_backup.stat.isfile is defined and kodi_watched_database_backup.stat.isfile
+
 - name: ensure kodi user exists
   user: name=kodi
         comment="kodi user"
