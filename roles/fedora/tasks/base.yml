@@ -71,7 +71,7 @@
     - transcode
     - libdvdread
     - libdvdnav
-    #- libdvdcss
+    - libdvdcss
     - libva-vdpau-driver
     - libva-intel-driver
     - libva-utils
