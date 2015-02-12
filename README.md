@@ -23,6 +23,6 @@ Then run ansible:
 
     ansible-playbook -i production -l [group] site.yml
 
-To run it for the local host, use:
+To run it with sudo, use:
 
-    ansible-playbook -i production -l [group] --connection local site.yml
+    ansible-playbook -i production -l [group] --sudo --ask-sudo-pass site.yml
