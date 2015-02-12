@@ -39,6 +39,11 @@
     - livetv
     - recordings
 
+- name: ensure mythtv config directory exists
+  file: dest=/etc/mythtv
+        state=directory
+        owner=mythtv group=mythtv mode=0755
+
 - name: ensure mythtv is configured
   template: src=config.xml.j2
             dest=/etc/mythtv/config.xml
@@ -61,20 +66,20 @@
         state=directory
         owner=mythtv group=mythtv mode=0755
   with_items:
-    - /etc/mythtv/tmp
-    - /etc/mythtv/themecache
-    - "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}"
-    - "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}"
+    - tmp
+    - themecache
+    - "Cache-mythbackend-{{ ansible_hostname|capitalize }}"
+    - "Cache-mythtv-setup-{{ ansible_hostname|capitalize }}"
 
 - name: ensure mythtv cache/tmp directories are mounted as tmpfs
   template: src=tmpfs.mount.j2
         dest="/etc/systemd/system/{{ item.name }}.mount"
         owner=root group=root mode=644
   with_items:
-    - { name: mythtv-tmp, path: /etc/mythtv/tmp }
-    - { name: mythtv-cache-theme, path: /etc/mythtv/themecache }
-    - { name: mythtv-cache-backend, path: "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}" }
-    - { name: mythtv-cache-setup, path: "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}" }
+    - { name: etc-mythtv-tmp, path: /etc/mythtv/tmp }
+    - { name: etc-mythtv-themecache, path: /etc/mythtv/themecache }
+    - { name: "etc-mythtv-Cache\\x2dmythbackend\\x2d{{ ansible_hostname|capitalize }}", path: "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}" }
+    - { name: "etc-mythtv-Cache\\x2dmythtv\\x2dsetup\\x2d{{ ansible_hostname|capitalize }}", path: "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}" }
 
 - name: ensure mythtv-setup wrapper is installed
   copy: src=mythtv-setup.bash
