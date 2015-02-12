@@ -77,3 +77,6 @@
               line="allowed_users = anybody"
               create=yes
               owner=root group=root mode=644
+
+- name: ensure kodi remote control port is open in firewall
+  firewalld: port=8080/tcp permanent=true state=enabled
