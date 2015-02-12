@@ -1,0 +1,11 @@
+[Unit]
+Description=Temporary Directory for {{ item.name }}
+DefaultDependencies=no
+Conflicts=umount.target
+Before=local-fs.target umount.target
+
+[Mount]
+What=tmpfs
+Where={{ item.path }}
+Type=tmpfs
+Options=noatime,size=100M

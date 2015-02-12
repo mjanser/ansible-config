@@ -1,12 +1,3 @@
-- name: ensure /tmp is mounted as tmpfs
-  mount: name=/tmp
-        src=none
-        fstype=tmpfs
-        opts="size=10%"
-        dump=0
-        passno=0
-        state=present
-
 - name: ensure rpmfusion-free repository is installed
   yum: pkg=http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm state=present
 

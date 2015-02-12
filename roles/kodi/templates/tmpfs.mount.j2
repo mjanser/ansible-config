@@ -1,0 +1,11 @@
+[Unit]
+Description=Temporary Directory for kodi
+DefaultDependencies=no
+Conflicts=umount.target
+Before=local-fs.target umount.target
+
+[Mount]
+What=tmpfs
+Where=/var/lib/kodi/.kodi/temp
+Type=tmpfs
+Options=noatime,size=100M

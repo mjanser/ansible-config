@@ -67,18 +67,14 @@
     - "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}"
 
 - name: ensure mythtv cache/tmp directories are mounted as tmpfs
-  mount: name="{{ item }}"
-        src=none
-        fstype=tmpfs
-        opts="size=5%"
-        dump=0
-        passno=0
-        state=present
+  template: src=tmpfs.mount.j2
+        dest="/etc/systemd/system/{{ item.name }}.mount"
+        owner=root group=root mode=644
   with_items:
-    - /etc/mythtv/tmp
-    - /etc/mythtv/themecache
-    - "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}"
-    - "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}"
+    - { name: mythtv-tmp, path: /etc/mythtv/tmp }
+    - { name: mythtv-cache-theme, path: /etc/mythtv/themecache }
+    - { name: mythtv-cache-backend, path: "/etc/mythtv/Cache-mythbackend-{{ ansible_hostname|capitalize }}" }
+    - { name: mythtv-cache-setup, path: "/etc/mythtv/Cache-mythtv-setup-{{ ansible_hostname|capitalize }}" }
 
 - name: ensure mythtv-setup wrapper is installed
   copy: src=mythtv-setup.bash

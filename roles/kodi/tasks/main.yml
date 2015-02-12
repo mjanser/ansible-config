@@ -55,13 +55,9 @@
         owner=kodi group=kodi mode=0755
 
 - name: ensure kodi tmp directory is mounted as tmpfs
-  mount: name=/var/lib/kodi/.kodi/temp
-        src=none
-        fstype=tmpfs
-        opts="size=5%"
-        dump=0
-        passno=0
-        state=present
+  template: src=tmpfs.mount.j2
+        dest=/etc/systemd/system/kodi-tmp.mount
+        owner=root group=root mode=644
 
 - name: ensure kodi service is installed
   copy: src=kodi.service
