@@ -28,7 +28,7 @@
   mysql_db: name=mythtv
             state=import
             target="/var/lib/backup/{{ ansible_hostname }}/db/mythtv_latest.sql"
-  when: mythtv_database.changed and mythtv_database_backup.stat.isfile is defined and mythtv_database_backup.stat.isfile
+  when: mythtv_database.changed and mythtv_database_backup.stat.exists is defined and mythtv_database_backup.stat.exists
 
 - name: ensure mythtv directories exist
   file: dest="/var/lib/mythtv/{{ item }}"

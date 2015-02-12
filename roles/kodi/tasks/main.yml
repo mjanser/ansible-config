@@ -31,7 +31,7 @@
   mysql_db: name=kodi_watched
             state=import
             target="/var/lib/backup/{{ ansible_hostname }}/db/kodi_watched_latest.sql"
-  when: kodi_watched_database.changed and kodi_watched_database_backup.stat.isfile is defined and kodi_watched_database_backup.stat.isfile
+  when: kodi_watched_database.changed and kodi_watched_database_backup.stat.exists is defined and kodi_watched_database_backup.stat.exists
 
 - name: ensure kodi user exists
   user: name=kodi
