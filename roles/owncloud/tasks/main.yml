@@ -31,6 +31,12 @@
 #        state=directory
 #        owner=apache group=apache mode=0750
 
+- name: ensure owncloud apps directory is linked
+  file: src=/var/lib/owncloud/apps
+        dest=/usr/share/owncloud/apps-appstore
+        state=link
+        force=yes
+
 - name: ensure owncloud https certificate exists on the filesystem
   copy: src="{{ owncloud.ssl.cert }}" dest="/etc/pki/tls/certs/{{ cloud_server_name }}.crt"
 
