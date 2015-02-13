@@ -10,5 +10,9 @@
     - { name: root, host: "::1" }
     - { name: root, host: "localhost.localdomain" }
     - { name: root, host: "127.0.0.1" }
+    - { name: root, host: "{{ ansible_fqdn }}" }
+    - { name: root, host: "{{ ansible_nodename }}" }
     - { name: ~, host: "localhost.localdomain" }
     - { name: ~, host: "localhost" }
+    - { name: ~, host: "{{ ansible_fqdn }}" }
+    - { name: ~, host: "{{ ansible_nodename }}" }

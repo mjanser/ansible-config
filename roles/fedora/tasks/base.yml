@@ -18,6 +18,7 @@
     - gcc
     - duplicity
     - libsemanage-python
+    - mariadb
 
 - name: ensure stat software is installed
   yum: pkg={{ item }}
