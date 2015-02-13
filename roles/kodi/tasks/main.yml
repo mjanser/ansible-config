@@ -9,8 +9,14 @@
     - xorg-x11-server-Xorg
     - xorg-x11-drv-evdev
     - xorg-x11-drv-qxl
+    - xorg-x11-drv-intel
+    - xorg-x11-drv-modesetting
+    - xorg-x11-drv-fbdev
+    - xorg-x11-drv-vesa
     - mesa-dri-drivers
     - dbus-x11
+    - intel-gpu-tools
+    - vdpauinfo
 
 - name: ensure mariadb user for kodi WatchedList addon exists
   mysql_user: name=kodi
@@ -46,6 +52,7 @@
         state=directory
         owner=kodi group=kodi mode=0755
   with_items:
+    - /var/lib/kodi
     - /var/lib/kodi/.kodi
     - /var/lib/kodi/.kodi/userdata
 
