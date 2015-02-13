@@ -47,9 +47,6 @@ mariadb:
     - { name: ~, encoding: utf8, collation: utf8_general_ci, import: true }
 
 mpd_device: ~
-mpd_passwords:
-  user: ~
-  admin: ~
 
 mythtv:
   db_password: ~

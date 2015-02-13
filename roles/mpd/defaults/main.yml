@@ -1,4 +1,1 @@
 mpd_device: "hw:0,0"
-mpd_passwords:
-  user: ~
-  admin: ~
