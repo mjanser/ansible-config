@@ -76,6 +76,9 @@
     - libva-vdpau-driver
     - libva-intel-driver
     - libva-utils
+    - libexif
+    - mjpegtools
+    - mjpegtools-lav
 
 - name: ensure standard firewalld configuration is not installed
   yum: pkg=firewalld-config-standard state=absent
