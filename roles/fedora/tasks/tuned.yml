@@ -10,6 +10,7 @@
 
 - command: tuned-adm active
   register: tuned_profile
+  changed_when: false
 
 - name: ensure tuned profile powersave is active
   command: tuned-adm profile powersave

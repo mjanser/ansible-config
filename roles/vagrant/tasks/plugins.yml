@@ -4,6 +4,7 @@
   register: user_vagrant_plugins
   when: group_names[0] in item.hosts and item.vagrant_plugins is defined
   with_items: users
+  changed_when: false
 
 - name: ensure the vagrant plugins for users are installed
   command: "vagrant plugin install {{ item[1] }}"

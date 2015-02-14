@@ -12,6 +12,7 @@
 
 - command: cat /etc/yum.repos.d/remi.repo
   register: remi_repo
+  changed_when: false
 
 - name: ensure remi repository is enabled
   command: yum-config-manager --enable remi
@@ -19,7 +20,7 @@
 
 - name: ensure remi repository is limited to a few packages
   command: yum-config-manager --save --setopt="remi.includepkgs=remi-release libdvdcss"
-  when: "'includepkgs=' not in remi_repo.stdout"
+  when: "'includepkgs =' not in remi_repo.stdout"
 
 - name: ensure docker is installed
   yum: pkg=docker-io

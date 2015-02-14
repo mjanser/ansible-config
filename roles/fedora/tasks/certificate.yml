@@ -5,6 +5,7 @@
 - command: trust list --filter=ca-anchors
   register: ca_installed
   when: ssl_ca.file and ssl_ca.name
+  changed_when: false
 
 - name: ensure own CA certificate is installed
   command: "trust anchor --store /etc/pki/tls/certs/{{ ssl_ca.name }}.crt"

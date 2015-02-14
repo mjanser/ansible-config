@@ -32,6 +32,7 @@
 
 - stat: path="/var/lib/backup/{{ ansible_hostname }}/db/kodi_watched_latest.sql"
   register: kodi_watched_database_backup
+  changed_when: false
 
 - name: import mariadb database for kodi WatchedList addon from backup
   mysql_db: name=kodi_watched

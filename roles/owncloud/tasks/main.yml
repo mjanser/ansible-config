@@ -19,6 +19,7 @@
 
 - stat: path="/var/lib/backup/{{ ansible_hostname }}/db/owncloud_latest.sql"
   register: owncloud_database_backup
+  changed_when: false
 
 - name: import owncloud database from backup
   mysql_db: name=owncloud

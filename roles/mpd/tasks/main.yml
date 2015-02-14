@@ -14,11 +14,10 @@
         force=yes
         seuser=system_u serole=object_r setype=mpd_var_lib_t
 
-- name: ensure music directory has correct permissions
+- name: ensure music directory has correct selinux context
   file: dest=/var/lib/media/music
         state=directory
         recurse=yes
-        mode="u=rwX,g=rX,o=rX"
         seuser=system_u serole=object_r setype=mpd_var_lib_t
 
 - name: ensure mpd is configured

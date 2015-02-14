@@ -15,6 +15,7 @@
 
 - shell: vagrant --version
   register: vagrant_version
+  changed_when: false
 
 - name: ensure bash completion script for vagrant is installed
   file: src=/opt/vagrant/embedded/gems/gems/vagrant-{{ vagrant_version.stdout.split()[1] }}/contrib/bash/completion.sh

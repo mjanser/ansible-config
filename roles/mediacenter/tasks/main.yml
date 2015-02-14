@@ -10,7 +10,8 @@
   file: dest="/var/lib/media/{{ item }}"
         state=directory
         recurse=yes
-        owner=apache group=apache mode=0755
+        owner=apache group=apache
+        mode="u=rwX,g=rX,o=rX"
   with_items:
     - music
     - pictures
