@@ -4,8 +4,8 @@
     - mpd
     - mpc
 
-- name: ensure mpd socket runs
-  service: name=mpd.socket enabled=yes state=started
+- name: ensure mpd is enabled and started
+  service: name=mpd enabled=yes state=started
 
 - name: ensure mpd music directory is linked
   file: src=/var/lib/media/music
@@ -27,5 +27,8 @@
             owner=root group=root mode=0644
   notify:
     - restart mpd
+
+- name: ensure mpd port is open in firewall
+  firewalld: port=6600/tcp permanent=true state=enabled
 
 - include: backup.yml
