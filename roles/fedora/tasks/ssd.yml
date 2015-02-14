@@ -10,8 +10,3 @@
 
 - name: ensure ssd trim timer is enabled
   service: name=fstrim.timer enabled=yes
-  when: ssd_trim_interval != 'boot'
-
-- name: ensure ssd trim service is enabled
-  service: name=fstrim.service enabled=yes
-  when: ssd_trim_interval == 'boot'
