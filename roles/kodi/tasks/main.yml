@@ -66,6 +66,9 @@
         dest=/etc/systemd/system/var-lib-kodi-.kodi-temp.mount
         owner=root group=root mode=644
 
+- name: ensure kodi tmp directory mount is enabled
+  service: name=var-lib-kodi-.kodi-temp.mount enabled=yes state=started
+
 - name: ensure kodi service is installed
   copy: src=kodi.service
         dest=/etc/systemd/system/kodi.service
