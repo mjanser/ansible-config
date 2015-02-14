@@ -19,6 +19,7 @@
     - duplicity
     - libsemanage-python
     - mariadb
+    - wget
 
 - name: ensure stat software is installed
   yum: pkg={{ item }}
