@@ -39,6 +39,7 @@
     - channels
     - livetv
     - recordings
+    - recordings_pretty
 
 - name: ensure mythtv config directory exists
   file: dest=/etc/mythtv
@@ -96,6 +97,11 @@
   copy: src=mythtv-setup.bash
         dest=/usr/local/bin/mythtv-setup
         owner=root group=root mode=755
+
+- name: ensure mythlink.pl is executable
+  file: dest=/usr/share/doc/mythtv-docs/contrib/user_jobs/mythlink.pl
+        state=file
+        mode=u+x,g+x,o+x
 
 - name: ensure mythbackend is running
   service: name=mythbackend enabled=yes state=started
