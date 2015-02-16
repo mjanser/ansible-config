@@ -20,7 +20,7 @@
 - name: ensure backup directory for mediacenter exists
   file: dest="/var/lib/backup/{{ ansible_hostname }}"
         state=directory
-        owner=root group=root mode=0750
+        owner=root group=root mode=0755
 
 - name: ensure backup directories exist
   file: dest="/var/lib/backup/{{ item.dir }}"
