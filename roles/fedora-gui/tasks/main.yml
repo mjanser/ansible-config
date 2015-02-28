@@ -1,3 +1,8 @@
+- name: ensure adobe flash repository is installed
+  yum: pkg=http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm state=present
+  tags:
+    - fedora-gui
+
 - name: ensure gnome tools are installed
   yum: pkg={{ item }}
   with_items:
@@ -36,6 +41,9 @@
     - mirall
     - gramps
     - xca
+    - java-1.8.0-openjdk
+    - flash-plugin
+    - nspluginwrapper
   tags:
     - fedora-gui
 
