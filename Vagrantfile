@@ -9,7 +9,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
-    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "60"]
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
+    #vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+  end
+
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.driver = "kvm"
   end
 
   if Vagrant.has_plugin?("vagrant-hostmanager")
@@ -29,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #ansible.start_at_task = "ensure kodi software is installed"
     ansible.playbook = "site.yml"
     ansible.groups = {
-      "workstations" => ["workstation"],
+      "workstations" => ["workstation", "workstation-preview"],
       "mediacenters" => ["mediacenter"],
     }
     ansible.extra_vars = {
@@ -40,8 +45,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "workstation" do |vmconfig|
-    vmconfig.vm.box = "TFDuesing/Fedora-21"
-    vmconfig.vm.network :private_network, ip: "192.168.222.10"
+    vmconfig.vm.box = "hansode/fedora-21-server-x86_64"
+    vmconfig.vm.network :private_network, ip: "192.168.221.90"
     vmconfig.vm.hostname = 'workstation.test'
 
     vmconfig.vm.provider "virtualbox" do |vb|
@@ -51,9 +56,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  config.vm.define "workstation-preview" do |vmconfig|
+    vmconfig.vm.box = "f22atomic"
+    vmconfig.vm.network :private_network, ip: "192.168.222.91"
+    vmconfig.vm.hostname = 'workstation-preview.test'
+
+    vmconfig.vm.provider "libvirt" do |libvirt|
+      libvirt.driver = "kvm"
+      libvirt.memory = 2048
+      libvirt.cpus = 2
+    end
+  end
+
   config.vm.define "mediacenter" do |vmconfig|
-    vmconfig.vm.box = "TFDuesing/Fedora-21"
-    vmconfig.vm.network :private_network, ip: "192.168.222.11"
+    vmconfig.vm.box = "hansode/fedora-21-server-x86_64"
+    vmconfig.vm.network :private_network, ip: "192.168.221.11"
     vmconfig.vm.hostname = 'mediacenter.test'
 
     if Vagrant.has_plugin?("vagrant-hostmanager")
