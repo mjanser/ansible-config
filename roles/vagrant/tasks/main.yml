@@ -1,26 +1,14 @@
-- name: ensure yum repository for vagrant is installed
-  copy: src=vagrant.repo
-        dest=/etc/yum.repos.d/
-        owner=root group=root mode=0644
-
-- name: ensure nfs-utils software is installed
-  yum: name=nfs-utils
-
 - name: ensure VirtualBox is installed
   yum: name=VirtualBox
   when: ansible_virtualization_role != 'guest'
 
 - name: ensure vagrant is installed
-  yum: name=vagrant
-
-- shell: vagrant --version
-  register: vagrant_version
-  changed_when: false
-
-- name: ensure bash completion script for vagrant is installed
-  file: src=/opt/vagrant/embedded/gems/gems/vagrant-{{ vagrant_version.stdout.split()[1] }}/contrib/bash/completion.sh
-        dest=/etc/bash_completion.d/vagrant.sh
-        state=link
+  yum: name={{ item }}
+  with_items:
+    - nfs-utils
+    - vagrant
+    - vagrant-libvirt
+    - vagrant-lxc
 
 - name: ensure sudoers file for vagrant is installed
   copy: src=sudoers
