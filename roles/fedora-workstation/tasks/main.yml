@@ -1,5 +1,5 @@
 - name: ensure workstation related software is installed
-  yum: pkg=ansible
+  yum: pkg={{ item }}
   with_items:
     - fedora-release-workstation
     - ansible

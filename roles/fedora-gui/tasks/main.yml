@@ -28,6 +28,8 @@
     - avidemux-qt
     - devede
     - easytag
+    - vlc
+    - gimp
   tags:
     - fedora-gui
 
