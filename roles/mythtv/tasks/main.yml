@@ -9,6 +9,11 @@
     - python-MythTV
     - liberation-sans-fonts
 
+- name: fix xmltv grabber for tv.search.ch
+  replace: dest=/bin/tv_grab_ch_search
+           regexp='tv\.search\.ch'
+           replace='tv.classic.search.ch'
+
 - name: ensure database user for mythtv exists
   mysql_user: name=mythtv
               host=localhost
