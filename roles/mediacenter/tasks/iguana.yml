@@ -1,0 +1,7 @@
+- name: ensure iguanaIR software is installed
+  yum: pkg={{ item }}
+  with_items:
+    - iguanaIR
+
+- name: ensure iguanaIR is running
+  service: name=iguanaIR enabled=yes state=started

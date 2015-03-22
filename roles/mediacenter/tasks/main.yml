@@ -35,3 +35,5 @@
 
 - name: ensure selinux is disabled because of problem with kodi
   selinux: state=disabled
+
+- include: iguana.yml
