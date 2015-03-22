@@ -1,3 +1,9 @@
+- name: ensure ruby header files are installed
+  yum: name={{ item }}
+  with_items:
+    - ruby-devel
+    - libvirt-devel
+
 - command: vagrant plugin list
   sudo: yes
   sudo_user: "{{ item.username }}"
