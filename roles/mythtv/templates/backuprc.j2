@@ -2,3 +2,4 @@ DBBackupDirectory=/var/lib/backup/{{ ansible_hostname }}/mythtv
 DBName=mythtv
 DBPassword={{ mythtv.db_password }}
 rotate=30
+rotateglob=mythtv-????-??????????????.sql*
