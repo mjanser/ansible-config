@@ -37,3 +37,4 @@
   selinux: state=disabled
 
 - include: iguana.yml
+- include: sispm.yml
