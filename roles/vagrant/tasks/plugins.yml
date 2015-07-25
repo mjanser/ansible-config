@@ -1,8 +1,9 @@
 - name: ensure ruby header files are installed
-  yum: name={{ item }}
+  dnf: name={{ item }}
   with_items:
     - ruby-devel
     - libvirt-devel
+    - rubygem-unf_ext
 
 - command: vagrant plugin list
   sudo: yes

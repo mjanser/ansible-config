@@ -1,5 +1,5 @@
 - name: ensure tex tools are installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - texlive
     - texlive-latex

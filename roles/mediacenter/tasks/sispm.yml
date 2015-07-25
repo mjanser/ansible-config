@@ -1,2 +1,2 @@
 - name: ensure sispmctl software is installed
-  yum: pkg=sispmctl
+  dnf: name=sispmctl

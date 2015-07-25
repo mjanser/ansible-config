@@ -1,5 +1,5 @@
 - name: ensure php-cli software is installed
-  yum: name=php-cli
+  dnf: name=php-cli
 
 - name: ensure capifony is installed
   get_url: url=https://raw.githubusercontent.com/mjanser/capifony-docker/master/cap.sh

@@ -1,9 +1,9 @@
 - name: ensure VirtualBox is installed
-  yum: name=VirtualBox
+  dnf: name=VirtualBox
   when: ansible_virtualization_role != 'guest'
 
 - name: ensure vagrant is installed
-  yum: name={{ item }}
+  dnf: name={{ item }}
   with_items:
     - nfs-utils
     - vagrant

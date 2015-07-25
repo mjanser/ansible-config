@@ -1,5 +1,5 @@
 - name: ensure nginx and php software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - nginx
     - php

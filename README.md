@@ -15,7 +15,7 @@ For testing there is a Vagrantfile to install in Vagrant boxes.
 
 You have to install Ansible first. This is for Fedora:
 
-    yum -y install ansible
+    dnf -y install ansible
 
 Configure the groups of hosts in the file `production` (see /etc/ansible/hosts for an example).
 

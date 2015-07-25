@@ -1,8 +1,8 @@
 - name: ensure fedora-release-server is installed
-  yum: pkg=fedora-release-server
+  dnf: name=fedora-release-server
 
 - name: ensure firewalld service runs
   service: name=firewalld enabled=yes state=started
 
-- name: ensure yum-cron-daily is installed
-  yum: pkg=yum-cron-daily
+- name: ensure dnf-automatic is installed
+  dnf: name=dnf-automatic

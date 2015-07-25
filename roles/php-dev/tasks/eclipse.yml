@@ -46,6 +46,7 @@
       http://pydev.org/updates \
     -installIU \
       org.eclipse.dltk.ruby.feature.group,\
+      org.eclipse.dltk.ruby,\
       net.sourceforge.texlipse,\
       com.github.eclipsecolortheme.feature.feature.group,\
       net.sourceforge.shelled.feature.group,\
@@ -66,7 +67,6 @@
       http://download.eclipse.org/releases/{{ eclipse_name }}/,\
       http://p2-dev.pdt-extensions.org/ \
     -installIU \
-      org.eclipse.dltk.ruby,\
       com.dubture.composer.feature.feature.group,\
       com.dubture.doctrine.feature.feature.group,\
       com.dubture.symfony.feature.feature.group,\
@@ -79,12 +79,12 @@
       org.phpsrc.eclipse.pti.tools.phpmd.feature.group,\
       markdown.editor.feature.feature.group,\
       org.psem2m.eclipse.rest.editor.feature.group,\
-      org.dadacoalition.yedit.feature.group,\
       org.sourceforge.jsonedit.feature.feature.group,\
       com.piece_framework.makegood_feature.feature.group \
     "
   sudo: yes
   sudo_user: "{{ eclipse_owner }}"
+#      org.dadacoalition.yedit.feature.group,\
 
 - name: ensure current eclipse version is linked
   file:

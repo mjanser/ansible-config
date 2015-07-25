@@ -1,5 +1,5 @@
 - name: ensure alsa software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - alsa-firmware
     - alsa-tools

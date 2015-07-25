@@ -1,5 +1,5 @@
 - name: ensure mythweb software is installed
-  yum: pkg=mythweb
+  dnf: name=mythweb
 
 - name: ensure nginx vhost for mythweb is installed
   template: src=mythweb_nginx.conf.j2

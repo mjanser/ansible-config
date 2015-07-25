@@ -1,5 +1,5 @@
 - name: ensure mpd is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - mpd
     - mpc

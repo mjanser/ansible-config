@@ -1,7 +1,7 @@
 # Inspired by https://github.com/graysky2/kodi-standalone-service
 
 - name: ensure kodi software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - kodi
     - kodi-pvr-mythtv

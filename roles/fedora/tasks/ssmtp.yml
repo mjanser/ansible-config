@@ -1,5 +1,5 @@
 - name: ensure ssmtp software is installed
-  yum: name=ssmtp
+  dnf: name=ssmtp
 
 - name: ensure ssmtp configuration is installed
   template: src=ssmtp.conf.j2

@@ -1,11 +1,9 @@
 - name: ensure basic software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
-    - yum-plugin-changelog
-    - tracer
-    - createrepo
+    - dnf-plugins-extras-tracer
     - vim-enhanced
-    - docker-io-vim
+    - docker-vim
     - git
     - gitflow
     - python-pip
@@ -22,7 +20,7 @@
     - wget
 
 - name: ensure stat software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - rpmconf
     - iotop
@@ -34,7 +32,7 @@
     - net-tools
 
 - name: ensure multimedia software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - flac
     - ffmpeg
@@ -82,4 +80,4 @@
     - mjpegtools-lav
 
 - name: ensure standard firewalld configuration is not installed
-  yum: pkg=firewalld-config-standard state=absent
+  dnf: name=firewalld-config-standard state=absent

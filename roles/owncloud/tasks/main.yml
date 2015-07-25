@@ -1,5 +1,5 @@
 - name: ensure owncloud software is installed
-  yum: pkg={{ item }}
+  dnf: name={{ item }}
   with_items:
     - owncloud
     - owncloud-mysql

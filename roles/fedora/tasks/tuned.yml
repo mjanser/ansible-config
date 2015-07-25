@@ -1,5 +1,5 @@
 - name: ensure tuned software is installed
-  yum: name=tuned-utils
+  dnf: name=tuned-utils
 
 - name: ensure tuned service runs
   service: name=tuned enabled=yes state=started

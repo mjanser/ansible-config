@@ -2,9 +2,9 @@ eclipse_owner: "{{ lookup('env','USER') }}"
 eclipse_group: "{{ eclipse_owner }}"
 eclipse_base_dir: "/opt/eclipse"
 
-eclipse_flavor: "java"
-eclipse_name: "luna"
-eclipse_release: "SR1"
+eclipse_flavor: "php"
+eclipse_name: "mars"
+eclipse_release: "R"
 
 eclipse_version: "{{eclipse_flavor}}-{{eclipse_name}}-{{eclipse_release}}"
 eclipse_archive: "eclipse-{{eclipse_version}}-linux-gtk-x86_64.tar.gz"
