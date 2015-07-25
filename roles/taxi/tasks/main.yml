@@ -1,5 +1,5 @@
 - name: ensure taxi software is installed
-  get_url: url=https://raw.githubusercontent.com/mjanser/taxi-docker/master/taxi.sh
-           dest=/usr/local/bin/taxi
-           force=yes
-           mode=0755
+  pip: name={{ item }}
+  with_items:
+    - taxi
+    - taxi-zebra
