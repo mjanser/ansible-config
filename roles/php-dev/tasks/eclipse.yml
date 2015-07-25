@@ -59,7 +59,6 @@
     "
   sudo: yes
   sudo_user: "{{ eclipse_owner }}"
-#      com.wdev91.eclipse.copyright.feature.feature.group,\
 
 - name: ensure php eclipse plugins are installed
   command: "{{ eclipse_base_dir }}/{{ eclipse_version }}/eclipse/eclipse -nosplash -application org.eclipse.equinox.p2.director \
@@ -77,14 +76,18 @@
       org.phpsrc.eclipse.pti.tools.phpunit.feature.group,\
       org.phpsrc.eclipse.pti.tools.phpcpd.feature.group,\
       org.phpsrc.eclipse.pti.tools.phpmd.feature.group,\
+      org.dadacoalition.yedit.feature.feature.group,\
       markdown.editor.feature.feature.group,\
       org.psem2m.eclipse.rest.editor.feature.group,\
       org.sourceforge.jsonedit.feature.feature.group,\
-      com.piece_framework.makegood_feature.feature.group \
+      com.piece_framework.makegood_feature.feature.group,\
+      net.vtst.ow.eclipse.less.feature.feature.group,\
+      org.eclipselabs.jsdt.jquery_feature.feature.group,\
+      eclipse.themes.darker.feature.feature.group,\
+      org.phpaspect.apdt.feature.feature.group \
     "
   sudo: yes
   sudo_user: "{{ eclipse_owner }}"
-#      org.dadacoalition.yedit.feature.group,\
 
 - name: ensure current eclipse version is linked
   file:

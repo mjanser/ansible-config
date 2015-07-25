@@ -11,9 +11,6 @@
 - name: ensure docker is installed
   dnf: name=docker
 
-- name: ensure docker service runs
-  service: name=docker enabled=yes state=started
-
 #- name: ensure wheel users have access to libvirt
 #  copy: src=libvirt.rules
 #        dest=/etc/polkit-1/rules.d/80-libvirt.rules
