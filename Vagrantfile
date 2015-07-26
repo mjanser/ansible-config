@@ -63,7 +63,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "mediacenter" do |vmconfig|
-    vmconfig.vm.box = "rarguello/fedora-22"
+    vmconfig.vm.box = "box-cutter/fedora22"
     vmconfig.vm.network :private_network, ip: "192.168.221.11"
     vmconfig.vm.hostname = 'mediacenter.test'
 
