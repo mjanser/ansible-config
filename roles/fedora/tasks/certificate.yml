@@ -9,4 +9,4 @@
 
 - name: ensure own CA certificate is installed
   command: "trust anchor --store /etc/pki/tls/certs/{{ ssl_ca.name }}.crt"
-  when: "ssl_ca.file and ssl_ca.name and ca_installed.stdout.find('{{ ssl_ca.name }}') == -1"
+  when: "ssl_ca.file and ssl_ca.name and ca_installed is defined and ca_installed.stdout.find('{{ ssl_ca.name }}') == -1"

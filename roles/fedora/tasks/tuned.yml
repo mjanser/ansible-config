@@ -4,9 +4,8 @@
 - name: ensure tuned service runs
   service: name=tuned enabled=yes state=started
 
-#- name: ensure powertop tunables are saved in Tuned profile
-#  command: powertop2tuned --enable powersave
-#  creates: /etc/tuned/powersave
+- name: ensure powertop service runs
+  service: name=powertop enabled=yes state=started
 
 - command: tuned-adm active
   register: tuned_profile
@@ -14,4 +13,4 @@
 
 - name: ensure tuned profile powersave is active
   command: tuned-adm profile powersave
-  when: tuned_profile.stdout.find('powersave') == -1
+  when: tuned_profile is defined and tuned_profile.stdout.find('powersave') == -1
