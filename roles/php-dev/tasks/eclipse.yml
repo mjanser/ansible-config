@@ -55,7 +55,8 @@
       com.google.eclipse.mechanic.feature.group,\
       de.anbos.eclipse.logviewer.feature.feature.group,\
       net.mihai-nita.ansicon.feature.group,\
-      org.python.pydev.feature.feature.group \
+      org.python.pydev.feature.feature.group,\
+      org.eclipse.tm.terminal.feature.feature.group \
     "
   sudo: yes
   sudo_user: "{{ eclipse_owner }}"
