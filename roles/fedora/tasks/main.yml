@@ -28,8 +28,6 @@
 
 - include: certificate.yml
 
-- include: ssmtp.yml tags=ssmtp
-
 - include: tuned.yml tags=tuned
 
 - include: ssd.yml tags=ssd
