@@ -1,26 +1,14 @@
-- name: ensure eclipse base directory exists
-  file: dest="{{ eclipse_base_dir }}"
-        state=directory
-        owner="{{ eclipse_owner }}"
-        group="{{ eclipse_group }}"
-
-- name: ensure eclipse installer directory exists
-  file: dest="{{ eclipse_base_dir }}/installer"
-        state=directory
-        owner="{{ eclipse_owner }}"
-        group="{{ eclipse_group }}"
-
 - name: ensure eclipse installer package is downloaded
   get_url: url="{{ eclipse_installer_url }}"
-           dest="{{ eclipse_base_dir }}/installer.tar.gz"
+           dest="{{ eclipse_base_dir }}/eclipse-installer.tar.gz"
 
 - name: ensure eclipse installer package is unpacked
-  unarchive: src="{{ eclipse_base_dir }}/installer.tar.gz"
-             dest="{{ eclipse_base_dir }}/installer"
+  unarchive: src="{{ eclipse_base_dir }}/eclipse-installer.tar.gz"
+             dest="{{ eclipse_base_dir }}"
              copy=no
              owner="{{ eclipse_owner }}"
              group="{{ eclipse_group }}"
-             creates="{{ eclipse_base_dir }}/installer/eclipse"
+             creates="{{ eclipse_base_dir }}/eclipse-installer"
   sudo: yes
   sudo_user: "{{ eclipse_owner }}"
 
