@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Eclipse Installer
+Comment=Installer for Eclipse Integrated Development Environment
+Icon=/opt/eclipse/installer/icon.xpm
+Exec=/opt/eclipse/installer/eclipse
+Terminal=false
+Categories=Development;IDE;Java;

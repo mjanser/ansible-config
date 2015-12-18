@@ -1,9 +1,0 @@
-- name: ensure workstation related software is installed
-  dnf: name={{ item }}
-  with_items:
-    - fedora-release-workstation
-    - ansible
-    - pass
-
-- name: ensure firewalld service runs
-  service: name=firewalld enabled=yes state=started

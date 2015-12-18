@@ -1,0 +1,46 @@
+- name: ensure some tools are installed
+  dnf: name={{ item }}
+  with_items:
+    - rpmconf
+    - iotop
+    - htop
+    - lm_sensors
+    - tlp
+    - acpitool
+    - powertop
+    - net-tools
+    - wget
+    - ctags-etags
+    - vim-enhanced
+    - docker-vim
+    - tmux
+    - tmux-powerline
+
+- name: ensure directory for vim bundles exists
+  file: dest=/opt/vim-bundles
+        state=directory
+        owner=root group=root mode=0755
+
+- name: ensure vundle is installed
+  git: repo=https://github.com/gmarik/vundle
+       dest=/opt/vim-bundles/vundle
+       version=master
+
+- name: ensure custom vim configuration is installed
+  copy: src=vimrc
+        dest=/etc/vimrc.custom
+        owner=root group=root mode=0644
+
+- name: ensure global vim configuration includes custom configuration
+  lineinfile: dest=/etc/vimrc
+              line='source /etc/vimrc.custom'
+
+- name: ensure tmux plugin manager is installed
+  git: repo=https://github.com/tmux-plugins/tpm
+       dest=/opt/tmux-plugins/tpm
+       version=master
+
+- name: ensure tmux configuration is installed
+  copy: src=tmux.conf
+        dest=/etc/tmux.conf
+        owner=root group=root mode=0644

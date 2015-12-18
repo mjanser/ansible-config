@@ -1,18 +1,24 @@
 - name: ensure gnome tools are installed
   dnf: name={{ item }}
   with_items:
-    - "@^workstation-product-environment"
+    - "@base-x"
     - epiphany
+    - gnome-backgrounds
+    - gnome-contacts
+    - gnome-documents
     - gnome-web-photo
     - gnome-photos
     - gnome-music
     - gnome-maps
     - gnome-weather
     - gnome-rdp
+    - gnome-terminal
     - gnome-power-manager
     - gnome-activity-journal
     - gnome-tweak-tool
     - gmpc
+    - totem
+    - vinagre
   tags:
     - fedora-gui
 
@@ -36,8 +42,8 @@
     - gitg
     - virt-manager
     - deja-dup
-    - mirall
-    - gramps
+    - owncloud-client
+    - owncloud-client-nautilus
     - xca
     - java-1.8.0-openjdk
   tags:
@@ -75,7 +81,3 @@
   tags:
     - fedora-gui
     - google-chrome
-
-- file: src=/lib/systemd/system/graphical.target dest=/etc/systemd/system/default.target state=link
-  tags:
-    - fedora-gui

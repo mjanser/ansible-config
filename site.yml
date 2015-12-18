@@ -1,7 +1,6 @@
 - hosts: workstations
   roles:
-    - fedora-workstation
-    - tex
+    - fedora-gui
     - taxi
     - vagrant
     - php-dev

@@ -1,21 +1,8 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "fedora/23-cloud-base"
 
-VAGRANTFILE_API_VERSION = "2"
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vbguest.auto_update = false
+  #config.vbguest.auto_update = false
   config.ssh.forward_x11 = true
-
-  config.vm.provider "virtualbox" do |vb|
-    vb.gui = true
-    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
-    #vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
-  end
-
-  config.vm.provider "libvirt" do |libvirt|
-    libvirt.driver = "kvm"
-  end
 
   if Vagrant.has_plugin?("vagrant-hostmanager")
     config.hostmanager.enabled = true
@@ -23,15 +10,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.hostmanager.ignore_private_ip = false
   end
 
-  config.vm.provision "shell",
-    inline: "rm -f /etc/systemd/system/firewalld.service && systemctl daemon-reload"
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 2
+    vb.memory = 2048
+    vb.gui = true
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
+    vb.customize ["modifyvm", :id, "--vram", "64"]
+    #vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+  end
+
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.memory = 2048
+    libvirt.cpus = 2
+  end
+
+  config.vm.provision "shell" do |s|
+    s.inline = <<-SHELL
+if [[ $(df --output=size -m /dev/vda1 | grep -o '[0-9]\\{2,\\}') -lt 5000 ]]; then
+  echo "Increase disk space"
+  growpart /dev/vda 1 && resize2fs /dev/vda1
+fi
+dnf install -q -y python2 python2-dnf libselinux-python
+echo "vagrant ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/vagrant-nopasswd
+SHELL
+  end
 
   config.vm.provision "ansible" do |ansible|
     ansible.sudo = true
     #ansible.verbose = "vvvv"
     #ansible.skip_tags = [ "fedora-base", "fedora-gui", "tex", "eclipse" ]
     #ansible.start_at_task = "ensure alsa software is installed"
-    #ansible.start_at_task = "ensure kodi software is installed"
+    #ansible.start_at_task = "ensure ruby header files are installed"
     ansible.playbook = "site.yml"
     ansible.groups = {
       "workstations" => ["workstation"],
@@ -45,26 +55,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "workstation" do |vmconfig|
-    vmconfig.vm.box = "box-cutter/fedora22"
-    vmconfig.vm.network :private_network, ip: "192.168.221.90"
+    vmconfig.vm.network :private_network, ip: "192.168.111.90"
     vmconfig.vm.hostname = 'workstation.test'
-
-    vmconfig.vm.provider "virtualbox" do |vb|
-      vb.cpus = 2
-      vb.memory = 2048
-      vb.customize ["modifyvm", :id, "--vram", "64"]
-    end
-
-    vmconfig.vm.provider "libvirt" do |libvirt|
-      libvirt.driver = "kvm"
-      libvirt.memory = 2048
-      libvirt.cpus = 2
-    end
   end
 
   config.vm.define "mediacenter" do |vmconfig|
-    vmconfig.vm.box = "box-cutter/fedora22"
-    vmconfig.vm.network :private_network, ip: "192.168.221.11"
+    vmconfig.vm.network :private_network, ip: "192.168.111.11"
     vmconfig.vm.hostname = 'mediacenter.test'
 
     if Vagrant.has_plugin?("vagrant-hostmanager")
@@ -72,14 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     vmconfig.vm.provider "virtualbox" do |vb|
-      vb.memory = 1024
       vb.customize ["modifyvm", :id, "--audio", "alsa"]
-    end
-
-    vmconfig.vm.provider "libvirt" do |libvirt|
-      libvirt.driver = "kvm"
-      libvirt.memory = 1024
-      libvirt.cpus = 2
     end
 
     vmconfig.vm.synced_folder "data/backup", "/var/lib/backup", type: "rsync",

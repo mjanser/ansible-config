@@ -1,8 +1,10 @@
-- name: ensure fedora-release-server is installed
-  dnf: name=fedora-release-server
-
-- name: ensure firewalld service runs
-  service: name=firewalld enabled=yes state=started
-
 - name: ensure dnf-automatic is installed
   dnf: name=dnf-automatic
+
+- name: ensure dnf-automatic timer is active
+  service: name=dnf-automatic.timer enabled=yes state=started
+
+- name: ensure dnf-automatic is configured to emit via email
+  lineinfile: dest=/etc/dnf/automatic.conf
+              regexp='emit_via ='
+              line='emit_via = email'

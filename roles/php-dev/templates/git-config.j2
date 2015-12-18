@@ -5,3 +5,7 @@
 [core]
     excludesfile = /home/{{ item.username }}/.gitignore
 {% endif %}
+[push]
+    default = upstream
+[fetch]
+    prune = true

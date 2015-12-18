@@ -2,13 +2,11 @@
   dnf: name={{ item }}
   with_items:
     - dnf-plugins-extras-tracer
-    - vim-enhanced
-    - docker-vim
     - git
     - gitflow
     - python-pip
+    - python-firewall
     - fuse-sshfs
-    - xorg-x11-xauth
     - bzip2
     - unrar
     - ntp
@@ -17,19 +15,9 @@
     - duplicity
     - libsemanage-python
     - mariadb
-    - wget
-
-- name: ensure stat software is installed
-  dnf: name={{ item }}
-  with_items:
-    - rpmconf
-    - iotop
-    - htop
-    - lm_sensors
-    - tlp
-    - acpitool
-    - powertop
-    - net-tools
+    - openvpn
+    - ansible
+    - pass
 
 - name: ensure multimedia software is installed
   dnf: name={{ item }}

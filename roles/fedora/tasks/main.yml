@@ -11,12 +11,7 @@
 - name: ensure docker is installed
   dnf: name=docker
 
-#- name: ensure wheel users have access to libvirt
-#  copy: src=libvirt.rules
-#        dest=/etc/polkit-1/rules.d/80-libvirt.rules
-#        owner=root group=root mode=0644
-
-- name: ensure wheel don't need password for sudo
+- name: ensure wheel users don't need password for sudo
   lineinfile: dest=/etc/sudoers
               regexp='^%wheel'
               line='%wheel ALL=(ALL) NOPASSWD:ALL'
@@ -29,6 +24,8 @@
 
 - include: base.yml tags=fedora-base
 
+- include: tools.yml tags=fedora-base
+
 - include: certificate.yml
 
 - include: ssmtp.yml tags=ssmtp
@@ -37,5 +34,7 @@
 
 - include: ssd.yml tags=ssd
   when: ansible_devices.sda is defined and ansible_devices.sda.rotational == '0'
+
+- include: firewall.yml tags=firewall
 
 - include: accounts.yml tags=accounts
