@@ -9,8 +9,6 @@
              owner="{{ eclipse_owner }}"
              group="{{ eclipse_group }}"
              creates="{{ eclipse_base_dir }}/eclipse-installer"
-  sudo: yes
-  sudo_user: "{{ eclipse_owner }}"
 
 - name: ensure desktop file for eclipse installer is installed
   copy: src=eclipse-installer.desktop
