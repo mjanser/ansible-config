@@ -1,7 +1,0 @@
-eclipse_owner: "{{ lookup('env','USER') }}"
-eclipse_group: "{{ eclipse_owner }}"
-eclipse_base_dir: "/opt"
-
-eclipse_name: "mars"
-eclipse_release: "R1a"
-eclipse_installer_url: "http://mirror.switch.ch/eclipse/oomph/epp/{{ eclipse_name }}/{{ eclipse_release }}/eclipse-inst-linux64.tar.gz"
