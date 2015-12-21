@@ -13,9 +13,9 @@ For testing there is a Vagrantfile to install in Vagrant boxes.
 
 ## Without Vagrant
 
-You have to install Ansible first. This is for Fedora:
+You have to install Ansible and some other packages first. This is for Fedora:
 
-    dnf -y install ansible
+    dnf -y install ansible python2-dnf libselinux-python
 
 Configure the groups of hosts in the file `production` (see /etc/ansible/hosts for an example).
 Install the dependencies from Ansible Galaxy:
