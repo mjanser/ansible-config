@@ -1,2 +1,4 @@
 - src: mjanser.powerline
+- src: mjanser.tmux
+- src: mjanser.vim
 - src: mjanser.ssmtp

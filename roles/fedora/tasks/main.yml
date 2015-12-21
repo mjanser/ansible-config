@@ -9,7 +9,10 @@
            creates=/etc/yum.repos.d/fedora-handbrake.repo
 
 - name: ensure docker is installed
-  dnf: name=docker
+  dnf: name="{{ item }}"
+  with_items:
+    - docker
+    - docker-vim
 
 - name: ensure wheel users don't need password for sudo
   lineinfile: dest=/etc/sudoers
@@ -23,8 +26,6 @@
               line='X11Forwarding yes'
 
 - include: base.yml tags=fedora-base
-
-- include: tools.yml tags=fedora-base
 
 - include: certificate.yml
 

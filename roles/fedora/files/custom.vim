@@ -15,24 +15,6 @@ set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 set splitbelow
 set splitright
 
-" vundle
-filetype off
-set rtp+=/opt/vim-bundles/vundle
-call vundle#rc('/opt/vim-bundles')
-
-" plugins
-Plugin 'gmarik/vundle'
-Plugin 'ervandew/supertab'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
-Plugin 'taglist.vim'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'arnaud-lb/vim-php-namespace'
-"Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-fugitive'
-
 " airline
 set laststatus=2
 
@@ -61,7 +43,7 @@ let g:surround_indent = 0
 let g:miniBufExplTabWrap = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplCycleArround = 1
-let g:tagbar_phpctags_bin='/opt/vim-bundles/tagbar-phpctags/bin/phpctags'
+let g:tagbar_phpctags_bin='~/.vim/bundle/tagbar-phpctags/bin/phpctags'
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 1
 let g:tagbar_sort = 0

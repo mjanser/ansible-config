@@ -67,5 +67,18 @@
     - mjpegtools
     - mjpegtools-lav
 
+- name: ensure some tools are installed
+  dnf: name={{ item }}
+  with_items:
+    - rpmconf
+    - iotop
+    - htop
+    - lm_sensors
+    - tlp
+    - acpitool
+    - powertop
+    - net-tools
+    - wget
+
 - name: ensure standard firewalld configuration is not installed
   dnf: name=firewalld-config-standard state=absent
