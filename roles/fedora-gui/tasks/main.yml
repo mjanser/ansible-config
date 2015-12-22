@@ -16,7 +16,9 @@
     - gnome-power-manager
     - gnome-activity-journal
     - gnome-tweak-tool
+    - dconf-editor
     - gmpc
+    - mpdris2
     - totem
     - vinagre
   tags:
