@@ -5,7 +5,7 @@
   service: name=tuned enabled=yes state=started
 
 - name: ensure powertop service runs
-  service: name=powertop enabled=yes state=started
+  service: name=powertop enabled=yes
 
 - command: tuned-adm active
   register: tuned_profile

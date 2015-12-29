@@ -1,6 +1,10 @@
 - hosts: workstations
   roles:
     - fedora-gui
+    - mjanser.powerline
+    - mjanser.tmux
+    - mjanser.vim
+    - mjanser.ssmtp
     - taxi
     - vagrant
     - php-dev
@@ -8,6 +12,10 @@
 - hosts: mediacenters
   roles:
     - fedora-server
+    - mjanser.powerline
+    - mjanser.tmux
+    - mjanser.vim
+    - mjanser.ssmtp
     - dbserver
     - mediacenter
     - mpd

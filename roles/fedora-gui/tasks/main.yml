@@ -66,8 +66,13 @@
   tags:
     - fedora-gui
 
+- command: rpm -q man-pages-de
+  register: langpacks_installed
+  changed_when: false
+
 - name: ensure de langpacks are installed
   command: dnf -y langinstall de_CH
+  when: langpacks_installed|failed
   tags:
     - fedora-gui
 

@@ -79,6 +79,7 @@
     - powertop
     - net-tools
     - wget
+    - smartmontools
 
 - name: ensure standard firewalld configuration is not installed
   dnf: name=firewalld-config-standard state=absent

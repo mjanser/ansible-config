@@ -25,6 +25,11 @@
               regexp='^X11Forwarding '
               line='X11Forwarding yes'
 
+- name: ensure there are enough inotify watches available
+  sysctl: name=fs.inotify.max_user_watches
+          value=524288
+          sysctl_file=/etc/sysctl.d/30-inotify.conf
+
 - include: base.yml tags=fedora-base
 
 - include: certificate.yml

@@ -12,7 +12,7 @@
 
 - name: ensure the user passwords are expired
   command: "chage -d 0 {{ item.item.username }}"
-  when: item.changed and item.item.password is defined
+  when: item.changed and item.item.password is defined and item.system is defined
   with_items: created_users.results
 
 - name: ensure ssh keys of users are added to authorized keys

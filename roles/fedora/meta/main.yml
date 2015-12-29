@@ -1,5 +1,0 @@
-dependencies:
-  - { role: mjanser.powerline }
-  - { role: mjanser.tmux }
-  - { role: mjanser.vim }
-  - { role: mjanser.ssmtp }
