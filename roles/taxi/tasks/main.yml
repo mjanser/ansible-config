@@ -1,5 +1,0 @@
-- name: ensure taxi software is installed
-  pip: name={{ item }}
-  with_items:
-    - taxi
-    - taxi-zebra
