@@ -2,3 +2,4 @@
 - src: mjanser.tmux
 - src: mjanser.vim
 - src: mjanser.ssmtp
+- src: mjanser.vagrant
