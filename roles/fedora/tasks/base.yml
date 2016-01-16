@@ -12,6 +12,7 @@
     - ntp
     - bash-completion
     - gcc
+    - php-cli
     - duplicity
     - libsemanage-python
     - mariadb

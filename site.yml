@@ -1,16 +1,17 @@
 - hosts: workstations
   roles:
     - fedora-gui
+    - mjanser.gitconfig
     - mjanser.powerline
     - mjanser.tmux
     - mjanser.vim
     - mjanser.ssmtp
-    - vagrant
-    - php-dev
+    - mjanser.vagrant
 
 - hosts: mediacenters
   roles:
     - fedora-server
+    - mjanser.gitconfig
     - mjanser.powerline
     - mjanser.tmux
     - mjanser.vim

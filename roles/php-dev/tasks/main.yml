@@ -1,4 +1,0 @@
-- name: ensure php-cli software is installed
-  dnf: name=php-cli
-
-- include: user.yml
