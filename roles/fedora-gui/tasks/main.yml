@@ -45,6 +45,7 @@
     - gitg
     - virt-manager
     - deja-dup
+    - deja-dup-nautilus
     - owncloud-client
     - owncloud-client-nautilus
     - xca
@@ -75,17 +76,3 @@
   when: langpacks_installed|failed
   tags:
     - fedora-gui
-
-- name: ensure dnf repository for google chrome is installed
-  copy: src=google-chrome.repo
-        dest=/etc/yum.repos.d/
-        owner=root group=root mode=0644
-  tags:
-    - fedora-gui
-    - google-chrome
-
-- name: ensure google chrome is installed
-  dnf: name=google-chrome-stable
-  tags:
-    - fedora-gui
-    - google-chrome

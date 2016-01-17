@@ -8,6 +8,7 @@
     - mjanser.vim
     - mjanser.ssmtp
     - mjanser.vagrant
+    - cmprescott.chrome
 
 - hosts: mediacenters
   roles:
