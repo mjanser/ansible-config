@@ -1,5 +1,6 @@
 - hosts: workstations
   roles:
+    - mjanser.firewalld
     - fedora-gui
     - mjanser.gitconfig
     - mjanser.powerline
@@ -10,6 +11,7 @@
 
 - hosts: mediacenters
   roles:
+    - mjanser.firewalld
     - fedora-server
     - mjanser.gitconfig
     - mjanser.powerline

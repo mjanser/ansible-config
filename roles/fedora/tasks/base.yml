@@ -82,5 +82,8 @@
     - wget
     - smartmontools
 
+- name: ensure powertop service is enabled
+  service: name=powertop enabled=yes
+
 - name: ensure standard firewalld configuration is not installed
   dnf: name=firewalld-config-standard state=absent

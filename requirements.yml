@@ -1,3 +1,4 @@
+- src: mjanser.firewalld
 - src: mjanser.powerline
 - src: mjanser.tmux
 - src: mjanser.vim
