@@ -1,2 +1,0 @@
-- name: restart mpd
-  service: name=mpd.service state=stopped

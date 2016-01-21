@@ -6,3 +6,5 @@
 - src: mjanser.vagrant
 - src: mjanser.gitconfig
 - src: cmprescott.chrome
+
+- src: mjanser.mpd

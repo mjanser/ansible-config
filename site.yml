@@ -21,7 +21,7 @@
     - mjanser.ssmtp
     - dbserver
     - mediacenter
-    - mpd
+    - mjanser.mpd
     - mythtv
     - kodi
     - owncloud

@@ -49,7 +49,13 @@ SHELL
     }
     ansible.extra_vars = {
       local_network: "192.168.222.0/24",
-      mpd_device: "hw:0,0",
+      mpd_outputs: [
+        {
+          "name" => "Default",
+          "type" => "alsa",
+          "device" => "hw:0,0",
+        }
+      ],
       cloud_server_name: "cloud.mediacenter.test"
     }
   end
