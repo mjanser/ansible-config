@@ -1,7 +1,6 @@
 - name: ensure users exist
   user: name="{{ item.username }}"
         comment="{{ item.name }}"
-        uid="{{ item.uid }}"
         groups="{{ item.groups|default('') }}"
         shell="{{ item.shell|default('/bin/bash') }}"
         password="{{ item.password|default('') }}"
