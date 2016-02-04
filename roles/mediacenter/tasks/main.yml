@@ -39,3 +39,4 @@
 - include: iguana.yml
 - include: sispm.yml
 - include: backup.yml
+- include: certificates.yml

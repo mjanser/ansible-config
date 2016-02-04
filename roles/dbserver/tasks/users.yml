@@ -1,6 +1,0 @@
-- name: ensure mariadb users exist
-  mysql_user: name="{{ item.name }}"
-              host="{{ item.host }}"
-              password="{{ item.password }}"
-              priv="{{ item.privileges }}"
-  with_items: mariadb.users

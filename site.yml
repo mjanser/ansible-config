@@ -19,9 +19,9 @@
     - mjanser.tmux
     - mjanser.vim
     - mjanser.ssmtp
-    - dbserver
-    - mediacenter
     - mjanser.mpd
+    - mjanser.mysql
+    - mediacenter
     - mythtv
     - kodi
     - owncloud

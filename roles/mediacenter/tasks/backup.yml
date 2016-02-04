@@ -1,15 +1,22 @@
-- name: ensure mpd backup directory exists
+---
+- name: ensure backup directories exist
   file:
-    dest: "/var/lib/backup/{{ ansible_hostname }}/mpd"
+    dest: "{{ item }}"
     state: directory
     owner: root
     group: root
     mode: 0750
+  with_items:
+    - "/var/lib/backup/{{ ansible_hostname }}/mpd"
+    - "/var/lib/backup/{{ ansible_hostname }}/db"
 
-- name: ensure mpd backup cron script is installed
+- name: ensure backup cron scripts are installed
   template:
-    src: backup-mpd.sh.j2
-    dest: /etc/cron.daily/mpd_backup.sh
+    src: "backup-{{ item }}.sh.j2"
+    dest: "/etc/cron.daily/{{ item }}_backup.sh"
     owner: root
     group: root
     mode: 0750
+  with_items:
+    - mpd
+    - mariadb
