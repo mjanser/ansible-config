@@ -1,0 +1,12 @@
+---
+- name: ensure certificates are installed
+  copy:
+    src: "{{ item.source }}"
+    dest: "/etc/pki/tls/certs/{{ item.name }}.crt"
+  with_items: mediacenter_certificates
+
+- name: ensure private keys are installed
+  copy:
+    src: "{{ item.source }}"
+    dest: "/etc/pki/tls/private/{{ item.name }}.pem"
+  with_items: mediacenter_private_keys
