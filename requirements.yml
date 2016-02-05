@@ -9,3 +9,4 @@
 
 - src: mjanser.mpd
 - src: mjanser.mysql
+- src: mjanser.nginx

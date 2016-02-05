@@ -21,6 +21,7 @@
     - mjanser.ssmtp
     - mjanser.mpd
     - mjanser.mysql
+    - mjanser.nginx
     - mediacenter
     - mythtv
     - kodi
