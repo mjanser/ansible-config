@@ -22,6 +22,7 @@
     - mjanser.mpd
     - mjanser.mysql
     - mjanser.nginx
+    - mjanser.php
     - mediacenter
     - mythtv
     - kodi
