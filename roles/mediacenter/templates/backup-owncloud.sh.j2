@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# owncloud Backup Script
+#
+
+DIR=/var/lib/backup/$(hostname -s)/etc
+
+set -o pipefail
+
+cp -r /etc/owncloud ${DIR}/
