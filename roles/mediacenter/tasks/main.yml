@@ -44,3 +44,4 @@
 - include: sispm.yml
 - include: backup.yml
 - include: certificates.yml
+- include: owncloud.yml

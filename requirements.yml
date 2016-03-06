@@ -11,3 +11,4 @@
 - src: mjanser.mysql
 - src: mjanser.nginx
 - src: mjanser.php
+- src: mjanser.owncloud

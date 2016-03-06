@@ -23,7 +23,7 @@
     - mjanser.mysql
     - mjanser.nginx
     - mjanser.php
+    - mjanser.owncloud
     - mediacenter
     - mythtv
     - kodi
-    - owncloud
