@@ -1,4 +1,0 @@
-dependencies:
-  - { role: fedora-server }
-  - { role: mjanser.nginx }
-  - { role: mjanser.php }

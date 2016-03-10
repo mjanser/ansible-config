@@ -1,9 +1,0 @@
-- name: ensure mythweb software is installed
-  dnf: name=mythweb
-
-- name: ensure nginx vhost for mythweb is installed
-  template: src=mythweb_nginx.conf.j2
-            dest=/etc/nginx/conf.d/mythweb.conf
-            owner=root group=root mode=0640
-  notify:
-    - restart nginx

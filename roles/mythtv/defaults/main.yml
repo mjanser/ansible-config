@@ -1,4 +1,0 @@
-mythtv_cache_directories:
-  - { name: etc-mythtv-tmp, path: /etc/mythtv/tmp }
-  - { name: etc-mythtv-themecache, path: /etc/mythtv/themecache }
-  - { name: etc-mythtv-cache, path: /etc/mythtv/cache }

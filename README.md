@@ -29,3 +29,11 @@ Then run ansible:
 To run it with sudo, use:
 
     ansible-playbook -i production -l [group] --sudo --ask-sudo-pass site.yml
+
+## TODO
+- kodi role
+- fedora cockpit
+- media-build-experimental-compiler
+- mediacenter control installation?
+- disable firewall?
+- remove selinux things
