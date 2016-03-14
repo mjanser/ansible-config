@@ -24,6 +24,7 @@
     - mjanser.nginx
     - mjanser.php
     - mediacenter
+    - mjanser.cockpit
     - mjanser.owncloud
     - mjanser.mythtv
     - kodi
