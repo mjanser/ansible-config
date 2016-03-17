@@ -1,10 +1,15 @@
 - name: ensure dnf-automatic is installed
-  dnf: name=dnf-automatic
+  package:
+    name: dnf-automatic
 
 - name: ensure dnf-automatic timer is active
-  service: name=dnf-automatic.timer enabled=yes state=started
+  service:
+    name: dnf-automatic.timer
+    enabled: yes
+    state: started
 
 - name: ensure dnf-automatic is configured to emit via email
-  lineinfile: dest=/etc/dnf/automatic.conf
-              regexp='emit_via ='
-              line='emit_via = email'
+  lineinfile:
+    dest: /etc/dnf/automatic.conf
+    regexp: "emit_via ="
+    line: "emit_via = email"

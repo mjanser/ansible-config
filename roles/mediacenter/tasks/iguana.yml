@@ -1,10 +1,15 @@
 - name: ensure iguanaIR software is installed
-  dnf: name=iguanaIR
+  package:
+    name: iguanaIR
 
 - name: ensure iguanaIR is running
-  service: name=iguanaIR enabled=yes state=started
+  service:
+    name: iguanaIR
+    enabled: yes
+    state: started
 
 - name: ensure codes for remotes for iguanaIR are installed
-  git: repo=https://github.com/mjanser/iguanair-pulse-generator
-       dest=/opt/iguanair-pulse-generator
-       version=master
+  git:
+    repo: https://github.com/mjanser/iguanair-pulse-generator
+    dest: /opt/iguanair-pulse-generator
+    version: master

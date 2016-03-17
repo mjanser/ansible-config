@@ -1,40 +1,47 @@
 - name: ensure rpmfusion-free repository is installed
-  dnf: name=http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
+  package:
+    name: http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
 
 - name: ensure rpmfusion-nonfree repository is installed
-  dnf: name=http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
+  package:
+    name: http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
 
 - name: ensure fedora-handbrake repository is installed
   command: dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
-           creates=/etc/yum.repos.d/fedora-handbrake.repo
+  args:
+    creates: /etc/yum.repos.d/fedora-handbrake.repo
 
 - name: ensure docker is installed
-  dnf: name="{{ item }}"
+  package:
+    name: "{{ item }}"
   with_items:
     - docker
     - docker-vim
 
 - name: ensure wheel users don't need password for sudo
-  lineinfile: dest=/etc/sudoers
-              regexp='^%wheel'
-              line='%wheel ALL=(ALL) NOPASSWD:ALL'
-              validate='visudo -cf %s'
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "^%wheel"
+    line: "%wheel ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"
 
 - name: ensure X forwarding is enabled in ssh
-  lineinfile: dest=/etc/ssh/sshd_config
-              regexp='^X11Forwarding '
-              line='X11Forwarding yes'
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^X11Forwarding "
+    line: X11Forwarding yes
 
 - name: ensure there are enough inotify watches available
-  sysctl: name=fs.inotify.max_user_watches
-          value=524288
-          sysctl_file=/etc/sysctl.d/30-inotify.conf
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: 524288
+    sysctl_file: /etc/sysctl.d/30-inotify.conf
 
-- include: base.yml tags=fedora-base
+- include: base.yml
 
 - include: certificate.yml
 
-- include: ssd.yml tags=ssd
+- include: ssd.yml
   when: ansible_devices.sda is defined and ansible_devices.sda.rotational == '0'
 
-- include: accounts.yml tags=accounts
+- include: accounts.yml

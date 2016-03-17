@@ -1,11 +1,11 @@
-# My Ansible configuration #
+# My Ansible configuration
 
 With these files I set up my computers.
 
 ## Configuration
 
-Before you start, you have to create the file `vars.yml` in the `group_vars/all` directory. It contains some private configuration.
-You can copy the file `vars.dist.yml` to start with.
+Before you start, you have to create the files `secrets.yml` in the directories `group_vars/all` and `group_vars/mediacenters`.
+It contains some private configuration. You can copy the corresponding `secrets.dist.yml` files to start with.
 
 ## Vagrant
 
@@ -29,11 +29,3 @@ Then run ansible:
 To run it with sudo, use:
 
     ansible-playbook -i production -l [group] --sudo --ask-sudo-pass site.yml
-
-## TODO
-- kodi role
-- fedora cockpit
-- media-build-experimental-compiler
-- mediacenter control installation?
-- disable firewall?
-- remove selinux things

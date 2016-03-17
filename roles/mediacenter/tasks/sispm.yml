@@ -1,2 +1,0 @@
-- name: ensure sispmctl software is installed
-  dnf: name=sispmctl

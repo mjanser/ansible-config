@@ -1,47 +1,63 @@
-- name: ensure alsa software is installed
-  dnf: name={{ item }}
+- name: ensure mediacenter software is installed
+  package:
+    name: "{{ item }}"
   with_items:
     - alsa-firmware
     - alsa-tools
     - alsa-tools-firmware
     - alsa-utils
+    - sispmctl
 
 - name: ensure media directories exist
-  file: dest="/var/lib/media/{{ item }}"
-        state=directory
-        recurse=yes
-        owner=apache group=apache
-        mode="u=rwX,g=rX,o=rX"
+  file:
+    dest: "/var/lib/media/{{ item }}"
+    state: directory
+    recurse: yes
+    owner: apache
+    group: apache
+    mode: "u=rwX,g=rX,o=rX"
   with_items:
     - music
     - pictures
     - videos
 
 - name: ensure backup directory for mediacenter exists
-  file: dest="/var/lib/backup/{{ ansible_hostname }}"
-        state=directory
-        owner=root group=root mode=0755
+  file:
+    dest: "/var/lib/backup/{{ ansible_hostname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
 - name: ensure backup directories exist
-  file: dest="/var/lib/backup/{{ item.dir }}"
-        state=directory
-        owner="{{ item.user }}" group="{{ item.user }}" mode=0750
-  with_items: backup.directories
+  file:
+    dest: "/var/lib/backup/{{ item.directory }}"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: 0750
+  with_items: "{{backup_directories }}"
 
 - name: ensure udev rule for slowing down dvd drive speed is installed
-  copy: content='KERNEL=="sr0", ACTION=="change", ENV{DISK_MEDIA_CHANGE}=="1", RUN+="/sbin/hdparm -E 9 /dev/sr0"'
-        dest=/etc/udev/rules.d/dvd-speed.rules
-        owner=root group=root mode=644
+  copy:
+    content: 'KERNEL=="sr0", ACTION=="change", ENV{DISK_MEDIA_CHANGE}=="1", RUN+="/sbin/hdparm -E 9 /dev/sr0"'
+    dest: /etc/udev/rules.d/dvd-speed.rules
+    owner: root
+    group: root
+    mode: 644
 
 - name: ensure php-fpm can access network
-  seboolean: name=httpd_can_network_connect state=yes persistent=yes
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
   when: ansible_selinux is defined and ansible_selinux.status == "enabled"
 
 - name: ensure selinux is disabled because of problem with kodi
-  selinux: state=disabled
+  selinux:
+    state: disabled
 
 - include: iguana.yml
-- include: sispm.yml
 - include: backup.yml
 - include: certificates.yml
 - include: owncloud.yml

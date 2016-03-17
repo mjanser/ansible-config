@@ -1,5 +1,6 @@
 - name: ensure gnome tools are installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - "@base-x"
     - epiphany
@@ -22,11 +23,10 @@
     - mpdris2
     - totem
     - vinagre
-  tags:
-    - fedora-gui
 
 - name: ensure multimedia software is installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - ImageMagick
     - avidemux-qt
@@ -35,11 +35,10 @@
     - vlc
     - gimp
     - inkscape
-  tags:
-    - fedora-gui
 
 - name: ensure misc software is installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - dnf-langpacks
     - gitg
@@ -50,22 +49,18 @@
     - owncloud-client-nautilus
     - xca
     - java-1.8.0-openjdk
-  tags:
-    - fedora-gui
 
 - name: ensure gnucash is installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - gnucash
     - gnucash-docs
     - libdbi-dbd-mysql
-  tags:
-    - fedora-gui
 
 - name: ensure office is installed
-  dnf: name="@libreoffice"
-  tags:
-    - fedora-gui
+  package:
+    name: "@libreoffice"
 
 - command: rpm -q man-pages-de
   register: langpacks_installed
@@ -74,5 +69,3 @@
 - name: ensure de langpacks are installed
   command: dnf -y langinstall de_CH
   when: langpacks_installed|failed
-  tags:
-    - fedora-gui

@@ -1,12 +1,14 @@
 - name: ensure own CA certificate exists on the filesystem
-  get_url: url="{{ ssl_ca.url }}" dest="/etc/pki/tls/certs/{{ ssl_ca.name }}.crt"
-  when: ssl_ca.url and ssl_ca.name
+  get_url:
+    url: "{{ ssl_ca_url }}"
+    dest: "/etc/pki/tls/certs/{{ ssl_ca_name }}.crt"
+  when: ssl_ca_url and ssl_ca_name
 
 - command: trust list --filter=ca-anchors
   register: ca_installed
-  when: ssl_ca.url and ssl_ca.name
+  when: ssl_ca_url and ssl_ca_name
   changed_when: false
 
 - name: ensure own CA certificate is installed
-  command: "trust anchor --store /etc/pki/tls/certs/{{ ssl_ca.name }}.crt"
-  when: "ssl_ca.url and ssl_ca.name and ca_installed is defined and ca_installed.stdout.find('{{ ssl_ca.name }}') == -1"
+  command: "trust anchor --store /etc/pki/tls/certs/{{ ssl_ca_name }}.crt"
+  when: "ssl_ca_url and ssl_ca_name and ca_installed is defined and ca_installed.stdout.find('{{ ssl_ca_name }}') == -1"

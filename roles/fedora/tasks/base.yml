@@ -1,5 +1,6 @@
 - name: ensure basic software is installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - dnf-plugins-extras-tracer
     - git
@@ -21,7 +22,8 @@
     - pass
 
 - name: ensure multimedia software is installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - flac
     - ffmpeg
@@ -69,7 +71,8 @@
     - mjpegtools-lav
 
 - name: ensure some tools are installed
-  dnf: name={{ item }}
+  package:
+    name: "{{ item }}"
   with_items:
     - rpmconf
     - iotop
@@ -83,7 +86,11 @@
     - smartmontools
 
 - name: ensure powertop service is enabled
-  service: name=powertop enabled=yes
+  service:
+    name: powertop
+    enabled: yes
 
 - name: ensure standard firewalld configuration is not installed
-  dnf: name=firewalld-config-standard state=absent
+  package:
+    name: firewalld-config-standard
+    state: absent

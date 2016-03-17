@@ -1,0 +1,72 @@
+mediacenter_certificates:
+  - name: mediacenter.lan
+    source: "{{ certificates_source }}/certs/mediacenter.lan.crt"
+  - name: cloud.duss-janser.ch
+    source: "{{ certificates_source }}/certs/cloud.duss-janser.ch.crt"
+mediacenter_private_keys:
+  - name: mediacenter.lan
+    source: "{{ certificates_source }}/private/mediacenter.lan.pem"
+  - name: cloud.duss-janser.ch
+    source: "{{ certificates_source }}/certs/cloud.duss-janser.ch.pem"
+
+mysql_vendor: mariadb
+mysql_ssl_ca: /etc/pki/tls/certs/DussJanser.crt
+mysql_ssl_cert: /etc/pki/tls/certs/mediacenter.lan.crt
+mysql_ssl_key: /etc/pki/tls/private/mediacenter.lan.pem
+mysql_databases:
+  - name: gnucash_martin
+    import_file: /var/lib/backup/mediacenter/db/gnucash_martin_latest.sql
+  - name: gnucash_haushalt
+    import_file: /var/lib/backup/mediacenter/db/gnucash_haushalt_latest.sql
+mysql_users:
+  - name: gnucash
+    host: "%"
+    password: "{{ mysql_gnucash_password }}"
+    privileges: "gnucash_%.*:ALL/*.*:REQUIRESSL"
+  - name: backup
+    host: localhost
+    password: "{{ mysql_backup_password }}"
+    privileges: "*.*:SELECT,RELOAD,LOCK TABLES,SHOW VIEW,PROCESS"
+mysql_firewall_zones:
+  - home
+
+nginx_firewall_zones:
+  - home
+
+php_timezone: Europe/Zurich
+
+cockpit_server_name: cockpit.mediacenter.lan
+cockpit_port: 9091
+
+owncloud_server_name: cloud.duss-janser.ch
+owncloud_config_user_backend: imap
+owncloud_config_user_backend_argument: "{imap.mail.hostpoint.ch:993/imap/ssl}"
+owncloud_config_trusted_domains: ["{{ owncloud_server_name }}"]
+owncloud_config_cli_url: "https://{{ owncloud_server_name }}"
+owncloud_config_mail_domain: "{{ owncloud_server_name }}"
+owncloud_config_defaultapp: "news,files"
+owncloud_apps:
+  - name: files_external
+  - name: user_external
+owncloud_ssl_certificate: "/etc/pki/tls/certs/{{ owncloud_server_name }}.crt"
+owncloud_ssl_certificate_key: "/etc/pki/tls/private/{{ owncloud_server_name }}.key"
+owncloud_restore_database: /var/lib/backups/mediacenter/db/owncloud_latest.sql
+owncloud_restore_config: /var/lib/backups/mediacenter/etc/owncloud/config.php
+owncloud_user_backend_imap_domain: duss-janser.ch
+
+mythtv_mythweb_server: mythweb.mediacenter.lan
+mythtv_backup_directory: /var/lib/backup/mediacenter/mythtv
+mythtv_restore_database: /var/lib/backup/mediacenter/db/mythtv_latest.sql
+
+mpd_name: Mediacenter Music Player
+mpd_outputs:
+  - name: Default
+    type: alsa
+    device: "hw:1,1"
+    mixer_type: software
+mpd_firewall_zones:
+  - home
+
+backup_directories:
+  - { directory: martin-nb, user: martin }
+  - { directory: isabelle-nb, user: isabelle }
