@@ -13,6 +13,7 @@
     - ntp
     - bash-completion
     - gcc
+    - jq
     - php-cli
     - duplicity
     - libsemanage-python
