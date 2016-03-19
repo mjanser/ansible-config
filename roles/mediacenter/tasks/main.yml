@@ -38,10 +38,30 @@
     mode: 0750
   with_items: "{{backup_directories }}"
 
+- name: ensure group for sispmctl exists
+  group:
+    name: sispmctl
+    gid: 450
+    system: yes
+
+- name: ensure apache user is in group sispmctl
+  group:
+    name: apache
+    groups: sispmctl
+    append: yes
+
+- name: ensure udev rule for sispmctl devices is installed
+  copy:
+    content: 'ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="fd13", GROUP="sispmctl"'
+    dest: /etc/udev/rules.d/10-sispmctl.rules
+    owner: root
+    group: root
+    mode: 644
+
 - name: ensure udev rule for slowing down dvd drive speed is installed
   copy:
     content: 'KERNEL=="sr0", ACTION=="change", ENV{DISK_MEDIA_CHANGE}=="1", RUN+="/sbin/hdparm -E 9 /dev/sr0"'
-    dest: /etc/udev/rules.d/dvd-speed.rules
+    dest: /etc/udev/rules.d/10-dvd-speed.rules
     owner: root
     group: root
     mode: 644
