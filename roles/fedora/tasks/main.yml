@@ -25,5 +25,3 @@
 
 - include: ssd.yml
   when: ansible_devices.sda is defined and ansible_devices.sda.rotational == '0'
-
-- include: accounts.yml
