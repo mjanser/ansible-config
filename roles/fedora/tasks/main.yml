@@ -16,7 +16,7 @@
     sysctl_file: /etc/sysctl.d/30-inotify.conf
 
 - name: ensure script for initializing projects is installed
-  file:
+  copy:
     src: init-github-projects.sh
     dest: /usr/local/bin/ini-github-projects
     mode: 0755
