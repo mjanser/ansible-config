@@ -39,7 +39,6 @@
   package:
     name: "{{ item }}"
   with_items:
-    - dnf-langpacks
     - gitg
     - virt-manager
     - deja-dup
