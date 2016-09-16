@@ -1,22 +1,6 @@
-- name: ensure rpmfusion-free repository is installed
+- name: ensure UnitedRPMs repository is installed
   package:
-    name: http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
-
-- name: ensure rpmfusion-nonfree repository is installed
-  package:
-    name: http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
-
-- name: ensure fedora-handbrake repository is installed
-  command: dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
-  args:
-    creates: /etc/yum.repos.d/fedora-handbrake.repo
-
-- name: ensure docker is installed
-  package:
-    name: "{{ item }}"
-  with_items:
-    - docker
-    - docker-vim
+    name: https://raw.githubusercontent.com/UnitedRPMs/unitedrpms/master/RPM/unitedrpms-{{ ansible_distribution_version }}-1.noarch.rpm
 
 - name: ensure wheel users don't need password for sudo
   lineinfile:
@@ -24,12 +8,6 @@
     regexp: "^%wheel"
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "visudo -cf %s"
-
-- name: ensure X forwarding is enabled in ssh
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: "^X11Forwarding "
-    line: X11Forwarding yes
 
 - name: ensure there are enough inotify watches available
   sysctl:
@@ -44,8 +22,6 @@
     mode: 0755
 
 - include: base.yml
-
-- include: certificate.yml
 
 - include: ssd.yml
   when: ansible_devices.sda is defined and ansible_devices.sda.rotational == '0'

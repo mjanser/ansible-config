@@ -1,17 +1,13 @@
-ssl_ca_url: http://gogan.ch/ca.crt
-ssl_ca_name: Duss-Janser
-
 users:
   -
     username: martin
     name: Martin Janser
-    groups: "wheel,vagrant"
+    groups: "wheel,ecryptfs,vagrant"
     password: "{{ user_default_password }}"
     ssh_key: "{{ users_martin_ssh_key }}"
     hosts: [ workstations, mediacenters ]
     symlinks:
       - { source: Dokumente/Liip/Zebra/config, target: .taxirc }
-      - { source: .config/vrapper/vrapperrc, target: .vrapperrc }
   -
     username: isabelle
     name: Isabelle Duss
@@ -25,7 +21,7 @@ gitconfig_users:
     ignore_github:
       - Linux
       - Vagrant
-      - Eclipse
+      - Ansible
       - Vim
 
 powerline_users:
@@ -56,5 +52,3 @@ vagrant_firewalld: true
 vagrant_plugins:
   - user: martin
     plugin: vagrant-hostmanager
-  - user: martin
-    plugin: vagrant-vbguest

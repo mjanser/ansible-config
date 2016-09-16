@@ -8,6 +8,7 @@
     - python-pip
     - python-firewall
     - fuse-sshfs
+    - exfat-utils
     - bzip2
     - unrar
     - ntp

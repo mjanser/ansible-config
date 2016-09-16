@@ -20,7 +20,6 @@
     - gnome-tweak-tool
     - dconf-editor
     - gmpc
-    - mpdris2
     - totem
     - vinagre
 
@@ -48,7 +47,10 @@
     - owncloud-client
     - owncloud-client-nautilus
     - xca
-    - java-1.8.0-openjdk
+    - scudcloud
+    - atom
+    - nodejs
+    - npm
 
 - name: ensure gnucash is installed
   package:
