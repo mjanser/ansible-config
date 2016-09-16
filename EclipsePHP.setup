@@ -61,6 +61,8 @@
           name="de.anbos.eclipse.logviewer.feature.feature.group"/>
       <requirement
           name="de.bitexpert.eclipse.vagrant.feature.feature.group"/>
+      <requirement
+          name="editorconfig-eclipse-feature.feature.group"/>
       <repository
           url="http://vrapper.sourceforge.net/update-site/stable"/>
       <repository
@@ -79,6 +81,8 @@
           url="https://bitbucket.org/denmiroch/jsontools/raw/ae2e9d683249ef989d940b441e00b74df729164c/JsonSite/site.xml"/>
       <repository
           url="http://update.bitexpert.de/eclipse/3.5/"/>
+      <repository
+          url="https://editorconfig-eclipse.github.io/repository"/>
     </setupTask>
     <setupTask
         xsi:type="setup.p2:P2Task"
