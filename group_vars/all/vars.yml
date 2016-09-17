@@ -29,6 +29,7 @@ vim_plugins:
   - "arnaud-lb/vim-php-namespace"
   - "tpope/vim-fugitive"
 
+vagrant_virtualbox: false
 vagrant_firewalld: true
 vagrant_plugins:
   - user: martin
