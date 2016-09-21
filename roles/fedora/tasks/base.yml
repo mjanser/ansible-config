@@ -16,12 +16,19 @@
     - gcc
     - jq
     - php-cli
+    - php-pdo
+    - php-mbstring
     - duplicity
     - libsemanage-python
     - mariadb
     - openvpn
     - ansible
+    - ansible-lint
     - pass
+    - aspell-de
+    - hunspell-de
+    - python3-click
+    - python3-appdirs
 
 - name: ensure multimedia software is installed
   package:

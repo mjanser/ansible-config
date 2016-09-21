@@ -17,6 +17,7 @@
     - gnome-terminal
     - gnome-power-manager
     - gnome-activity-journal
+    - gnome-shell-extension-calc
     - gnome-tweak-tool
     - dconf-editor
     - gmpc
@@ -41,6 +42,7 @@
   with_items:
     - gitg
     - virt-manager
+    - libvirt-daemon-config-network
     - deja-dup
     - deja-dup-nautilus
     - owncloud-client
