@@ -1,0 +1,26 @@
+
+{% for radio in router_wireless_radios %}
+config wifi-device '{{ radio.name }}'
+	option type '{{ radio.type }}'
+	option channel '{{ radio.channel }}'
+	option hwmode '{{ radio.hwmode }}'
+	option path '{{ radio.path }}'
+	option htmode '{{ radio.htmode }}'
+	option disabled '0'
+	option txpower '{{ radio.txpower }}'
+	option country '{{ router_country }}'
+
+{% endfor %}
+
+{% for interface in router_wireless_interfaces %}
+config wifi-iface
+	option device '{{ interface.device }}'
+	option network '{{ interface.network }}'
+	option mode 'ap'
+	option disabled '0'
+	option ssid '{{ interface.ssid }}'
+	option encryption 'psk2+tkip+aes'
+	option key '{{ interface.key }}'
+	option isolate '{{ interface.isolate }}'
+
+{% endfor %}

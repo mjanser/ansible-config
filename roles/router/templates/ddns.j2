@@ -1,0 +1,14 @@
+
+config ddns 'global'
+	option date_format '%F %R'
+	option log_lines '250'
+	option allow_local_ip '0'
+
+config service 'ipv4'
+	option interface 'wan'
+	option ip_source 'network'
+	option ip_network 'wan'
+	option service_name '{{ router_ddns_service }}'
+	option lookup_host '{{ router_ddns_host }}'
+	option password '{{ router_ddns_password }}'
+	option enabled '1'

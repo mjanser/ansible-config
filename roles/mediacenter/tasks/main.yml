@@ -1,3 +1,6 @@
+---
+- include: accounts.yml
+
 - name: ensure mediacenter software is installed
   package:
     name: "{{ item }}"
@@ -20,6 +23,7 @@
     - music
     - pictures
     - videos
+    - playlists
 
 - name: ensure backup directory for mediacenter exists
   file:
@@ -31,12 +35,12 @@
 
 - name: ensure backup directories exist
   file:
-    dest: "/var/lib/backup/{{ item.directory }}"
+    dest: "/var/lib/backup/{{ item.username }}"
     state: directory
-    owner: "{{ item.user }}"
-    group: "{{ item.user }}"
-    mode: 0750
-  with_items: "{{backup_directories }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: 0755
+  with_items: "{{ mediacenter_accounts }}"
 
 - name: ensure group for sispmctl exists
   group:
@@ -45,9 +49,9 @@
     system: yes
 
 - name: ensure apache user is in group sispmctl
-  group:
+  user:
     name: apache
-    groups: sispmctl
+    groups: sispmctl,dialout,pulse-access
     append: yes
 
 - name: ensure udev rule for sispmctl devices is installed
@@ -77,7 +81,8 @@
   selinux:
     state: disabled
 
+- include: dnf.yml
 - include: iguana.yml
 - include: backup.yml
-- include: certificates.yml
-- include: owncloud.yml
+- include: ddbridge.yml
+- include: controlapp.yml

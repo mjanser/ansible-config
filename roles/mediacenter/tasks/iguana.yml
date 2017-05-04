@@ -2,6 +2,11 @@
   package:
     name: iguanaIR
 
+- name: ensure iguanaIR module is blacklisted
+  copy:
+    dest: /etc/modprobe.d/iguana-blacklist.conf
+    content: "blacklist iguanair\n"
+
 - name: ensure iguanaIR is running
   service:
     name: iguanaIR

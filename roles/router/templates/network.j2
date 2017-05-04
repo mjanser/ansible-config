@@ -1,0 +1,49 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd8c:9008:bb66::/48'
+
+config interface 'lan'
+	option ifname '{{ router_lan_interfaces }}'
+	option force_link '1'
+	option type 'bridge'
+	option proto 'static'
+	option netmask '{{ router_lan_netmask }}'
+	option ipaddr '{{ router_lan_ip }}'
+	option ip6assign '60'
+
+config interface 'wan'
+	option ifname '{{ router_wan_interfaces }}'
+	option proto 'dhcp'
+
+config interface 'wan6'
+	option ifname '@wan'
+	option proto 'dhcpv6'
+
+config interface 'guest'
+	option proto 'static'
+	option ipaddr '{{ router_guest_ip }}'
+	option netmask '{{ router_guest_netmask }}'
+
+config interface 'VPN'
+	option proto 'none'
+	option ifname 'tun0'
+	option auto '1'
+
+config switch
+	option name 'switch0'
+	option reset '1'
+	option enable_vlan '1'
+
+{% for vlan in router_vlans %}
+config switch_vlan
+	option device 'switch0'
+	option vlan '{{ vlan.id }}'
+	option ports '{{ vlan.ports }}'
+
+{% endfor %}

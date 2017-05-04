@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup data for {{ item }}
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/{{ item }}-backup.sh

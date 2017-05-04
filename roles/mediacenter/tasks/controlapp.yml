@@ -1,0 +1,27 @@
+---
+- name: ensure control app is installed
+  git:
+    repo: https://github.com/mjanser/php-mediacenter-control-app.git
+    dest: /var/www/mediacenter-control
+    version: master
+
+- name: ensure control app dependencies are installed
+  composer:
+    command: install
+    working_dir: /var/www/mediacenter-control
+    prefer_dist: yes
+
+- name: ensure writable directories for controlapp have correct permissions
+  file:
+    path: /var/www/mediacenter-control/app/cache
+    state: directory
+    owner: apache
+    group: apache
+    mode: "u=rwX,g=rX,o=rX"
+    recurse: yes
+
+- name: ensure nginx vhost for control app is configured
+  template:
+    src: controlapp_nginx_vhost.conf.j2
+    dest: "/etc/nginx/conf.d/vhost_controlapp.conf"
+  notify: reload nginx

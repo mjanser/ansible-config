@@ -1,0 +1,35 @@
+
+config system
+	option hostname '{{ router_hostname }}'
+	option conloglevel '4'
+	option cronloglevel '8'
+	option timezone '{{ router_timezone }}'
+	option zonename '{{ router_timezone_name }}'
+
+config timeserver 'ntp'
+	option enabled '1'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+
+config watchcat
+	option period '6h'
+	option mode 'ping'
+	option pinghosts '8.8.8.8'
+	option forcedelay '30'
+
+{% for led in router_leds %}
+config led
+	option name '{{ led.name }}'
+	option sysfs '{{ led.sysfs }}'
+	option default '{{ led.default }}'
+	option trigger '{{ led.trigger }}'
+{% if led.mode is defined %}
+	option mode '{{ led.mode }}'
+{% endif %}
+{% if led.dev is defined %}
+	option dev '{{ led.dev }}'
+{% endif %}
+
+{% endfor %}

@@ -20,9 +20,12 @@
     - gnome-shell-extension-calc
     - gnome-tweak-tool
     - dconf-editor
+    - gnome-todo
+    - gnome-packagekit
     - gmpc
     - totem
     - vinagre
+    - simple-scan
 
 - name: ensure multimedia software is installed
   package:
@@ -35,6 +38,9 @@
     - vlc
     - gimp
     - inkscape
+    - pulseaudio-module-zeroconf
+    - paprefs
+    - pavucontrol
 
 - name: ensure misc software is installed
   package:
@@ -45,13 +51,21 @@
     - libvirt-daemon-config-network
     - deja-dup
     - deja-dup-nautilus
-    - owncloud-client
-    - owncloud-client-nautilus
+    - nextcloud-client
+    - nextcloud-client-nautilus
     - xca
     - scudcloud
-    - atom
+    - php-cli
+    - php-pdo
+    - php-mbstring
+    - php-xml
+    - composer
     - nodejs
     - npm
+    - golang
+    - glide
+    - python3-click
+    - python3-appdirs
 
 - name: ensure gnucash is installed
   package:
@@ -64,3 +78,48 @@
 - name: ensure office is installed
   package:
     name: "@libreoffice"
+
+- name: ensure Cloud Foundry CLI repository is configured
+  yum_repository:
+    name: cloudfoundry-cli
+    description: Cloud Foundry CLI
+    baseurl: https://packages.cloudfoundry.org/fedora
+    gpgkey: https://packages.cloudfoundry.org/fedora/cli.cloudfoundry.org.key
+    gpgcheck: yes
+    skip_if_unavailable: yes
+
+- name: ensure copr repository for atom is configured
+  yum_repository:
+    name: atom
+    description: Copr repo for atom owned by mosquito
+    baseurl: https://copr-be.cloud.fedoraproject.org/results/mosquito/atom/fedora-$releasever-$basearch/
+    gpgkey: https://copr-be.cloud.fedoraproject.org/results/mosquito/atom/pubkey.gpg
+    gpgcheck: yes
+    skip_if_unavailable: yes
+
+- name: ensure copr repository for gnome shell browser integration is configured
+  yum_repository:
+    name: chrome-gnome-shell
+    description: Copr repo for chrome-gnome-shell owned by region51
+    baseurl: https://copr-be.cloud.fedoraproject.org/results/region51/chrome-gnome-shell/fedora-$releasever-$basearch/
+    gpgkey: https://copr-be.cloud.fedoraproject.org/results/region51/chrome-gnome-shell/pubkey.gpg
+    gpgcheck: yes
+    skip_if_unavailable: yes
+
+- name: ensure copr repository for packer is configured
+  yum_repository:
+    name: packer
+    description: Copr repo for packer owned by bnied
+    baseurl: https://copr-be.cloud.fedoraproject.org/results/bnied/packer/fedora-$releasever-$basearch/
+    gpgkey: https://copr-be.cloud.fedoraproject.org/results/bnied/packer/pubkey.gpg
+    gpgcheck: yes
+    skip_if_unavailable: yes
+
+- name: ensure packages from custom repositories are installed
+  package:
+    name: "{{ item }}"
+  with_items:
+    - cf-cli
+    - atom
+    - chrome-gnome-shell
+    - packer

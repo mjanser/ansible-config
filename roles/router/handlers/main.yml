@@ -1,0 +1,15 @@
+---
+- name: reload network
+  raw: /etc/init.d/network reload
+
+- name: reload dnsmasq
+  raw: /etc/init.d/dnsmasq reload
+
+- name: reload firewall
+  raw: /etc/init.d/firewall reload
+
+- name: reload openvpn
+  raw: /etc/init.d/openvpn reload
+
+- name: reload ddns
+  raw: /etc/init.d/ddns reload

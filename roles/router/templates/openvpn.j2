@@ -1,0 +1,28 @@
+package openvpn
+
+config openvpn vpn
+	option enabled 1
+	option port 1194
+	option proto udp
+	option dev tun
+	option ca /etc/openvpn/ca.crt
+	option cert /etc/openvpn/router.crt
+	option key /etc/openvpn/router.key
+	option dh /etc/openvpn/dh1024.pem
+	option server "{{ router_vpn_network }} {{ router_vpn_netmask }}"
+	option ifconfig_pool_persist /tmp/ipp.txt
+	list push "route {{ router_lan_network }} {{ router_lan_netmask }}"
+	list push "dhcp-option DNS {{ router_vpn_ip }}"
+	list push "dhcp-option DOMAIN lan"
+	list push "comp-lzo adaptive"
+	option client_to_client 1
+	option keepalive "10 120"
+	option tls_auth "/etc/openvpn/ta.key 1"
+	option comp_lzo adaptive
+	option fast_io on
+	option max_clients 10
+	option persist_key 1
+	option persist_tun 1
+	option user nobody
+	option status /tmp/openvpn-status.log
+	option verb 3

@@ -24,4 +24,12 @@
 - include: base.yml
 
 - include: ssd.yml
-  when: ansible_devices.sda is defined and ansible_devices.sda.rotational == '0'
+  when: ansible_devices.values()|rejectattr("rotational", "sameas", "0")|list|length > 0
+
+- name: ensure users are created
+  user:
+    name: "{{ item.user }}"
+    comment: "{{ item.name }}"
+    groups: "{{ item.groups }}"
+    append: yes
+  with_items: "{{ users }}"

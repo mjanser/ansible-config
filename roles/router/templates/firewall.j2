@@ -1,0 +1,95 @@
+
+config defaults
+	option syn_flood '1'
+	option input 'REJECT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+
+{% for zone in router_firewall_zones %}
+config zone
+	option name '{{ zone.name }}'
+	option network '{{ zone.network }}'
+	option input '{{ zone.input }}'
+	option output '{{ zone.output }}'
+	option forward '{{ zone.forward }}'
+{% if zone.masq is defined %}
+	option masq '{{ zone.masq }}'
+{% endif %}
+{% if zone.mtu_fix is defined %}
+	option mtu_fix '{{ zone.mtu_fix }}'
+{% endif %}
+
+{% endfor %}
+
+{% for forwarding in router_firewall_forwardings %}
+config forwarding
+	option src '{{ forwarding.src }}'
+	option dest '{{ forwarding.dest }}'
+
+{% endfor %}
+
+{% for redirect in router_firewall_redirects %}
+config redirect
+	option name '{{ redirect.name }}'
+	option target 'DNAT'
+	option src '{{ redirect.src }}'
+	option dest '{{ redirect.dest }}'
+	option proto '{{ redirect.proto }}'
+	option src_dport '{{ redirect.src_dport }}'
+	option dest_ip '{{ redirect.dest_ip }}'
+	option dest_port '{{ redirect.dest_port }}'
+
+{% endfor %}
+
+{% for rule in router_firewall_rules %}
+config rule
+	option name '{{ rule.name }}'
+{% if rule.src is defined %}
+	option src '{{ rule.src }}'
+{% endif %}
+{% if rule.src_port is defined %}
+	option src_port '{{ rule.src_port }}'
+{% endif %}
+{% if rule.dest is defined %}
+	option dest '{{ rule.dest }}'
+{% endif %}
+{% if rule.dest_port is defined %}
+	option dest_port '{{ rule.dest_port }}'
+{% endif %}
+{% if rule.proto is defined %}
+	option proto '{{ rule.proto }}'
+{% endif %}
+{% if rule.icmp_type is defined %}
+	option icmp_type '{{ rule.icmp_type }}'
+{% endif %}
+{% if rule.icmp_types is defined %}
+{% for type in rule.icmp_types %}
+	list icmp_type '{{ type }}'
+{% endfor %}
+{% endif %}
+{% if rule.limit is defined %}
+	option limit '{{ rule.limit }}'
+{% endif %}
+{% if rule.family is defined %}
+	option family '{{ rule.family }}'
+{% endif %}
+	option target '{{ rule.target }}'
+
+{% endfor %}
+
+config include
+	option path '/etc/firewall.user'
+
+config include
+	option path '/etc/firewall.d/with_reload/firewall.include.sh'
+	option reload '1'
+
+config include
+	option path '/etc/firewall.d/without_reload/firewall.include.sh'
+	option reload '0'
+
+config include 'miniupnpd'
+	option type 'script'
+	option path '/usr/share/miniupnpd/firewall.include'
+	option family 'any'
+	option reload '1'

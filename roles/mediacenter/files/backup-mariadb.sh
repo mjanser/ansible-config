@@ -3,10 +3,7 @@
 # MariaDB Backup Script
 #
 
-USER=backup
-PASS='{{ mysql_backup_password }}'
-DIR=/var/lib/backup/$(hostname -s)/db
-ROTATE=30
+. /etc/backup/mariadb
 
 set -o pipefail
 

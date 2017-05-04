@@ -1,3 +1,10 @@
+users:
+  - user: martin
+    name: Martin Janser
+    groups:
+      - wheel
+      - ecryptfs
+
 gitconfig_users:
   - user: martin
     name: Martin Janser
@@ -31,6 +38,6 @@ vim_plugins:
 
 vagrant_virtualbox: false
 vagrant_firewalld: true
-vagrant_plugins:
-  - user: martin
-    plugin: vagrant-hostmanager
+vagrant_plugin_packages:
+  - name: vagrant-hostmanager
+  - name: vagrant-sshfs

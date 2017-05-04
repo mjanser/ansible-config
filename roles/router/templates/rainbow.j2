@@ -1,0 +1,7 @@
+
+{% for led in router_rainbow %}
+config led '{{ led.name }}'
+	option status 'auto'
+	option color '{{ led.color }}'
+
+{% endfor %}

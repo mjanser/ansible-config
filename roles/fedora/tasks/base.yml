@@ -7,17 +7,16 @@
     - gitflow
     - python-pip
     - python-firewall
+    - python-netaddr
     - fuse-sshfs
     - exfat-utils
+    - ecryptfs-utils
     - bzip2
     - unrar
     - ntp
     - bash-completion
     - gcc
     - jq
-    - php-cli
-    - php-pdo
-    - php-mbstring
     - duplicity
     - libsemanage-python
     - mariadb
@@ -27,8 +26,6 @@
     - pass
     - aspell-de
     - hunspell-de
-    - python3-click
-    - python3-appdirs
 
 - name: ensure multimedia software is installed
   package:
@@ -52,7 +49,6 @@
     - gstreamer1-plugins-good
     - gstreamer1-plugins-bad-free
     - gstreamer1-plugins-bad-free-extras
-    - gstreamer1-plugins-bad-freeworld
     - gstreamer1-plugins-good-extras
     - gstreamer1-plugins-ugly
     - gstreamer1-vaapi
@@ -75,6 +71,7 @@
     - libexif
     - mjpegtools
     - mjpegtools-lav
+    - mediainfo
 
 - name: ensure some tools are installed
   package:

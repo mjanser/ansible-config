@@ -1,0 +1,249 @@
+router_hostname: router
+router_timezone: "CET-1CEST,M3.5.0,M10.5.0/3"
+router_timezone_name: Europe/Zurich
+router_country: CH
+
+router_lan_interfaces: eth0 eth2
+router_wan_interfaces: eth1
+
+router_vlans:
+  - id: 1
+    ports: 0 1 2 3 5
+  - id: 2
+    ports: 4 6
+
+router_wireless_radios:
+  - name: radio_11a
+    type: mac80211
+    channel: 36
+    hwmode: 11a
+    path: "platform/soc/soc:pcie-controller/pci0000:00/0000:00:02.0/0000:02:00.0"
+    htmode: VHT80
+    txpower: 23
+  - name: radio_11g
+    type: mac80211
+    channel: 11
+    hwmode: 11g
+    path: "platform/soc/soc:pcie-controller/pci0000:00/0000:00:03.0/0000:03:00.0"
+    htmode: HT20
+    txpower: 19
+
+router_wireless_interfaces:
+  - device: radio_11a
+    network: lan
+    ssid: "{{ router_wireless_ssid }}"
+    key: "{{ router_wireless_key }}"
+    isolate: 0
+  - device: radio_11g
+    network: lan
+    ssid: "{{ router_wireless_ssid }}"
+    key: "{{ router_wireless_key }}"
+    isolate: 0
+  - device: radio_11g
+    network: guest
+    ssid: "{{ router_wireless_guest_ssid }}"
+    key: "{{ router_wireless_guest_key }}"
+    isolate: 1
+
+router_dhcp:
+  - interface: lan
+    start: 100
+    limit: 150
+    leasetime: 12h
+    dhcpv6: server
+    options:
+      - "3,{{ router_lan_ip }}"
+      - "6,{{ router_lan_ip }}"
+  - interface: guest
+    start: 100
+    limit: 150
+    leasetime: 5h
+    options:
+      - "3,{{ router_guest_ip }}"
+      - "6,{{ router_guest_ip }}"
+
+router_firewall_zones:
+  - name: lan
+    network: lan
+    input: ACCEPT
+    output: ACCEPT
+    forward: ACCEPT
+  - name: wan
+    network: wan wan6
+    input: REJECT
+    output: ACCEPT
+    forward: REJECT
+    masq: 1
+    mtu_fix: 1
+  - name: guest
+    network: guest
+    input: REJECT
+    output: ACCEPT
+    forward: REJECT
+  - name: vpn
+    network: vpn
+    input: ACCEPT
+    output: ACCEPT
+    forward: ACCEPT
+    masq: 1
+
+router_firewall_forwardings:
+  - src: lan
+    dest: wan
+  - src: guest
+    dest: wan
+  - src: vpn
+    dest: lan
+  - src: lan
+    dest: vpn
+
+router_firewall_redirects:
+  - name: https
+    src: wan
+    dest: lan
+    proto: tcp
+    src_dport: 443
+    dest_ip: "{{ router_host_web_ip }}"
+    dest_port: 443
+  - name: http
+    src: wan
+    dest: lan
+    proto: tcp
+    src_dport: 80
+    dest_ip: "{{ router_host_web_ip }}"
+    dest_port: 80
+
+router_firewall_rules:
+  - name: WAN-DHCP
+    src: wan
+    proto: udp
+    dest_port: 68
+    family: ipv4
+    target: ACCEPT
+  - name: WAN-DHCPv6
+    src: wan
+    proto: udp
+    src_ip: "fe80::/10"
+    src_port: 547
+    dest_ip: "fe80::/10"
+    dest_port: 546
+    family: ipv6
+    target: ACCEPT
+  - name: WAN-Ping
+    src: wan
+    proto: icmp
+    icmp_type: echo-request
+    family: ipv4
+    target: ACCEPT
+  - name: WAN-IGMP
+    src: wan
+    proto: igmp
+    family: ipv4
+    target: ACCEPT
+  - name: WAN-MLD
+    src: wan
+    proto: icmp
+    src_ip: "fe80::/10"
+    family: ipv6
+    target: ACCEPT
+    icmp_types:
+      - 130/0
+      - 131/0
+      - 132/0
+      - 143/0
+  - name: WAN-ICMPv6-Input
+    src: wan
+    proto: icmp
+    family: ipv6
+    limit: 1000/sec
+    target: ACCEPT
+    icmp_types:
+      - echo-request
+      - echo-reply
+      - destination-unreachable
+      - packet-too-big
+      - time-exceeded
+      - bad-header
+      - unknown-header-type
+      - router-solicitation
+      - neighbour-solicitation
+      - router-advertisement
+      - neighbour-advertisement
+  - name: WAN-ICMPv6-Forward
+    src: wan
+    dest: "*"
+    proto: icmp
+    family: ipv6
+    limit: 1000/sec
+    target: ACCEPT
+    icmp_types:
+      - echo-request
+      - echo-reply
+      - destination-unreachable
+      - packet-too-big
+      - time-exceeded
+      - bad-header
+      - unknown-header-type
+  - name: WAN-ESP
+    src: wan
+    dest: lan
+    proto: esp
+    target: ACCEPT
+  - name: WAN-ISAKMP
+    src: wan
+    dest: lan
+    dest_port: 500
+    proto: udp
+    target: ACCEPT
+  - name: Guest-DNS
+    src: guest
+    dest_port: 53
+    proto: udp tcp
+    target: ACCEPT
+  - name: Guest-DHCP
+    src: guest
+    src_port: 67-68
+    dest_port: 67-68
+    proto: udp
+    target: ACCEPT
+  - name: VPN
+    src: "*"
+    dest_port: 1194
+    proto: udp
+    target: ACCEPT
+
+router_leds:
+  - name: PCI1
+    sysfs: omnia-led:pci1
+    default: 1
+    trigger: netdev
+    mode: link tx rx
+    dev: wlan1
+  - name: PCI2
+    sysfs: omnia-led:pci2
+    default: 1
+    trigger: netdev
+    mode: link tx rx
+    dev: wlan0
+  - name: PCI3
+    sysfs: omnia-led:pci3
+    default: 0
+    trigger: sda
+  - name: USR1
+    sysfs: omnia-led:user1
+    default: 0
+    trigger: netdev
+    mode: link tx rx
+    dev: tun0
+
+router_rainbow:
+  - name: all
+    color: 00000F
+  - name: pwr
+    color: 0F0000
+  - name: usr1
+    color: 0F0F00
+  - name: pci3
+    color: F0FFF0
+  - name: wan
+    color: 000F00

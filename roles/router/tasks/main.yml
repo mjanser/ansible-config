@@ -1,0 +1,51 @@
+---
+- name: ensure system configuration is installed
+  template:
+    src: system.j2
+    dest: /etc/config/system
+
+- name: ensure user_notify configuration is installed
+  template:
+    src: user_notify.j2
+    dest: /etc/config/user_notify
+
+- name: ensure rainbow configuration is installed
+  template:
+    src: rainbow.j2
+    dest: /etc/config/rainbow
+
+- name: ensure network configuration is installed
+  template:
+    src: network.j2
+    dest: /etc/config/network
+  notify: reload network
+
+- name: ensure wireless configuration is installed
+  template:
+    src: wireless.j2
+    dest: /etc/config/wireless
+  notify: reload network
+
+- name: ensure dhcp configuration is installed
+  template:
+    src: dhcp.j2
+    dest: /etc/config/dhcp
+  notify: reload dnsmasq
+
+- name: ensure firewall configuration is installed
+  template:
+    src: firewall.j2
+    dest: /etc/config/firewall
+  notify: reload firewall
+
+- name: ensure openvpn configuration is installed
+  template:
+    src: openvpn.j2
+    dest: /etc/config/openvpn
+  notify: reload openvpn
+
+- name: ensure ddns configuration is installed
+  template:
+    src: ddns.j2
+    dest: /etc/config/ddns
+  notify: reload ddns

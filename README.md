@@ -4,12 +4,12 @@ With these files I set up my computers.
 
 ## Configuration
 
-Before you start, you have to create the files `secrets.yml` in the directories `group_vars/all` and `group_vars/mediacenters`.
+Before you start, you have to create the files `secrets.yml` in the directories `group_vars/all`, `group_vars/mediacenters` and `group_vars/routers`.
 It contains some private configuration. You can copy the corresponding `secrets.dist.yml` files to start with.
 
 ## Vagrant
 
-For testing there is a Vagrantfile to install in Vagrant boxes.
+For testing there is a Vagrantfile which runs the installation in virtual machines.
 
 ## Without Vagrant
 
@@ -28,4 +28,4 @@ Then run ansible:
 
 To run it with sudo, use:
 
-    ansible-playbook -i production -l [group] --sudo --ask-sudo-pass site.yml
+    ansible-playbook -i production -l [group] --become site.yml

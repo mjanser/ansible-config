@@ -1,0 +1,20 @@
+
+config smtp 'smtp'
+	option sender_name 'turris'
+	option enable '1'
+	option use_turris_smtp '0'
+	option security 'ssl'
+	option server '{{ ssmtp_mailhub_host }}'
+	option port '{{ ssmtp_mailhub_port }}'
+	option username '{{ ssmtp_auth_username }}'
+	option password '{{ ssmtp_auth_password }}'
+	option from '{{ router_smtp_from }}'
+	list to '{{ router_smtp_to }}'
+
+config notifications 'notifications'
+	option severity '3'
+	option news '1'
+
+config reboot 'reboot'
+	option delay '3'
+	option time '03:30'

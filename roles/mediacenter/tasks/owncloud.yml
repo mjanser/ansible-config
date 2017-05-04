@@ -1,6 +1,0 @@
----
-- name: ensure domain is set for owncloud imap login
-  replace:
-    dest: /var/www/owncloud/apps/user_external/lib/imap.php
-    regexp: '^(.*)imap_open\((.*), \$uid, (.*)\);$'
-    replace: "\\1imap_open(\\2, $uid . '@{{ owncloud_user_backend_imap_domain }}', \\3);"

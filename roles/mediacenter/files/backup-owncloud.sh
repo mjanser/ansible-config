@@ -3,7 +3,7 @@
 # owncloud Backup Script
 #
 
-DIR=/var/lib/backup/$(hostname -s)/etc
+. /etc/backup/owncloud
 
 set -o pipefail
 

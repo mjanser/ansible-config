@@ -3,8 +3,7 @@
 # MPD Backup Script
 #
 
-DIR=/var/lib/backup/$(hostname -s)/mpd
-ROTATE=30
+. /etc/backup/mpd
 
 set -o pipefail
 

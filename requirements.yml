@@ -8,9 +8,12 @@
 - src: cmprescott.chrome
 
 - src: mjanser.cockpit
+- src: mjanser.lets-encrypt
+- src: mjanser.pulseaudio
 - src: mjanser.mpd
 - src: mjanser.mysql
 - src: mjanser.nginx
 - src: mjanser.php
 - src: mjanser.owncloud
 - src: mjanser.mythtv
+- src: mjanser.kodi
