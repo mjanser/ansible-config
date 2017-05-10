@@ -4,9 +4,9 @@
 # This script can be used to clone a list of repositories hosted on Github.
 # Some examples:
 #
-# cd ansible && init-github-projects [username] ansible ansible
-# cd firefox && init-github-projects [username] firefox firefox-addon
-# cd web && init-github-projects [username] php php
+# cd ansible && init-github-projects [username] topic:ansible ansible-
+# cd firefox && init-github-projects [username] firefox firefox-addon-
+# cd web && init-github-projects [username] topic:php php-
 # cd web && init-github-projects [username] website
 #
 
@@ -28,5 +28,5 @@ fi
 URL=https://api.github.com/search/repositories?q=user:$USERNAME+$TERM
 
 curl -s -H "Accept: application/vnd.github.v3+json" $URL | jq -r ".items[] \
-  | \"test ! -d $DESTINATION/\" + .name + \" && git clone -q --recursive \" + .ssh_url + \" $DESTINATION/\" + (.name|ltrimstr(\"$TRIM\"))" \
+  | \"test ! -d $DESTINATION/\" + (.name|ltrimstr(\"$TRIM\")) + \" && git clone -q --recursive \" + .ssh_url + \" $DESTINATION/\" + (.name|ltrimstr(\"$TRIM\"))" \
   | sh

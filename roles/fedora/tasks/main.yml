@@ -18,7 +18,7 @@
 - name: ensure script for initializing projects is installed
   copy:
     src: init-github-projects.sh
-    dest: /usr/local/bin/ini-github-projects
+    dest: /usr/local/bin/init-github-projects
     mode: 0755
 
 - include: base.yml
