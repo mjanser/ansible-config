@@ -1,0 +1,21 @@
+php_timezone: Europe/Zurich
+php_fpm_pm: static
+php_fpm_pm_max_children: 8
+
+mysql_vendor: mariadb
+mysql_custom_config: |
+  innodb_large_prefix = true
+  innodb_file_format = barracuda
+  innodb_file_per_table = 1
+
+owncloud_server_name: cloud.duss-janser.ch
+owncloud_config_trusted_domains: ["{{ owncloud_server_name }}"]
+owncloud_config_cli_url: "https://{{ owncloud_server_name }}"
+owncloud_config_mail_domain: "{{ owncloud_server_name }}"
+owncloud_config_mysql_utf8mb4: yes
+owncloud_config_defaultapp: "news,files"
+owncloud_apps:
+  - name: files_external
+owncloud_ssl_certificate: "/etc/letsencrypt/live/{{ owncloud_server_name }}/cert.pem"
+owncloud_ssl_certificate_key: "/etc/letsencrypt/live/{{ owncloud_server_name }}/privkey.pem"
+owncloud_restore_database: /var/lib/backup/db/nextcloud_latest.sql

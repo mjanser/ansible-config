@@ -1,31 +1,13 @@
-- name: ensure basic software is installed
+- name: ensure some tools are installed
   package:
     name: "{{ item }}"
   with_items:
-    - dnf-plugins-extras-tracer
-    - git
-    - gitflow
-    - python-pip
-    - python-firewall
-    - python-netaddr
-    - fuse-sshfs
-    - exfat-utils
-    - ecryptfs-utils
-    - bzip2
-    - unrar
-    - ntp
-    - bash-completion
-    - gcc
-    - jq
-    - duplicity
-    - libsemanage-python
-    - mariadb
-    - openvpn
-    - ansible
-    - ansible-lint
-    - pass
-    - aspell-de
-    - hunspell-de
+    - iotop
+    - lm_sensors
+    - tlp
+    - acpitool
+    - powertop
+    - smartmontools
 
 - name: ensure multimedia software is installed
   package:
@@ -73,27 +55,7 @@
     - mjpegtools-lav
     - mediainfo
 
-- name: ensure some tools are installed
-  package:
-    name: "{{ item }}"
-  with_items:
-    - rpmconf
-    - iotop
-    - htop
-    - lm_sensors
-    - tlp
-    - acpitool
-    - powertop
-    - net-tools
-    - wget
-    - smartmontools
-
 - name: ensure powertop service is enabled
   service:
     name: powertop
     enabled: yes
-
-- name: ensure standard firewalld configuration is not installed
-  package:
-    name: firewalld-config-standard
-    state: absent

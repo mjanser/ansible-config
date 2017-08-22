@@ -2,7 +2,7 @@
 - hosts: workstations
   roles:
     - mjanser.firewalld
-    - fedora-gui
+    - workstation
     - mjanser.gitconfig
     - mjanser.powerline
     - mjanser.tmux
@@ -14,7 +14,7 @@
 - hosts: mediacenters
   roles:
     - mjanser.firewalld
-    - fedora
+    - fedora-extended
     - mjanser.pulseaudio
     - mjanser.php
     - mjanser.nginx
@@ -24,13 +24,22 @@
     - mjanser.tmux
     - mjanser.vim
     - mjanser.ssmtp
-    - mjanser.lets-encrypt
     - mjanser.mpd
     - mjanser.mysql
     - mjanser.cockpit
-    - mjanser.owncloud
     - mjanser.mythtv
     - mjanser.kodi
+
+- hosts: cloud
+  roles:
+    - debian-base
+    - mjanser.powerline
+    - mjanser.php
+    - mjanser.nginx
+    - mjanser.mysql
+    - mjanser.ssmtp
+    - mjanser.lets-encrypt
+    - mjanser.owncloud
 
 - hosts: routers
   roles:

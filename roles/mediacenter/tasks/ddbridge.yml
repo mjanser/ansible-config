@@ -13,7 +13,6 @@
     dest: /usr/src
     copy: no
     creates: /usr/src/dddvb-0.9.28-v7a
-  register: owncloud_download
 
 - name: ensure depmod extra rules are defined
   copy:

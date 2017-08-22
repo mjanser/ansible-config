@@ -59,7 +59,14 @@ config host
 config cname
 	option cname '{{ cname }}'
 	option target '{{ host.name }}.lan'
+
 {% endfor %}
 {% endif %}
+{% endfor %}
+
+{% for domain in router_domains %}
+config domain
+	option name '{{ domain.name }}'
+	option ip '{{ domain.ip }}'
 
 {% endfor %}

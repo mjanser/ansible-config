@@ -229,6 +229,12 @@ router_leds:
     sysfs: omnia-led:pci3
     default: 0
     trigger: sda
+  - name: WAN
+    sysfs: omnia-led:wan
+    default: 1
+    trigger: netdev
+    mode: link tx rx
+    dev: eth1
   - name: USR1
     sysfs: omnia-led:user1
     default: 0

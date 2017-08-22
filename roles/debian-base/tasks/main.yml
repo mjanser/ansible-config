@@ -1,0 +1,31 @@
+- name: ensure wheel users don't need password for sudo
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"
+
+- name: ensure users are created
+  user:
+    name: "{{ item.user }}"
+    comment: "{{ item.name }}"
+    groups:
+      - sudo
+    append: yes
+  with_items: "{{ users }}"
+
+- name: ensure basic software is installed
+  package:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - python-pip
+    - python-netaddr
+    - sshfs
+    - bzip2
+    - ntp
+    - bash-completion
+    - jq
+    - htop
+    - net-tools
+    - wget

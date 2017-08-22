@@ -7,8 +7,9 @@ lsmod | grep -q ddbridge
 if [ $? -ne 0 ]; then
   systemctl stop mythbackend.service
 
-  cd /usr/src/dddvb-0.9.28
+  cd /usr/src/dddvb
   make clean
+  git pull
   make
   make install
   modprobe ddbridge

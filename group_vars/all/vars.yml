@@ -1,9 +1,6 @@
 users:
   - user: martin
     name: Martin Janser
-    groups:
-      - wheel
-      - ecryptfs
 
 gitconfig_users:
   - user: martin
@@ -21,7 +18,7 @@ powerline_users:
 tmux_users:
   - martin
 
-vim_custom_config_file: roles/fedora/files/custom.vim
+vim_custom_config_file: roles/workstation/files/custom.vim
 vim_users:
   - martin
 vim_plugins:

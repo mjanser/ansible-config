@@ -4,20 +4,7 @@ mediacenter_accounts:
     password: "{{ mediacenter_account_martin_password }}"
 
 mysql_vendor: mariadb
-mysql_databases:
-  - name: gnucash_martin
-    import_file: /var/lib/backup/mediacenter/db/gnucash_martin_latest.sql
-  - name: gnucash_haushalt
-    import_file: /var/lib/backup/mediacenter/db/gnucash_haushalt_latest.sql
-mysql_users:
-  - name: gnucash
-    host: "%"
-    password: "{{ mysql_gnucash_password }}"
-    privileges: "gnucash_%.*:ALL"
-  - name: backup
-    host: localhost
-    password: "{{ mysql_backup_password }}"
-    privileges: "*.*:SELECT,RELOAD,LOCK TABLES,SHOW VIEW,PROCESS"
+mysql_backup: no
 mysql_firewall_zones:
   - home
 
@@ -31,20 +18,9 @@ php_fpm_pm_max_children: 8
 cockpit_server_name: cockpit.mediacenter.lan
 cockpit_port: 9091
 
-owncloud_server_name: cloud.duss-janser.ch
-owncloud_config_trusted_domains: ["{{ owncloud_server_name }}"]
-owncloud_config_cli_url: "https://{{ owncloud_server_name }}"
-owncloud_config_mail_domain: "{{ owncloud_server_name }}"
-owncloud_config_defaultapp: "news,files"
-owncloud_apps:
-  - name: files_external
-owncloud_ssl_certificate: "/etc/letsencrypt/live/{{ owncloud_server_name }}/cert.pem"
-owncloud_ssl_certificate_key: "/etc/letsencrypt/live/{{ owncloud_server_name }}/privkey.pem"
-owncloud_restore_database: /var/lib/backup/mediacenter/db/owncloud_latest.sql
-
 mythtv_mythweb_hostname: mythweb.mediacenter.lan
-mythtv_backup_directory: /var/lib/backup/mediacenter/mythtv
-mythtv_restore_database: /var/lib/backup/mediacenter/db/mythtv_latest.sql
+mythtv_backup_directory: /var/lib/backup/mythtv
+mythtv_restore_database: /var/lib/backup/mythtv/latest.sql
 
 pulseaudio_card_profiles:
   - card: 1
@@ -67,8 +43,7 @@ mpd_firewall_zones:
 
 kodi_user_groups: audio,video,pulse,dialout
 kodi_webserver_enable: yes
-kodi_watched_list_database: yes
-kodi_watched_list_database_backup: /var/lib/backup/mediacenter/db/kodi_watched_latest.sql
+kodi_watched_list_database: no
 kodi_firewall_zones:
   - home
 

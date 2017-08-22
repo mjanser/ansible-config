@@ -30,7 +30,7 @@ config interface 'guest'
 	option ipaddr '{{ router_guest_ip }}'
 	option netmask '{{ router_guest_netmask }}'
 
-config interface 'VPN'
+config interface 'vpn'
 	option proto 'none'
 	option ifname 'tun0'
 	option auto '1'

@@ -1,8 +1,0 @@
-#
-# MariaDB Backup Configuration
-#
-
-USER=backup
-PASS='{{ mysql_backup_password }}'
-DIR=/var/lib/backup/$(hostname -s)/db
-ROTATE=30

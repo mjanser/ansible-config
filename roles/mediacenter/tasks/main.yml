@@ -25,23 +25,6 @@
     - videos
     - playlists
 
-- name: ensure backup directory for mediacenter exists
-  file:
-    dest: "/var/lib/backup/{{ ansible_hostname }}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
-- name: ensure backup directories exist
-  file:
-    dest: "/var/lib/backup/{{ item.username }}"
-    state: directory
-    owner: "{{ item.username }}"
-    group: "{{ item.username }}"
-    mode: 0755
-  with_items: "{{ mediacenter_accounts }}"
-
 - name: ensure group for sispmctl exists
   group:
     name: sispmctl
@@ -83,6 +66,5 @@
 
 - include: dnf.yml
 - include: iguana.yml
-- include: backup.yml
 - include: ddbridge.yml
 - include: controlapp.yml

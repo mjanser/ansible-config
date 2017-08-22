@@ -1,8 +1,39 @@
-- name: ensure gnome tools are installed
+- name: ensure there are enough inotify watches available
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: 524288
+    sysctl_file: /etc/sysctl.d/30-inotify.conf
+
+- name: ensure script for initializing projects is installed
+  copy:
+    src: init-github-projects.sh
+    dest: /usr/local/bin/init-github-projects
+    mode: 0755
+
+- name: ensure basic software is installed
   package:
     name: "{{ item }}"
   with_items:
-    - "@base-x"
+    - gitflow
+    - exfat-utils
+    - ecryptfs-utils
+    - unrar
+    - gcc
+    - duplicity
+    - mariadb
+    - openvpn
+    - ansible
+    - ansible-lint
+    - pass
+    - aspell-de
+    - hunspell-de
+
+- name: ensure gui tools are installed
+  package:
+    name: "{{ item }}"
+  with_items:
+    - "@GNOME"
+    - "@libreoffice"
     - epiphany
     - gnome-backgrounds
     - gnome-contacts
@@ -22,10 +53,15 @@
     - dconf-editor
     - gnome-todo
     - gnome-packagekit
-    - gmpc
+    - cantata
     - totem
     - vinagre
     - simple-scan
+    - deja-dup
+    - deja-dup-nautilus
+    - nextcloud-client
+    - nextcloud-client-nautilus
+    - scudcloud
 
 - name: ensure multimedia software is installed
   package:
@@ -42,19 +78,15 @@
     - paprefs
     - pavucontrol
 
-- name: ensure misc software is installed
+- name: ensure development software is installed
   package:
     name: "{{ item }}"
   with_items:
     - gitg
     - virt-manager
     - libvirt-daemon-config-network
-    - deja-dup
-    - deja-dup-nautilus
-    - nextcloud-client
-    - nextcloud-client-nautilus
+    - qemu-system-arm
     - xca
-    - scudcloud
     - php-cli
     - php-pdo
     - php-mbstring
@@ -66,18 +98,6 @@
     - glide
     - python3-click
     - python3-appdirs
-
-- name: ensure gnucash is installed
-  package:
-    name: "{{ item }}"
-  with_items:
-    - gnucash
-    - gnucash-docs
-    - libdbi-dbd-mysql
-
-- name: ensure office is installed
-  package:
-    name: "@libreoffice"
 
 - name: ensure Cloud Foundry CLI repository is configured
   yum_repository:
@@ -123,3 +143,10 @@
     - atom
     - chrome-gnome-shell
     - packer
+
+- name: ensure users are in ecryptfs group
+  user:
+    name: "{{ item.user }}"
+    groups: ecryptfs
+    append: yes
+  with_items: "{{ users }}"
