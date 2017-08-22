@@ -21,13 +21,6 @@ if [ "mediacenter.test" = "$HOSTNAME" -o "workstation.test" = "$HOSTNAME" ]; the
   fi
   dnf install -q -y python2 python2-dnf libselinux-python
   echo "vagrant ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/vagrant-nopasswd
-
-  if [ "mediacenter.test" = "$HOSTNAME" ]; then
-    dnf install -q -y openssl
-    mkdir -p /etc/letsencrypt/live/cloud.duss-janser.ch
-    /etc/pki/tls/certs/make-dummy-cert /etc/letsencrypt/live/cloud.duss-janser.ch/cert.pem
-    ln -f -s /etc/letsencrypt/live/cloud.duss-janser.ch/cert.pem /etc/letsencrypt/live/cloud.duss-janser.ch/privkey.pem
-  fi
 elif [ "router.test" = "$HOSTNAME" ]; then
   opkg update
   opkg install python-light python-logging python-openssl python-codecs python-distutils openvpn-openssl
