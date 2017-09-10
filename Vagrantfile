@@ -77,7 +77,7 @@ SHELL
     end
 
     if Vagrant.has_plugin?('vagrant-hostmanager')
-      vmconfig.hostmanager.aliases = %w(mythweb.mediacenter.test cloud.mediacenter.test, cockpit.mediacenter.test)
+      vmconfig.hostmanager.aliases = %w(mythweb.mediacenter.test, cockpit.mediacenter.test)
     end
 
     vmconfig.vm.synced_folder 'data/backup', '/var/lib/backup', type: 'rsync', rsync__chown: false, rsync__exclude: '.gitignore'
