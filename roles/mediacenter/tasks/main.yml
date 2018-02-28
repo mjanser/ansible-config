@@ -1,5 +1,5 @@
 ---
-- include: accounts.yml
+- import_tasks: accounts.yml
 
 - name: ensure mediacenter software is installed
   package:
@@ -64,7 +64,7 @@
   selinux:
     state: disabled
 
-- include: dnf.yml
-- include: iguana.yml
-- include: ddbridge.yml
-- include: controlapp.yml
+- import_tasks: dnf.yml
+- import_tasks: iguana.yml
+- import_tasks: ddbridge.yml
+- import_tasks: controlapp.yml

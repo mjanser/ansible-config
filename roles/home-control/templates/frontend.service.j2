@@ -1,0 +1,18 @@
+[Unit]
+Description=Home automation frontend
+After=network.target
+
+[Service]
+Environment=PORT={{ automation_frontend_port }}
+Environment=HOME=/tmp
+Environment=NODE_ENV=production
+Environment=MQTT=mqtt://{{ automation_server_name }}
+Type=simple
+User=nobody
+WorkingDirectory=/var/www/home-control/{{ automation_frontend_version }}
+ExecStart=/usr/bin/nodejs index.js
+Restart=always
+RestartSec=500ms
+
+[Install]
+WantedBy=multi-user.target

@@ -19,6 +19,7 @@
     name: "{{ item }}"
   with_items:
     - git
+    - curl
     - python-pip
     - python-netaddr
     - sshfs

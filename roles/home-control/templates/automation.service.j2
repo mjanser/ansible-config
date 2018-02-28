@@ -1,0 +1,15 @@
+[Unit]
+Description=Martin's home automation: {{ item.name }}
+After=network.target
+
+[Service]
+Environment=MQTT_URI=tcp://home-control.lan:1883
+{% for env, value in item.environment.iteritems() %}
+Environment={{ env }}={{ value }}
+{% endfor %}
+Type=notify
+Restart=on-failure
+ExecStart=/opt/automation/{{ item.name }}_{{ item.version }}{% if item.config is defined %} --config /etc/automation/{{ item.name }}.yaml{% endif %}
+
+[Install]
+WantedBy=multi-user.target

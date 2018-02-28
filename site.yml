@@ -41,6 +41,14 @@
     - mjanser.lets-encrypt
     - mjanser.owncloud
 
+- hosts: home-control
+  roles:
+    - debian-base
+    - mjanser.powerline
+    - mjanser.nginx
+    - mjanser.ssmtp
+    - home-control
+
 - hosts: routers
   roles:
     - router

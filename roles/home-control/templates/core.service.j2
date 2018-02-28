@@ -1,0 +1,12 @@
+[Unit]
+Description=Martin's home automation: core
+After=network.target
+
+[Service]
+Environment=MQTT_URI=tcp://home-control.lan:1883
+Type=notify
+ExecStart=/opt/automation/core_{{ automation_custom_version }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,10 @@
+- name: ensure UnitedRPMs key is installed
+  rpm_key:
+    key: https://raw.githubusercontent.com/UnitedRPMs/unitedrpms/master/URPMS-GPG-PUBLICKEY-Fedora-24
+
 - name: ensure UnitedRPMs repository is installed
   package:
-    name: "https://github.com/UnitedRPMs/unitedrpms/releases/download/3/unitedrpms-{{ ansible_distribution_version }}-3.fc{{ ansible_distribution_version }}.noarch.rpm"
+    name: "https://github.com/UnitedRPMs/unitedrpms/releases/download/7/unitedrpms-{{ ansible_distribution_version }}-7.fc{{ ansible_distribution_version }}.noarch.rpm"
 
 - name: ensure wheel users don't need password for sudo
   lineinfile:
@@ -9,10 +13,10 @@
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "visudo -cf %s"
 
-- include: ssd.yml
+- import_tasks: ssd.yml
   when: (ansible_virtualization_role != "guest" or ansible_virtualization_type != "lxc") and ansible_devices.values()|rejectattr("rotational", "sameas", "0")|list|length > 0
 
-- name: ensure users are created
+- name: ensure admin users are created
   user:
     name: "{{ item.user }}"
     comment: "{{ item.name }}"
@@ -27,6 +31,7 @@
   with_items:
     - dnf-plugins-extras-tracer
     - git
+    - curl
     - python-pip
     - python-firewall
     - python-netaddr

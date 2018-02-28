@@ -1,0 +1,20 @@
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: restart automation services
+  service:
+    name: "{{ item.name }}"
+    state: restarted
+  with_items: "{{ automation_software }}"
+
+- name: restart automation frontend
+  service:
+    name: home-control-frontend
+    state: restarted
+
+- name: restart core
+  service:
+    name: core
+    state: restarted

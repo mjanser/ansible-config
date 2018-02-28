@@ -1,0 +1,41 @@
+automation_server_name: home-control.lan
+automation_custom_version: 0.1
+automation_frontend_version: 0.5
+automation_frontend_port: 3001
+
+automation_software:
+  - name: broker-kodi
+    version: 0.1
+    environment:
+      KODI_URI: "[fd8c:9008:bb66::cd0]:9090"
+    config: |
+      topics:
+        system: mediacenter/kodi/system/set
+        playback_state: mediacenter/kodi/playback/state
+        playback_seek: mediacenter/kodi/playback/seek
+        playback_speed: mediacenter/kodi/playback/speed
+        play: mediacenter/kodi/play
+        system_state: mediacenter/kodi/system/state
+        state: mediacenter/kodi/state
+  - name: broker-lgtv
+    version: 0.2
+    environment:
+      LGTV_URI: "tv.lan"
+      LGTV_KEY: "{{ lgtv_key }}"
+    config: |
+      topic_set: mediacenter/tv/set
+      topic_state: mediacenter/tv/state
+  - name: broker-mpd
+    version: 0.1
+    environment:
+      MPD_URI: "mediacenter.lan:6600"
+    config: |
+      topics:
+        system: mediacenter/mpd/system/set
+        playback_state: mediacenter/mpd/playback/state
+        playback_seek: mediacenter/mpd/playback/seek
+        playback_options: mediacenter/mpd/playback/option
+        play: mediacenter/mpd/play
+        add: mediacenter/mpd/add
+        system_state: mediacenter/mpd/system/state
+        state: mediacenter/mpd/state

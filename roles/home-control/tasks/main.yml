@@ -1,0 +1,95 @@
+- name: ensure directories for automation software exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /opt/automation
+    - /etc/automation
+    - /var/www/home-control
+    - "/var/www/home-control/{{ automation_frontend_version }}"
+
+- name: ensure automation software is downloaded
+  get_url:
+    url: "https://github.com/martins-home-automation/{{ item.name }}/releases/download/v{{ item.version }}/{{ item.name }}_linux_arm"
+    dest: "/opt/automation/{{ item.name }}_{{ item.version }}"
+    mode: 0755
+  with_items: "{{ automation_software }}"
+
+- name: ensure automation custom logic is downloaded
+  get_url:
+    url: "https://github.com/mjanser/home-automation/releases/download/v{{ automation_custom_version }}/core_linux_arm"
+    dest: "/opt/automation/core_{{ automation_custom_version }}"
+    mode: 0755
+
+- name: ensure configuration files for automation software are installed
+  copy:
+    dest: "/etc/automation/{{ item.name }}.yaml"
+    content: "{{ item.config }}"
+  when: item.config is defined
+  with_items: "{{ automation_software }}"
+  notify: restart automation services
+
+- name: ensure automation software service files are installed
+  template:
+    src: automation.service.j2
+    dest: "/etc/systemd/system/{{ item.name }}.service"
+  with_items: "{{ automation_software }}"
+  notify: restart automation services
+
+- name: ensure automation custom logic service file is installed
+  template:
+    src: core.service.j2
+    dest: /etc/systemd/system/core.service
+  notify: restart core
+
+- name: ensure automation software is running
+  service:
+    name: "{{ item.name }}"
+    enabled: yes
+    state: started
+  with_items: "{{ automation_software }}"
+
+- name: ensure automation custom logic is running
+  service:
+    name: core
+    enabled: yes
+    state: started
+
+- name: ensure automation frontend is downloaded
+  unarchive:
+    src: "https://github.com/mjanser/home-control-frontend/releases/download/v{{ automation_frontend_version }}/home-control-frontend.tgz"
+    dest: "/var/www/home-control/{{ automation_frontend_version }}"
+    copy: no
+    extra_opts:
+      - "--strip-components=1"
+    creates: "/var/www/home-control/{{ automation_frontend_version }}/index.js"
+
+- name: ensure vendors for automation frontend are installed
+  npm:
+    path: "/var/www/home-control/{{ automation_frontend_version }}"
+    production: yes
+
+- name: ensure automation frontend service file is installed
+  template:
+    src: frontend.service.j2
+    dest: "/etc/systemd/system/home-control-frontend.service"
+  notify: restart automation frontend
+
+- name: ensure automation frontend is running
+  service:
+    name: home-control-frontend
+    enabled: yes
+    state: started
+
+- name: ensure nginx vhost for automation is configured
+  template:
+    src: vhost.conf.j2
+    dest: /etc/nginx/sites-available/home-control
+  notify: reload nginx
+
+- name: ensure nginx vhost for automation is enabled
+  file:
+    src: /etc/nginx/sites-available/home-control
+    dest: /etc/nginx/sites-enabled/home-control
+    state: link
+  notify: reload nginx
