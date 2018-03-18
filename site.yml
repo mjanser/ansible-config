@@ -49,6 +49,13 @@
     - mjanser.ssmtp
     - home-control
 
+- hosts: dlna
+  roles:
+    - debian-base
+    - mjanser.powerline
+    - mjanser.ssmtp
+    - dlna
+
 - hosts: routers
   roles:
     - router

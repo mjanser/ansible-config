@@ -1,0 +1,4 @@
+- name: restart dlna
+  service:
+    name: minidlna
+    state: restarted

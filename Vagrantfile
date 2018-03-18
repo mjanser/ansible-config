@@ -38,6 +38,7 @@ SHELL
       'mediacenters' => ['mediacenter'],
       'cloud' => ['cloud'],
       'home-control' => ['home-control'],
+      'dlna' => ['dlna'],
       'routers' => ['router'],
     }
     ansible.extra_vars = {
@@ -94,6 +95,11 @@ SHELL
     vmconfig.vm.box = 'debian/stretch64'
     vmconfig.vm.hostname = 'home-control.test'
     vmconfig.vm.network 'forwarded_port', guest: 80, host: 8889
+  end
+
+  config.vm.define 'dlna' do |vmconfig|
+    vmconfig.vm.box = 'debian/stretch64'
+    vmconfig.vm.hostname = 'dlna.test'
   end
 
   config.vm.define 'router' do |vmconfig|

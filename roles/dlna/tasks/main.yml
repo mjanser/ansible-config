@@ -1,0 +1,24 @@
+- name: ensure there are enough inotify watches available
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: 524288
+    sysctl_file: /etc/sysctl.d/30-inotify.conf
+
+- name: ensure dlna server software is installed
+  package:
+    name: minidlna
+
+- name: ensure dlna server is configured
+  copy:
+    dest: /etc/minidlna.conf
+    src: minidlna.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart dlna
+
+- name: ensure dlna server is running
+  service:
+    name: minidlna
+    enabled: yes
+    state: started
