@@ -1,9 +1,29 @@
 automation_server_name: home-control.lan
-automation_custom_version: 0.1
-automation_frontend_version: 0.5
+automation_custom_version: 0.2
+automation_frontend_version: 0.6
 automation_frontend_port: 3001
 
 automation_software:
+  - name: broker-denon
+    version: 0.1
+    environment:
+      DENON_URI: "avr.lan:23"
+    config: |
+      topics:
+        system: mediacenter/avr/system/set
+        power: mediacenter/avr/power/set
+        volume_set: mediacenter/avr/volume/set
+        volume_up: mediacenter/avr/volume/up
+        volume_down: mediacenter/avr/volume/down
+        volume_mute: mediacenter/avr/volume/mute
+        input: mediacenter/avr/input/set
+        surround_mode: mediacenter/avr/surround/set
+        system_state: mediacenter/avr/system/state
+        power_state: mediacenter/avr/power/state
+        volume_state: mediacenter/avr/volume/state
+        input_state: mediacenter/avr/input/state
+        surround_mode_state: mediacenter/avr/surround/state
+        info: mediacenter/avr/info
   - name: broker-kodi
     version: 0.1
     environment:
@@ -18,7 +38,7 @@ automation_software:
         system_state: mediacenter/kodi/system/state
         state: mediacenter/kodi/state
   - name: broker-lgtv
-    version: 0.2
+    version: 0.3
     environment:
       LGTV_URI: "tv.lan"
       LGTV_KEY: "{{ lgtv_key }}"
