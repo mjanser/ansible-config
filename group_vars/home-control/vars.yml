@@ -1,5 +1,5 @@
 automation_server_name: home-control.lan
-automation_custom_version: 0.3
+automation_custom_version: 0.4
 automation_frontend_version: 0.7
 automation_frontend_port: 3001
 
