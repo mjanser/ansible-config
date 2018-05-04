@@ -57,17 +57,3 @@ automation_software:
     config: |
       topic_set: mediacenter/tv/set
       topic_state: mediacenter/tv/state
-  - name: broker-mpd
-    version: 0.1
-    environment:
-      MPD_URI: "mediacenter.lan:6600"
-    config: |
-      topics:
-        system: mediacenter/mpd/system/set
-        playback_state: mediacenter/mpd/playback/state
-        playback_seek: mediacenter/mpd/playback/seek
-        playback_options: mediacenter/mpd/playback/option
-        play: mediacenter/mpd/play
-        add: mediacenter/mpd/add
-        system_state: mediacenter/mpd/system/state
-        state: mediacenter/mpd/state
