@@ -32,10 +32,6 @@
     - dnf-plugins-extras-tracer
     - git
     - curl
-    - python-pip
-    - python-firewall
-    - python-netaddr
-    - libsemanage-python
     - fuse-sshfs
     - bzip2
     - ntp
@@ -45,6 +41,9 @@
     - htop
     - net-tools
     - wget
+    - tmux
+    - vim
+    - nvim
 
 - name: ensure standard firewalld configuration is not installed
   package:

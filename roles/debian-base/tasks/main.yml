@@ -30,3 +30,5 @@
     - htop
     - net-tools
     - wget
+    - pass
+    - yadm

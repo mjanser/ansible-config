@@ -20,6 +20,7 @@
     - ecryptfs-utils
     - duplicity
     - mariadb
+    - mycli
     - openvpn
     - ansible
     - ansible-lint
@@ -49,7 +50,6 @@
     - dconf-editor
     - gnome-todo
     - tilix
-    - cantata
     - totem
     - vinagre
     - simple-scan
@@ -76,17 +76,6 @@
     - libvirt-daemon-config-network
     - qemu-system-arm
     - xca
-    - php-cli
-    - php-pdo
-    - php-mbstring
-    - php-xml
-    - php-soap
-    - php-pecl-amqp
-    - composer
-    - nodejs
-    - npm
-    - golang
-    - atom
 
 - name: ensure Cloud Foundry CLI repository is configured
   yum_repository:

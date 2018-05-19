@@ -1,11 +1,11 @@
 automation_server_name: home-control.lan
-automation_custom_version: 0.4
-automation_frontend_version: 0.7
+automation_custom_version: "0.10"
+automation_frontend_version: "0.8"
 automation_frontend_port: 3001
 
 automation_software:
   - name: broker-denon
-    version: 0.2
+    version: "0.2"
     environment:
       DENON_URI: "avr.lan:23"
     config: |
@@ -25,7 +25,7 @@ automation_software:
         surround_mode_state: mediacenter/avr/surround/state
         info: mediacenter/avr/info
   - name: broker-heos
-    version: 0.1
+    version: "0.1"
     environment:
       HEOS_URI: "avr.lan:1255"
     config: |
@@ -37,9 +37,9 @@ automation_software:
         state: mediacenter/heos/state
         info: mediacenter/heos/info
   - name: broker-kodi
-    version: 0.1
+    version: "0.4"
     environment:
-      KODI_URI: "[fd8c:9008:bb66::cd0]:9090"
+      KODI_URI: "osmc.lan:9090"
     config: |
       topics:
         system: mediacenter/kodi/system/set
@@ -47,10 +47,13 @@ automation_software:
         playback_seek: mediacenter/kodi/playback/seek
         playback_speed: mediacenter/kodi/playback/speed
         play: mediacenter/kodi/play
+        input: mediacenter/kodi/input
+        cec: mediacenter/kodi/cec
         system_state: mediacenter/kodi/system/state
         state: mediacenter/kodi/state
+        power_state: mediacenter/kodi/power/state
   - name: broker-lgtv
-    version: 0.3
+    version: "0.3"
     environment:
       LGTV_URI: "tv.lan"
       LGTV_KEY: "{{ lgtv_key }}"
