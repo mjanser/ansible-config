@@ -1,5 +1,5 @@
 automation_server_name: home-control.lan
-automation_custom_version: "0.10"
+automation_custom_version: "0.13"
 automation_frontend_version: "0.8"
 automation_frontend_port: 3001
 
@@ -53,10 +53,23 @@ automation_software:
         state: mediacenter/kodi/state
         power_state: mediacenter/kodi/power/state
   - name: broker-lgtv
-    version: "0.3"
+    version: "0.5"
     environment:
       LGTV_URI: "tv.lan"
       LGTV_KEY: "{{ lgtv_key }}"
     config: |
-      topic_set: mediacenter/tv/set
-      topic_state: mediacenter/tv/state
+      toplevel_topic: lgtv
+  - name: broker-presence
+    version: "0.2"
+    config: |
+      toplevel_topic: presence
+      toplevel_topic_wifi: wifi
+      absent_delay_wifi: 3m
+      last_seen_buffer: 5m
+      room: home
+      enable_prometheus: true
+      people:
+        - name: martin
+          wifi_mac: 84:c7:ea:83:77:d3
+        - name: isabelle
+          wifi_mac: d0:fc:cc:b9:f2:9b
