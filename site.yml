@@ -3,32 +3,10 @@
   roles:
     - mjanser.firewalld
     - workstation
-    - mjanser.gitconfig
     - mjanser.powerline
-    - mjanser.tmux
-    - mjanser.vim
     - mjanser.ssmtp
     - mjanser.vagrant
     - cmprescott.chrome
-
-- hosts: mediacenters
-  roles:
-    - mjanser.firewalld
-    - fedora-extended
-    - mjanser.pulseaudio
-    - mjanser.php
-    - mjanser.nginx
-    - mediacenter
-    - mjanser.gitconfig
-    - mjanser.powerline
-    - mjanser.tmux
-    - mjanser.vim
-    - mjanser.ssmtp
-    - mjanser.mpd
-    - mjanser.mysql
-    - mjanser.cockpit
-    - mjanser.mythtv
-    - mjanser.kodi
 
 - hosts: cloud
   roles:

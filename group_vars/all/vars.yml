@@ -2,39 +2,11 @@ users:
   - user: martin
     name: Martin Janser
 
-gitconfig_users:
-  - user: martin
-    name: Martin Janser
-    email: martin@duss-janser.ch
-    ignore_github:
-      - Linux
-      - Vagrant
-      - Ansible
-      - Vim
-
 powerline_users:
   - martin
 
-tmux_users:
-  - martin
-
-vim_custom_config_file: roles/workstation/files/custom.vim
-vim_users:
-  - martin
-vim_plugins:
-  - "gmarik/vundle"
-  - "ervandew/supertab"
-  - "bling/vim-airline"
-  - "tpope/vim-surround"
-  - "scrooloose/syntastic"
-  - "taglist.vim"
-  - "StanAngeloff/php.vim"
-  - "shawncplus/phpcomplete.vim"
-  - "arnaud-lb/vim-php-namespace"
-  - "tpope/vim-fugitive"
-
-vagrant_virtualbox: false
-vagrant_firewalld: true
+vagrant_virtualbox: no
+vagrant_firewalld: no
 vagrant_plugin_packages:
   - name: vagrant-hostmanager
   - name: vagrant-sshfs

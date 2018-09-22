@@ -1,19 +1,11 @@
 - src: mjanser.firewalld
 - src: mjanser.powerline
-- src: mjanser.tmux
-- src: mjanser.vim
 - src: mjanser.ssmtp
 - src: mjanser.vagrant
-- src: mjanser.gitconfig
 - src: cmprescott.chrome
 
-- src: mjanser.cockpit
 - src: mjanser.lets-encrypt
-- src: mjanser.pulseaudio
-- src: mjanser.mpd
 - src: mjanser.mysql
 - src: mjanser.nginx
 - src: mjanser.php
 - src: mjanser.owncloud
-- src: mjanser.mythtv
-- src: mjanser.kodi

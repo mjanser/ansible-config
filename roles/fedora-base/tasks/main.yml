@@ -43,7 +43,7 @@
     - wget
     - tmux
     - vim
-    - nvim
+    - neovim
 
 - name: ensure standard firewalld configuration is not installed
   package:
