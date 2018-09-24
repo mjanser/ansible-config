@@ -1,5 +1,5 @@
 automation_server_name: home-control.lan
-automation_custom_version: "0.13"
+automation_custom_version: "0.16"
 automation_frontend_version: "0.8"
 automation_frontend_port: 3001
 
@@ -53,9 +53,9 @@ automation_software:
         state: mediacenter/kodi/state
         power_state: mediacenter/kodi/power/state
   - name: broker-lgtv
-    version: "0.5"
+    version: "0.6"
     environment:
-      LGTV_URI: "tv.lan"
+      LGTV_URI: "ws://tv.lan:3000"
       LGTV_KEY: "{{ lgtv_key }}"
     config: |
       toplevel_topic: lgtv
