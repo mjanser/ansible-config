@@ -4,7 +4,7 @@ With these files I set up my computers.
 
 ## Configuration
 
-Before you start, you have to create the files `secrets.yml` in the directories `group_vars/all`, `group_vars/mediacenters` and `group_vars/routers`.
+Before you start, you have to create the files `secrets.yml` in the directories `group_vars/all`, `group_vars/cloud`, `group_vars/home-control` and `group_vars/routers`.
 It contains some private configuration. You can copy the corresponding `secrets.dist.yml` files to start with.
 
 ## Vagrant

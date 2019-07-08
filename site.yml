@@ -6,7 +6,6 @@
     - mjanser.powerline
     - mjanser.ssmtp
     - mjanser.vagrant
-    - cmprescott.chrome
 
 - hosts: cloud
   roles:

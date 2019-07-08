@@ -14,7 +14,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision 'shell' do |s|
     s.inline = <<-SHELL
-if [ "mediacenter.test" = "$HOSTNAME" -o "workstation.test" = "$HOSTNAME" ]; then
+if [ "workstation.test" = "$HOSTNAME" ]; then
   if [[ $(df --output=size -m /dev/vda1 | grep -o '[0-9]\\{2,\\}') -lt 5000 ]]; then
     echo "Increase disk space"
     growpart /dev/vda 1 && resize2fs /dev/vda1
@@ -35,7 +35,6 @@ SHELL
     ansible.playbook = 'site.yml'
     ansible.groups = {
       'workstations' => ['workstation'],
-      'mediacenters' => ['mediacenter'],
       'cloud' => ['cloud'],
       'home-control' => ['home-control'],
       'dlna' => ['dlna'],
@@ -66,23 +65,6 @@ SHELL
       libvirt.memory = 2048
       libvirt.cpus = 2
     end
-  end
-
-  config.vm.define 'mediacenter' do |vmconfig|
-    vmconfig.vm.network :private_network, ip: '192.168.111.11'
-    vmconfig.vm.hostname = 'mediacenter.test'
-    vmconfig.ssh.forward_x11 = true
-
-    config.vm.provider 'libvirt' do |libvirt|
-      libvirt.memory = 2048
-      libvirt.cpus = 2
-    end
-
-    if Vagrant.has_plugin?('vagrant-hostmanager')
-      vmconfig.hostmanager.aliases = %w(mythweb.mediacenter.test, cockpit.mediacenter.test)
-    end
-
-    vmconfig.vm.synced_folder 'data/backup', '/var/lib/backup', type: 'rsync', rsync__chown: false, rsync__exclude: '.gitignore'
   end
 
   config.vm.define 'cloud' do |vmconfig|

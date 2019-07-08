@@ -2,7 +2,6 @@
 - src: mjanser.powerline
 - src: mjanser.ssmtp
 - src: mjanser.vagrant
-- src: cmprescott.chrome
 
 - src: mjanser.lets-encrypt
 - src: mjanser.mysql

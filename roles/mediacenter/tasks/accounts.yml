@@ -1,9 +1,0 @@
----
-- name: ensure users exists
-  user:
-    name: "{{ item.username }}"
-    comment: "{{ item.name }}"
-    shell: /bin/bash
-    password: "{{ item.password }}"
-  with_items:
-    - "{{ mediacenter_accounts }}"
