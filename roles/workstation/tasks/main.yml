@@ -66,6 +66,7 @@
     - easytag
     - gitg
     - xca
+    - yadm
 
 - name: ensure users are in ecryptfs group
   user:
