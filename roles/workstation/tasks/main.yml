@@ -10,15 +10,22 @@
     dest: /usr/local/bin/init-github-projects
     mode: 0755
 
+
+- name: ensure Cloud Foundry CLI repository is configured
+  yum_repository:
+    name: cloudfoundry-cli
+    description: Cloud Foundry CLI
+    baseurl: https://packages.cloudfoundry.org/fedora
+    gpgkey: https://packages.cloudfoundry.org/fedora/cli.cloudfoundry.org.key
+    gpgcheck: yes
+    skip_if_unavailable: yes
+
 - name: ensure basic software is installed
   package:
     name: "{{ item }}"
   with_items:
-    - neovim
-    - gitflow
     - exfat-utils
     - ecryptfs-utils
-    - duplicity
     - mariadb
     - mycli
     - openvpn
@@ -28,6 +35,8 @@
     - aspell-de
     - hunspell-de
     - fzf
+    - tidy
+    - cf-cli
 
 - name: ensure gui tools are installed
   package:
@@ -52,42 +61,11 @@
     - totem
     - vinagre
     - simple-scan
-    - deja-dup
-    - deja-dup-nautilus
     - nextcloud-client
     - nextcloud-client-nautilus
-
-- name: ensure multimedia software is installed
-  package:
-    name: "{{ item }}"
-  with_items:
-    - ImageMagick
-    - avidemux-qt
     - easytag
-    - vlc
-
-- name: ensure development software is installed
-  package:
-    name: "{{ item }}"
-  with_items:
     - gitg
-    - virt-manager
-    - libvirt-daemon-config-network
-    - qemu-system-arm
     - xca
-
-- name: ensure Cloud Foundry CLI repository is configured
-  yum_repository:
-    name: cloudfoundry-cli
-    description: Cloud Foundry CLI
-    baseurl: https://packages.cloudfoundry.org/fedora
-    gpgkey: https://packages.cloudfoundry.org/fedora/cli.cloudfoundry.org.key
-    gpgcheck: yes
-    skip_if_unavailable: yes
-
-- name: ensure Cloud Foundry CLI is installed
-  package:
-    name: cf-cli
 
 - name: ensure users are in ecryptfs group
   user:

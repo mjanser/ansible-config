@@ -1,11 +1,3 @@
-- name: ensure UnitedRPMs key is installed
-  rpm_key:
-    key: https://raw.githubusercontent.com/UnitedRPMs/unitedrpms/master/URPMS-GPG-PUBLICKEY-Fedora-24
-
-- name: ensure UnitedRPMs repository is installed
-  package:
-    name: "https://github.com/UnitedRPMs/unitedrpms/releases/download/7/unitedrpms-{{ ansible_distribution_version }}-7.fc{{ ansible_distribution_version }}.noarch.rpm"
-
 - name: ensure wheel users don't need password for sudo
   lineinfile:
     dest: /etc/sudoers
@@ -29,23 +21,23 @@
   package:
     name: "{{ item }}"
   with_items:
-    - dnf-plugins-extras-tracer
-    - git
+    - acpitool
+    - bash-completion
+    - bzip2
     - curl
     - fuse-sshfs
-    - bzip2
-    - ntp
-    - bash-completion
-    - jq
-    - rpmconf
+    - git
     - htop
+    - iotop
+    - jq
+    - lm_sensors
+    - mediainfo
     - net-tools
-    - wget
+    - ntp
+    - powertop
+    - rpmconf
+    - smartmontools
+    - tlp
     - tmux
     - vim
-    - neovim
-
-- name: ensure standard firewalld configuration is not installed
-  package:
-    name: firewalld-config-standard
-    state: absent
+    - wget
